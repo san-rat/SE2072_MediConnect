@@ -1,5 +1,11 @@
 package com.mediconnect.service;
 
-public class DoctorService {
-    
+import com.mediconnect.model.DoctorModel;
+import java.util.List;
+
+public interface DoctorService {
+    DoctorModel saveDoctor(DoctorModel doctor);
+    List<DoctorModel> getAllDoctors();
+    DoctorModel getDoctorById(String id);
+    void deleteDoctor(String id);
 }
