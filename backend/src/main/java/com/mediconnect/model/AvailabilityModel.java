@@ -1,4 +1,4 @@
-package com.mediconnect.Availability;
+package com.mediconnect.model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

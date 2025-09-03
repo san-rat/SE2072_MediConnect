@@ -1,4 +1,4 @@
-package com.mediconnect.Status;
+package com.mediconnect.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

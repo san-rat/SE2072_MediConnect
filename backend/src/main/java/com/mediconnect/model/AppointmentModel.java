@@ -1,10 +1,8 @@
-package com.mediconnect.Appointment;
+package com.mediconnect.model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-
-import com.mediconnect.Status.StatusModel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
