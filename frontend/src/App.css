@@ -21,11 +21,13 @@
   justify-content: center;
 }
 
+
 .btn-outline {
   background: transparent;
   border-color: #2c5282;
   color: #2c5282;
 }
+
 
 .btn-outline:hover {
   background: #2c5282;
