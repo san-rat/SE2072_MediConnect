@@ -19,8 +19,7 @@ const HomePage = () => {
           <div className="hero-image">
             <div className="placeholder-image">
               <div className="image-content">
-                <span>🏥</span>
-                <p>Medical Care</p>
+                
               </div>
             </div>
           </div>

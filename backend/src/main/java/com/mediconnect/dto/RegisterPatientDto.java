@@ -1,23 +1,44 @@
 package com.mediconnect.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public class RegisterPatientDto {
 
     // User fields
+    @NotBlank(message = "First name is required")
     private String firstName;
+
+    @NotBlank(message = "Last name is required")
     private String lastName;
+
+    @Email(message = "Email should be valid")
+    @NotBlank(message = "Email is required")
     private String email;
+
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
+
+    @NotBlank(message = "Phone is required")
     private String phone;
 
     // Patient fields
+    @Past(message = "Date of birth must be in the past")
     private LocalDate dateOfBirth;
+
+    @NotBlank(message = "Emergency contact is required")
     private String emergencyContact;
+
     private String bloodGroup;
     private String medicalHistory;
 
-    public RegisterPatientDto() {}
+    
+
+
 
     // Getters and Setters
     public String getFirstName() { return firstName; }

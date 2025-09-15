@@ -36,7 +36,8 @@ public class DoctorController {
         doctor.setSpecialization(dto.getSpecialization());
         doctor.setLicenseNumber(dto.getLicenseNumber());
         doctor.setYearsExperience(dto.getYearsExperience());
-        doctor.setConsultationFee(dto.getConsultationFee());
+        doctor.setConsultationFee(dto.getConsultationFee().doubleValue());
         return doctorService.saveDoctor(doctor);
     }
 }
+

@@ -9,9 +9,14 @@ import com.mediconnect.model.PatientModel;
 import com.mediconnect.service.UserService;
 import com.mediconnect.service.DoctorService;
 import com.mediconnect.service.PatientService;
+import com.mediconnect.util.JwtUtil;
+import jakarta.validation.Valid;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -20,31 +25,34 @@ public class AuthController {
     private final UserService userService;
     private final DoctorService doctorService;
     private final PatientService patientService;
+    private final AuthenticationManager authManager;
+    private final JwtUtil jwtUtil;
 
     public AuthController(UserService userService,
                           DoctorService doctorService,
-                          PatientService patientService) {
+                          PatientService patientService,
+                          AuthenticationManager authManager,
+                          JwtUtil jwtUtil) {
         this.userService = userService;
         this.doctorService = doctorService;
         this.patientService = patientService;
+        this.authManager = authManager;
+        this.jwtUtil = jwtUtil;
     }
 
-    // User login
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
-        List<UserModel> users = userService.getAllUsers();
-        for (UserModel user : users) {
-            if (user.getEmail().equals(request.getEmail()) &&
-                user.getPassword().equals(request.getPassword())) {
-                return "Login successful!";
-            }
-        }
-        return "Invalid credentials";
+    public Map<String, Object> login(@RequestBody LoginRequest request) {
+        var auth = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
+        authManager.authenticate(auth); // throws if bad creds
+        String token = jwtUtil.generateToken(request.getEmail());
+        Map<String, Object> resp = new HashMap<>();
+        resp.put("token", token);
+        resp.put("type", "Bearer");
+        return resp;
     }
 
-    // Register Doctor
     @PostMapping("/register/doctor")
-    public DoctorModel registerDoctor(@RequestBody RegisterDoctorDto dto) {
+    public DoctorModel registerDoctor(@Valid @RequestBody RegisterDoctorDto dto) {
         UserModel user = new UserModel();
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
@@ -58,13 +66,12 @@ public class AuthController {
         doctor.setSpecialization(dto.getSpecialization());
         doctor.setLicenseNumber(dto.getLicenseNumber());
         doctor.setYearsExperience(dto.getYearsExperience());
-        doctor.setConsultationFee(dto.getConsultationFee());
+        doctor.setConsultationFee(dto.getConsultationFee().doubleValue());
         return doctorService.saveDoctor(doctor);
     }
 
-    // Register Patient
     @PostMapping("/register/patient")
-    public PatientModel registerPatient(@RequestBody RegisterPatientDto dto) {
+    public PatientModel registerPatient(@Valid @RequestBody RegisterPatientDto dto) {
         UserModel user = new UserModel();
         user.setFirstName(dto.getFirstName());
         user.setLastName(dto.getLastName());
