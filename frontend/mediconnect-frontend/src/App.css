@@ -1,0 +1,130 @@
+/* Hospital Theme Styles */
+
+.hospital-bg {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e3f2fd, #f9fbff);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+}
+
+/* Header */
+.hospital-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(25, 118, 210, 0.2);
+}
+
+.hospital-logo {
+  height: 60px;
+}
+
+.hospital-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1976d2;
+}
+
+.hospital-subtitle {
+  font-size: 1rem;
+  color: #1565c0;
+}
+
+/* Main Section */
+.hospital-main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.hospital-section {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(25, 118, 210, 0.1);
+  border: 1px solid #bbdefb;
+}
+
+.hospital-section-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1976d2;
+  margin-bottom: 1rem;
+}
+
+.hospital-intro {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+/* Form */
+.hospital-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.prescription-form-label {
+  font-weight: 500;
+  color: #1976d2;
+  margin-bottom: 0.3rem;
+}
+
+.prescription-form-input,
+.prescription-form-textarea {
+  border: 1px solid #bbdefb;
+  border-radius: 0.75rem;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  background: #f8fbff;
+}
+
+.prescription-form-input:focus,
+.prescription-form-textarea:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+  outline: none;
+}
+
+.prescription-form-button {
+  background: linear-gradient(90deg, #1976d2, #42a5f5);
+  color: #fff;
+  font-weight: 600;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 0.75rem;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.prescription-form-button:hover {
+  background: linear-gradient(90deg, #42a5f5, #1976d2);
+  transform: scale(1.02);
+}
+
+.prescription-form-message.success {
+  margin-top: 1rem;
+  text-align: center;
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+/* Footer */
+.hospital-footer {
+  text-align: center;
+  padding: 1rem;
+  background: #e3f2fd;
+  color: #1976d2;
+  font-size: 0.9rem;
+}
