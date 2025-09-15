@@ -34,3 +34,12 @@ public class NotificationController {
         return service.markAsRead(id);
     }
 }
+
+
+
+
+
+
+
+
+
