@@ -1,5 +1,5 @@
 import './HomePage.css'
-
+import heroImage from '../assets/827a7642-638b-4ce3-b70f-c34f15d66ad5.png';
 const HomePage = () => {
   return (
     <main className="home-page">
@@ -7,75 +7,113 @@ const HomePage = () => {
       <section id="home" className="hero">
         <div className="hero-container">
           <div className="hero-content">
-            <h1>Your Health, Our Priority</h1>
+            <div className="hospital-badge">
+              <span className="hospital-icon">🏥</span>
+              <h2>Dr. Dimantha Private Hospital</h2>
+            </div>
+            <h1>Excellence in Healthcare</h1>
             <p>
-              Connect with qualified doctors, book appointments seamlessly, and take control of your healthcare journey with MediConnect.
+              Experience world-class medical care with our team of specialists. From emergency services to routine checkups, 
+              we're committed to your health and wellness journey.
             </p>
             <div className="hero-buttons">
-              <button className="btn btn-primary btn-large">Book Appointment</button>
-              <button className="btn btn-outline btn-large">Find Doctors</button>
+              <button className="btn btn-primary btn-large">🩺 Book Appointment</button>
+              <button className="btn btn-outline btn-large">🏥 Emergency Services</button>
             </div>
           </div>
-          <div className="hero-image">
-            <div className="placeholder-image">
-              <div className="image-content">
-                
-              </div>
-            </div>
-          </div>
+          <div className="hero-media">
+  <img
+    className="hero-photo"
+    src={heroImage}
+    //alt="Modern Healthcare Facility"
+  />
+
+ 
+
+  <div className="media-badge">24/7 Emergency</div>
+  <div className="media-chip">ISO 9001 Certified</div>
+</div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Medical Services Section */}
       <section className="features">
         <div className="container">
-          <h2>Why Choose MediConnect?</h2>
+          <h2>Comprehensive Medical Services</h2>
           <div className="features-grid">
             <div className="feature-card">
-              <div className="feature-icon">📅</div>
-              <h3>Easy Scheduling</h3>
-              <p>Book appointments with your preferred doctors at your convenience, 24/7 online booking system.</p>
+              <div className="feature-icon">🩺</div>
+              <h3>General Medicine</h3>
+              <p>Complete primary care services including routine checkups, preventive care, and treatment of common illnesses.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">👩‍⚕️</div>
-              <h3>Qualified Doctors</h3>
-              <p>Connect with licensed and experienced healthcare professionals across various specializations.</p>
+              <div className="feature-icon">❤️</div>
+              <h3>Cardiology</h3>
+              <p>Advanced cardiac care with state-of-the-art diagnostic equipment and experienced cardiologists.</p>
             </div>
             <div className="feature-card">
-              <div className="feature-icon">🔒</div>
-              <h3>Secure & Private</h3>
-              <p>Your medical information is protected with industry-standard security and privacy measures.</p>
+              <div className="feature-icon">🧠</div>
+              <h3>Neurology</h3>
+              <p>Specialized treatment for neurological conditions with cutting-edge technology and expert neurologists.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">👶</div>
+              <h3>Pediatrics</h3>
+              <p>Comprehensive healthcare for children from infancy through adolescence with specialized pediatric care.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🚑</div>
+              <h3>Emergency Care</h3>
+              <p>24/7 emergency services with rapid response team and fully equipped emergency department.</p>
+            </div>
+            <div className="feature-card">
+              <div className="feature-icon">🔬</div>
+              <h3>Laboratory Services</h3>
+              <p>Complete diagnostic testing with advanced lab equipment and fast, accurate results.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Section */}
-      <section id="about" className="about">
+      {/* Prescriptions Section */}
+      <section id="prescriptions" className="prescriptions">
         <div className="container">
-          <div className="about-content">
-            <div className="about-text">
-              <h2>About MediConnect</h2>
+          <div className="prescriptions-content">
+            <div className="prescriptions-text">
+              <h2>Digital Prescription Management</h2>
               <p>
-                MediConnect is a revolutionary healthcare platform designed to bridge the gap between patients and healthcare providers. 
-                Our mission is to make quality healthcare accessible, convenient, and efficient for everyone.
+                Access and manage your prescriptions digitally with our secure platform. 
+                Get electronic prescriptions, refill requests, and medication reminders all in one place.
               </p>
-              <p>
-                With our smart appointment system, you can easily find and book appointments with qualified doctors, 
-                manage your medical records, and stay connected with your healthcare providers.
-              </p>
-              <ul>
-                <li>✓ Verified Doctors</li>
-                <li>✓ Medical Specializations</li>
-                <li>✓ 24/7 Customer Support</li>
-                <li>✓ Secure Digital Health Records</li>
-              </ul>
+              <div className="prescription-features">
+                <div className="prescription-feature">
+                  <span className="feature-icon">📊</span>
+                  <div>
+                    <h4>Electronic Prescriptions</h4>
+                    <p>Receive digital prescriptions directly from your doctor with detailed instructions.</p>
+                  </div>
+                </div>
+                <div className="prescription-feature">
+                  <span className="feature-icon">🔄</span>
+                  <div>
+                    <h4>Auto Refill Reminders</h4>
+                    <p>Never miss your medication with automated refill notifications and reminders.</p>
+                  </div>
+                </div>
+                <div className="prescription-feature">
+                  <span className="feature-icon">📱</span>
+                  <div>
+                    <h4>Mobile Access</h4>
+                    <p>Access your prescription history and current medications from anywhere.</p>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div className="about-image">
+            <div className="prescriptions-image">
               <div className="placeholder-image">
                 <div className="image-content">
-                  <span>⚕️</span>
-                  <p>Healthcare Excellence</p>
+                  <span>📊</span>
+                  <p>Prescription Management</p>
                 </div>
               </div>
             </div>
@@ -83,90 +121,199 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Doctors Section */}
-      <section id="doctors" className="doctors">
+      {/* Appointments Section */}
+      <section id="appointments" className="appointments">
         <div className="container">
-          <h2>Meet Our Top Doctors</h2>
-          <div className="doctors-grid">
-            <div className="doctor-card">
-              <div className="doctor-image">
-                <div className="placeholder-image">
-                  <span>👨‍⚕️</span>
+          <h2>Easy Appointment Booking</h2>
+          <div className="appointments-content">
+            <div className="appointment-steps">
+              <div className="appointment-step">
+                <div className="step-number">1</div>
+                <div className="step-content">
+                  <h3>Choose Your Doctor</h3>
+                  <p>Browse our network of qualified specialists and find the right doctor for your needs.</p>
                 </div>
               </div>
-              <h3>Dr. John Smith</h3>
-              <p className="specialization">Cardiologist</p>
-              <p className="experience">15+ Years Experience</p>
-              <button className="btn btn-outline btn-small">View Profile</button>
+              <div className="appointment-step">
+                <div className="step-number">2</div>
+                <div className="step-content">
+                  <h3>Select Date & Time</h3>
+                  <p>Pick a convenient date and time from available slots that fit your schedule.</p>
+                </div>
+              </div>
+              <div className="appointment-step">
+                <div className="step-number">3</div>
+                <div className="step-content">
+                  <h3>Confirm Booking</h3>
+                  <p>Review your appointment details and confirm your booking with instant confirmation.</p>
+                </div>
+              </div>
             </div>
-            <div className="doctor-card">
-              <div className="doctor-image">
-                <div className="placeholder-image">
-                  <span>👩‍⚕️</span>
-                </div>
+            <div className="appointment-features">
+              <div className="appointment-feature-card">
+                <span className="feature-icon">📅</span>
+                <h4>24/7 Online Booking</h4>
+                <p>Book appointments anytime, anywhere with our user-friendly online platform.</p>
               </div>
-              <h3>Dr. Sarah Johnson</h3>
-              <p className="specialization">Dermatologist</p>
-              <p className="experience">12+ Years Experience</p>
-              <button className="btn btn-outline btn-small">View Profile</button>
-            </div>
-            <div className="doctor-card">
-              <div className="doctor-image">
-                <div className="placeholder-image">
-                  <span>👨‍⚕️</span>
-                </div>
+              <div className="appointment-feature-card">
+                <span className="feature-icon">📲</span>
+                <h4>SMS Reminders</h4>
+                <p>Receive automated reminders via SMS and email before your appointment.</p>
               </div>
-              <h3>Dr. Michael Brown</h3>
-              <p className="specialization">Pediatrician</p>
-              <p className="experience">10+ Years Experience</p>
-              <button className="btn btn-outline btn-small">View Profile</button>
+              <div className="appointment-feature-card">
+                <span className="feature-icon">🚑</span>
+                <h4>Emergency Slots</h4>
+                <p>Priority booking available for urgent medical consultations and emergencies.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* News Section */}
-      <section id="news" className="news">
+      {/* Notifications Section */}
+      <section id="notifications" className="notifications">
         <div className="container">
-          <h2>Latest Health News</h2>
+          <h2>Stay Informed with Smart Notifications</h2>
+          <div className="notifications-content">
+            <div className="notification-types">
+              <div className="notification-type">
+                <div className="notification-icon">📅</div>
+                <h3>Appointment Reminders</h3>
+                <p>Get timely reminders for your upcoming appointments via SMS, email, or push notifications.</p>
+              </div>
+              <div className="notification-type">
+                <div className="notification-icon">📊</div>
+                <h3>Prescription Alerts</h3>
+                <p>Receive notifications when your prescriptions are ready for pickup or need refills.</p>
+              </div>
+              <div className="notification-type">
+                <div className="notification-icon">🏥</div>
+                <h3>Health Updates</h3>
+                <p>Stay updated with important health announcements, vaccination schedules, and hospital news.</p>
+              </div>
+            </div>
+            <div className="notification-settings">
+              <h3>Customize Your Notifications</h3>
+              <div className="notification-options">
+                <div className="notification-option">
+                  <span className="option-icon">📧</span>
+                  <div className="option-details">
+                    <h4>Email Notifications</h4>
+                    <p>Receive detailed updates and summaries via email</p>
+                  </div>
+                </div>
+                <div className="notification-option">
+                  <span className="option-icon">📱</span>
+                  <div className="option-details">
+                    <h4>SMS Alerts</h4>
+                    <p>Get quick reminders and urgent updates via text message</p>
+                  </div>
+                </div>
+                <div className="notification-option">
+                  <span className="option-icon">🔔</span>
+                  <div className="option-details">
+                    <h4>Push Notifications</h4>
+                    <p>Instant alerts through our mobile app for immediate attention</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Medical News Section */}
+      <section className="news-section">
+        <div className="container">
+          <h2>Latest Medical News & Updates</h2>
           <div className="news-grid">
-            <div className="news-card">
+            <div className="news-card featured">
               <div className="news-image">
-                <div className="placeholder-image">
-                  <span>📰</span>
-                </div>
+                <span className="news-icon">🔬</span>
               </div>
               <div className="news-content">
-                <span className="news-date">March 15, 2024</span>
-                <h3>New Telemedicine Services Now Available</h3>
-                <p>Connect with doctors remotely through our new telemedicine platform for non-emergency consultations.</p>
-                <a href="#" className="read-more">Read More →</a>
+                <div className="news-category">Research</div>
+                <h3>Breakthrough in Heart Disease Treatment</h3>
+                <p>New minimally invasive procedure shows 95% success rate in treating coronary artery disease with faster recovery times.</p>
+                <div className="news-meta">
+                  <span className="news-date">March 20, 2024</span>
+                  <span className="news-author">Dr. Sarah Johnson</span>
+                </div>
               </div>
             </div>
+
             <div className="news-card">
               <div className="news-image">
-                <div className="placeholder-image">
-                  <span>🩺</span>
-                </div>
+                <span className="news-icon">💊</span>
               </div>
               <div className="news-content">
-                <span className="news-date">March 10, 2024</span>
-                <h3>Preventive Health Checkup Packages</h3>
-                <p>New comprehensive health screening packages now available at discounted rates for early detection.</p>
-                <a href="#" className="read-more">Read More →</a>
+                <div className="news-category">Pharmacy</div>
+                <h3>New Medication Guidelines Released</h3>
+                <p>Updated protocols for diabetes management medications now available for all patients.</p>
+                <div className="news-meta">
+                  <span className="news-date">March 18, 2024</span>
+                  <span className="news-author">Pharmacy Team</span>
+                </div>
               </div>
             </div>
+
             <div className="news-card">
               <div className="news-image">
-                <div className="placeholder-image">
-                  <span>💊</span>
-                </div>
+                <span className="news-icon">🏥</span>
               </div>
               <div className="news-content">
-                <span className="news-date">March 5, 2024</span>
-                <h3>Mental Health Awareness Campaign</h3>
-                <p>Join our mental health awareness initiative with free consultations and educational workshops.</p>
-                <a href="#" className="read-more">Read More →</a>
+                <div className="news-category">Hospital</div>
+                <h3>New MRI Machine Installation</h3>
+                <p>State-of-the-art MRI equipment now operational, reducing wait times for diagnostic imaging.</p>
+                <div className="news-meta">
+                  <span className="news-date">March 15, 2024</span>
+                  <span className="news-author">Admin Team</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="news-card">
+              <div className="news-image">
+                <span className="news-icon">🦠</span>
+              </div>
+              <div className="news-content">
+                <div className="news-category">Health Alert</div>
+                <h3>Seasonal Flu Prevention Tips</h3>
+                <p>Important guidelines to protect yourself and your family during flu season.</p>
+                <div className="news-meta">
+                  <span className="news-date">March 12, 2024</span>
+                  <span className="news-author">Public Health</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="news-card">
+              <div className="news-image">
+                <span className="news-icon">👶</span>
+              </div>
+              <div className="news-content">
+                <div className="news-category">Pediatrics</div>
+                <h3>Child Vaccination Schedule Update</h3>
+                <p>New vaccination recommendations for children under 5 years old.</p>
+                <div className="news-meta">
+                  <span className="news-date">March 10, 2024</span>
+                  <span className="news-author">Pediatrics Dept</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="news-card">
+              <div className="news-image">
+                <span className="news-icon">🧠</span>
+              </div>
+              <div className="news-content">
+                <div className="news-category">Neurology</div>
+                <h3>Memory Care Program Launch</h3>
+                <p>Comprehensive memory care services now available for patients with cognitive conditions.</p>
+                <div className="news-meta">
+                  <span className="news-date">March 8, 2024</span>
+                  <span className="news-author">Neurology Team</span>
+                </div>
               </div>
             </div>
           </div>
