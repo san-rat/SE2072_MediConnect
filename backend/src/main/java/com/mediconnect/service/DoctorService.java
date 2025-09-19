@@ -7,5 +7,6 @@ public interface DoctorService {
     DoctorModel saveDoctor(DoctorModel doctor);
     List<DoctorModel> getAllDoctors();
     DoctorModel getDoctorById(String id);
+    DoctorModel findByUserId(String userId);
     void deleteDoctor(String id);
 }

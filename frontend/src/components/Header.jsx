@@ -3,16 +3,30 @@ import './Header.css'
 
 const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPageChange }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isAuthed, setIsAuthed] = useState(!!localStorage.getItem('mc_token'))
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
 
   // Auto-close menu when modal opens
   useEffect(() => {
-    if (isModalOpen) {
-      setIsMenuOpen(false)
-    }
+    if (isModalOpen) setIsMenuOpen(false)
   }, [isModalOpen])
+
+  // Listen for auth changes (in case other tabs log in/out)
+  useEffect(() => {
+    const onStorage = () => setIsAuthed(!!localStorage.getItem('mc_token'))
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
+  }, [])
+
+  const handleLogout = () => {
+    localStorage.removeItem('mc_token')
+    localStorage.removeItem('mc_token_type')
+    localStorage.removeItem('mc_role')
+    setIsAuthed(false)
+    window.location.reload()
+  }
 
   return (
     <header className="header">
@@ -21,6 +35,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
         <div className="logo">
           <span className="logo-mark" aria-label="Hospital" role="img"></span>
           <h1>MediConnect</h1>
+          <span className="tagline">Smart Appointments. Better Care.</span>
         </div>
 
         {/* Desktop Navigation */}
@@ -71,18 +86,26 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
 
         {/* Auth Buttons */}
         <div className="auth-buttons">
-          <button
-            className="btn btn-outline"
-            onClick={() => { closeMenu(); onLoginClick(); }}
-          >
-            Login
-          </button>
-          <button
-            className="btn btn-primary"
-            onClick={() => { closeMenu(); onRegisterClick(); }}
-          >
-            Register
-          </button>
+          {isAuthed ? (
+            <button className="btn btn-outline" onClick={handleLogout}>
+              Logout
+            </button>
+          ) : (
+            <>
+              <button
+                className="btn btn-outline"
+                onClick={() => { closeMenu(); onLoginClick(); }}
+              >
+                Login
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => { closeMenu(); onRegisterClick(); }}
+              >
+                Register
+              </button>
+            </>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -140,13 +163,22 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
               CONTACT
             </button>
           </li>
+
           <li className="mobile-auth-buttons">
-            <button className="btn btn-outline" onClick={() => { onLoginClick(); closeMenu(); }}>
-              Login
-            </button>
-            <button className="btn btn-primary" onClick={() => { onRegisterClick(); closeMenu(); }}>
-              Register
-            </button>
+            {isAuthed ? (
+              <button className="btn btn-outline" onClick={() => { handleLogout(); closeMenu(); }}>
+                Logout
+              </button>
+            ) : (
+              <>
+                <button className="btn btn-outline" onClick={() => { onLoginClick(); closeMenu(); }}>
+                  Login
+                </button>
+                <button className="btn btn-primary" onClick={() => { onRegisterClick(); closeMenu(); }}>
+                  Register
+                </button>
+              </>
+            )}
           </li>
         </ul>
       </nav>

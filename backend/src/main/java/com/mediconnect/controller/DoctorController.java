@@ -6,6 +6,7 @@ import com.mediconnect.model.UserModel;
 import com.mediconnect.service.DoctorService;
 import com.mediconnect.service.UserService;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/doctors")
@@ -17,6 +18,11 @@ public class DoctorController {
     public DoctorController(DoctorService doctorService, UserService userService) {
         this.doctorService = doctorService;
         this.userService = userService;
+    }
+
+    @GetMapping
+    public List<DoctorModel> getAllDoctors() {
+        return doctorService.getAllDoctors();
     }
 
     @PostMapping("/register")

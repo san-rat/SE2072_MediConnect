@@ -44,10 +44,23 @@ public class AuthController {
     public Map<String, Object> login(@RequestBody LoginRequest request) {
         var auth = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
         authManager.authenticate(auth); // throws if bad creds
+        
+        // Get user to determine role
+        UserModel user = userService.findByEmail(request.getEmail());
+        String role = "USER"; // default role
+        
+        // Check if user is a doctor or patient
+        if (doctorService.findByUserId(user.getId()) != null) {
+            role = "DOCTOR";
+        } else if (patientService.findByUserId(user.getId()) != null) {
+            role = "PATIENT";
+        }
+        
         String token = jwtUtil.generateToken(request.getEmail());
         Map<String, Object> resp = new HashMap<>();
         resp.put("token", token);
         resp.put("type", "Bearer");
+        resp.put("role", role);
         return resp;
     }
 

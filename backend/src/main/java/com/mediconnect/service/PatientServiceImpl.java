@@ -33,6 +33,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
+    public PatientModel findByUserId(String userId) {
+        return patientRepository.findByUserId(userId).orElse(null);
+    }
+
+    @Override
     public void deletePatient(String id) {
         patientRepository.deleteById(id);
     }

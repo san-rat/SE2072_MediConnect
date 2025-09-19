@@ -33,6 +33,11 @@ public class DoctorServiceImpl implements DoctorService {
     }
 
     @Override
+    public DoctorModel findByUserId(String userId) {
+        return doctorRepository.findByUserId(userId).orElse(null);
+    }
+
+    @Override
     public void deleteDoctor(String id) {
         doctorRepository.deleteById(id);
     }

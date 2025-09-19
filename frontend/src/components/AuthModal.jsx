@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { login, registerPatient, registerDoctor } from "../services/auth"  // ⬅️ uses your services
 
 /**
  * Modern landing + auth component (full-screen hero with CTA bar)
@@ -261,15 +262,44 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'hero' }) => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!validateForm()) return
+
     setIsSubmitting(true)
     try {
-      await new Promise(r => setTimeout(r, 800))
-      console.log('Submitted:', { mode, userType, formData })
-      alert(`${isLogin ? 'Login' : 'Registration'} successful!`)
-      onClose?.()
+      if (isLogin) {
+        await login(formData.email, formData.password)
+        alert('Login successful!')
+        onClose?.()
+        window.location.reload() // refresh header auth state
+      } else {
+        if (userType === 'patient') {
+          await registerPatient({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            password: formData.password,
+            phone: formData.phone,
+            dateOfBirth: formData.dateOfBirth,
+            emergencyContact: formData.emergencyContact,
+          })
+        } else {
+          await registerDoctor({
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: formData.email,
+            password: formData.password,
+            phone: formData.phone,
+            specialization: formData.specialization,
+            licenseNumber: formData.licenseNumber,
+            yearsExperience: 0,      // adjust to your DTO if required
+            consultationFee: 0
+          })
+        }
+        alert('Registration successful! Please sign in.')
+        setMode('login')
+      }
     } catch (err) {
       console.error(err)
-      alert('Something went wrong.')
+      alert(err?.response?.data?.message || 'Something went wrong.')
     } finally {
       setIsSubmitting(false)
     }
