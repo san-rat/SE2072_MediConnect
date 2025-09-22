@@ -29,7 +29,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
   }
 
   return (
-    <header className="header">
+    <header className={`header ${isAuthed ? 'authenticated' : 'unauthenticated'}`}>
       <div className="header-container">
         {/* Logo */}
         <div className="logo">
@@ -38,9 +38,96 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
           <span className="tagline">Smart Appointments. Better Care.</span>
         </div>
 
-        {/* Desktop Navigation */}
-        <nav className="nav-desktop">
-          <ul className="nav-links">
+        {/* Desktop Navigation - Only show when authenticated */}
+        {isAuthed && (
+          <nav className="nav-desktop">
+            <ul className="nav-links">
+              <li>
+                <button 
+                  className={`nav-link ${currentPage === 'home' ? 'active' : ''}`}
+                  onClick={() => { onPageChange('home'); closeMenu(); }}
+                >
+                  HOME
+                </button>
+              </li>
+              <li>
+                <button 
+                  className={`nav-link ${currentPage === 'prescriptions' ? 'active' : ''}`}
+                  onClick={() => { onPageChange('prescriptions'); closeMenu(); }}
+                >
+                  PRESCRIPTIONS
+                </button>
+              </li>
+              <li>
+                <button 
+                  className={`nav-link ${currentPage === 'appointments' ? 'active' : ''}`}
+                  onClick={() => { onPageChange('appointments'); closeMenu(); }}
+                >
+                  APPOINTMENTS
+                </button>
+              </li>
+              <li>
+                <button 
+                  className={`nav-link ${currentPage === 'notifications' ? 'active' : ''}`}
+                  onClick={() => { onPageChange('notifications'); closeMenu(); }}
+                >
+                  NOTIFICATIONS
+                </button>
+              </li>
+              <li>
+                <button 
+                  className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}
+                  onClick={() => { onPageChange('contact'); closeMenu(); }}
+                >
+                  CONTACT
+                </button>
+              </li>
+            </ul>
+          </nav>
+        )}
+
+        {/* Auth Buttons */}
+        <div className="auth-buttons">
+          {isAuthed ? (
+            <button className="btn btn-outline" onClick={handleLogout}>
+              Logout
+            </button>
+          ) : (
+            <>
+              <button
+                className="btn btn-outline"
+                onClick={() => { closeMenu(); onLoginClick(); }}
+              >
+                Login
+              </button>
+              <button
+                className="btn btn-primary"
+                onClick={() => { closeMenu(); onRegisterClick(); }}
+              >
+                Register
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Mobile Menu Button - Only show when authenticated */}
+        {isAuthed && (
+          <button
+            className={`mobile-menu-btn ${isMenuOpen ? 'open' : ''}`}
+            onClick={toggleMenu}
+            aria-label="Toggle menu"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        )}
+      </div>
+
+      {/* Mobile Navigation - Only show when authenticated */}
+      {isAuthed && (
+        <nav className={`nav-mobile ${isMenuOpen ? 'open' : ''}`}>
+          <ul className="nav-links-mobile">
             <li>
               <button 
                 className={`nav-link ${currentPage === 'home' ? 'active' : ''}`}
@@ -81,107 +168,15 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
                 CONTACT
               </button>
             </li>
-          </ul>
-        </nav>
 
-        {/* Auth Buttons */}
-        <div className="auth-buttons">
-          {isAuthed ? (
-            <button className="btn btn-outline" onClick={handleLogout}>
-              Logout
-            </button>
-          ) : (
-            <>
-              <button
-                className="btn btn-outline"
-                onClick={() => { closeMenu(); onLoginClick(); }}
-              >
-                Login
-              </button>
-              <button
-                className="btn btn-primary"
-                onClick={() => { closeMenu(); onRegisterClick(); }}
-              >
-                Register
-              </button>
-            </>
-          )}
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          className={`mobile-menu-btn ${isMenuOpen ? 'open' : ''}`}
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
-        >
-          <span></span>
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-
-      {/* Mobile Navigation */}
-      <nav className={`nav-mobile ${isMenuOpen ? 'open' : ''}`}>
-        <ul className="nav-links-mobile">
-          <li>
-            <button 
-              className={`nav-link ${currentPage === 'home' ? 'active' : ''}`}
-              onClick={() => { onPageChange('home'); closeMenu(); }}
-            >
-              HOME
-            </button>
-          </li>
-          <li>
-            <button 
-              className={`nav-link ${currentPage === 'prescriptions' ? 'active' : ''}`}
-              onClick={() => { onPageChange('prescriptions'); closeMenu(); }}
-            >
-              PRESCRIPTIONS
-            </button>
-          </li>
-          <li>
-            <button 
-              className={`nav-link ${currentPage === 'appointments' ? 'active' : ''}`}
-              onClick={() => { onPageChange('appointments'); closeMenu(); }}
-            >
-              APPOINTMENTS
-            </button>
-          </li>
-          <li>
-            <button 
-              className={`nav-link ${currentPage === 'notifications' ? 'active' : ''}`}
-              onClick={() => { onPageChange('notifications'); closeMenu(); }}
-            >
-              NOTIFICATIONS
-            </button>
-          </li>
-          <li>
-            <button 
-              className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}
-              onClick={() => { onPageChange('contact'); closeMenu(); }}
-            >
-              CONTACT
-            </button>
-          </li>
-
-          <li className="mobile-auth-buttons">
-            {isAuthed ? (
+            <li className="mobile-auth-buttons">
               <button className="btn btn-outline" onClick={() => { handleLogout(); closeMenu(); }}>
                 Logout
               </button>
-            ) : (
-              <>
-                <button className="btn btn-outline" onClick={() => { onLoginClick(); closeMenu(); }}>
-                  Login
-                </button>
-                <button className="btn btn-primary" onClick={() => { onRegisterClick(); closeMenu(); }}>
-                  Register
-                </button>
-              </>
-            )}
-          </li>
-        </ul>
-      </nav>
+            </li>
+          </ul>
+        </nav>
+      )}
     </header>
   )
 }
