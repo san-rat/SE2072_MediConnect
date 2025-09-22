@@ -1,2 +1,15 @@
 .DS_Store
 .idea/
+*.iml
+target/
+*.class
+*.jar
+*.war
+*.ear
+.mvn/
+!/.mvn/wrapper/**
+*.pid
+node_modules/
+dist/
+build/
+*.log
