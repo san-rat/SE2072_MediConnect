@@ -3,6 +3,7 @@ import api from "../lib/api";
 export async function login(email, password) {
   const { data } = await api.post("/api/auth/login", { email, password });
   localStorage.setItem("mc_token", data.token);
+  localStorage.setItem("mc_token_type", data.type || "Bearer");
   localStorage.setItem("mc_role", data.role);
   return data;
 }

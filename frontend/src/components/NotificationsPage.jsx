@@ -90,7 +90,7 @@ const NotificationsPage = () => {
               </div>
             </div>
             <div className="notification-content">
-              <p>Your payment of $150 for the consultation fee has been processed successfully. Thank you for your payment.</p>
+              <p>Your payment of Rs 150 for the consultation fee has been processed successfully. Thank you for your payment.</p>
             </div>
             <div className="notification-actions">
               <button className="btn btn-primary">View Receipt</button>

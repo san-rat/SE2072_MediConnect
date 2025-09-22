@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
@@ -33,16 +34,19 @@ public class SecurityConfig {
 
     // Security rules + enable CORS + disable CSRF for APIs
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http, DaoAuthenticationProvider provider) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, DaoAuthenticationProvider provider, JwtAuthenticationFilter jwtAuthFilter) throws Exception {
         http
             .cors(Customizer.withDefaults())    // use our CorsConfigurationSource bean
             .csrf(csrf -> csrf.disable())
             .authenticationProvider(provider)
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
                     "/",                      // health/home
                     "/api/auth/**",           // login + register
-                    "/api/doctors"            // get all doctors (public)
+                    "/api/doctors/**",        // get all doctors (public)
+                    "/api/appointments/available-slots/**",  // get available time slots (public)
+                    "/api/appointments/test/**"  // test endpoints for initialization
                 ).permitAll()
                 .anyRequest().authenticated()
             );
