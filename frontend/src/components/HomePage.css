@@ -19,7 +19,7 @@
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f8fafc 100%);
+  background: var(--g-hero, linear-gradient(135deg, #f0f9ff 0%, #eafaf7 50%, #f8fafc 100%));
   padding: 120px 0;
   min-height: 700px;
   display: flex;
@@ -55,7 +55,7 @@
 
 .hero-content h1 {
   font-size: 3.5rem;
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
+  background: var(--g-brand, linear-gradient(135deg, #0d8eae 0%, #0a7e95 50%, #096b82 100%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -94,25 +94,25 @@
   align-items: center;
   justify-content: center;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.1);
+  box-shadow: 0 10px 30px rgba(13, 142, 174, 0.1);
   position: relative;
   overflow: hidden;
 }
 
 .medical-hero {
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
+  background: linear-gradient(135deg, #f0f9ff 0%, #eafaf7 50%, #dbf3ef 100%);
 }
 
 .placeholder-image:hover {
-  border-color: #0ea5e9;
+  border-color: var(--primary);
   background: #fff;
   transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2);
+  box-shadow: 0 20px 40px rgba(13, 142, 174, 0.2);
 }
 
 .hero-medical-icon {
   font-size: 5rem;
-  filter: drop-shadow(0 4px 8px rgba(14, 165, 233, 0.3));
+  filter: drop-shadow(0 4px 8px rgba(13, 142, 174, 0.3));
 }
 
 .image-content {
@@ -140,7 +140,7 @@
 .features h2 {
   text-align: center;
   font-size: 2.8rem;
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  background: var(--g-brand, linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -159,7 +159,7 @@
   padding: 2.5rem 2rem;
   border-radius: 20px;
   background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-  border: 2px solid #e0f2fe;
+  border: 2px solid rgba(123, 193, 183, 0.35);
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
@@ -172,7 +172,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  background: var(--g-brand, linear-gradient(135deg, var(--primary), var(--primary-600)));
   transform: translateX(-100%);
   transition: transform 0.4s ease;
 }
@@ -183,19 +183,19 @@
 
 .feature-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
-  border-color: #0ea5e9;
+  box-shadow: 0 20px 40px rgba(13, 142, 174, 0.15);
+  border-color: var(--primary);
 }
 
 .feature-icon {
   font-size: 3.5rem;
   margin-bottom: 1.5rem;
-  filter: drop-shadow(0 2px 4px rgba(14, 165, 233, 0.2));
+  filter: drop-shadow(0 2px 4px rgba(13, 142, 174, 0.2));
 }
 
 .feature-card h3 {
   font-size: 1.6rem;
-  color: #0369a1;
+  color: var(--primary-700);
   margin-bottom: 1.2rem;
   font-weight: 600;
 }
@@ -237,7 +237,7 @@
 }
 
 .about-text li {
-  color: #2c5282;
+  color: var(--primary);
   margin-bottom: 0.5rem;
   font-weight: 500;
 }
@@ -299,7 +299,7 @@
 }
 
 .specialization {
-  color: #2c5282;
+  color: var(--primary);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -379,7 +379,7 @@
 }
 
 .read-more:hover {
-  color: #2a4d7a;
+  color: var(--primary-700);
 }
 
 /* Contact Section */
@@ -412,7 +412,7 @@
   font-size: 1.5rem;
   width: 50px;
   height: 50px;
-  background: #ebf8ff;
+  background: rgba(123, 193, 183, 0.25);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -455,8 +455,8 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #2c5282;
-  box-shadow: 0 0 0 3px rgba(44, 82, 130, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 142, 174, 0.12);
 }
 
 .form-group textarea {
@@ -517,7 +517,7 @@
 /* Prescriptions Section */
 .prescriptions {
   padding: 100px 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #eafaf7 100%);
 }
 
 .prescriptions-content {
@@ -529,7 +529,7 @@
 
 .prescriptions-text h2 {
   font-size: 2.8rem;
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  background: var(--g-brand, linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -557,14 +557,14 @@
   padding: 1.5rem;
   background: white;
   border-radius: 15px;
-  border: 2px solid #e0f2fe;
+  border: 2px solid rgba(123, 193, 183, 0.35);
   transition: all 0.3s ease;
 }
 
 .prescription-feature:hover {
   transform: translateX(10px);
-  border-color: #0ea5e9;
-  box-shadow: 0 10px 25px rgba(14, 165, 233, 0.1);
+  border-color: var(--primary);
+  box-shadow: 0 10px 25px rgba(13, 142, 174, 0.1);
 }
 
 .prescription-feature .feature-icon {
@@ -573,7 +573,7 @@
 }
 
 .prescription-feature h4 {
-  color: #0369a1;
+  color: var(--primary-700);
   margin-bottom: 0.5rem;
   font-size: 1.2rem;
   font-weight: 600;
@@ -594,7 +594,7 @@
 .appointments h2 {
   text-align: center;
   font-size: 2.8rem;
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  background: var(--g-brand, linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -624,7 +624,7 @@
 .step-number {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  background: var(--g-brand, linear-gradient(135deg, var(--primary), var(--primary-600)));
   color: white;
   border-radius: 50%;
   display: flex;
@@ -637,7 +637,7 @@
 }
 
 .step-content h3 {
-  color: #0369a1;
+  color: var(--primary-700);
   margin-bottom: 0.8rem;
   font-size: 1.4rem;
   font-weight: 600;
@@ -657,7 +657,7 @@
 .appointment-feature-card {
   padding: 2rem;
   background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
-  border: 2px solid #e0f2fe;
+  border: 2px solid rgba(123, 193, 183, 0.35);
   border-radius: 18px;
   text-align: center;
   transition: all 0.3s ease;
@@ -665,8 +665,8 @@
 
 .appointment-feature-card:hover {
   transform: translateY(-5px);
-  border-color: #0ea5e9;
-  box-shadow: 0 15px 30px rgba(14, 165, 233, 0.15);
+  border-color: var(--primary);
+  box-shadow: 0 15px 30px rgba(13, 142, 174, 0.15);
 }
 
 .appointment-feature-card .feature-icon {
@@ -675,7 +675,7 @@
 }
 
 .appointment-feature-card h4 {
-  color: #0369a1;
+  color: var(--primary-700);
   margin-bottom: 1rem;
   font-size: 1.3rem;
   font-weight: 600;
@@ -689,13 +689,13 @@
 /* Notifications Section */
 .notifications {
   padding: 100px 0;
-  background: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #eafaf7 100%);
 }
 
 .notifications h2 {
   text-align: center;
   font-size: 2.8rem;
-  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  background: var(--g-brand, linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -718,15 +718,15 @@
 .notification-type {
   padding: 2rem;
   background: white;
-  border: 2px solid #e0f2fe;
+  border: 2px solid rgba(123, 193, 183, 0.35);
   border-radius: 18px;
   transition: all 0.3s ease;
 }
 
 .notification-type:hover {
-  border-color: #0ea5e9;
+  border-color: var(--primary);
   transform: translateY(-3px);
-  box-shadow: 0 12px 25px rgba(14, 165, 233, 0.12);
+  box-shadow: 0 12px 25px rgba(13, 142, 174, 0.12);
 }
 
 .notification-icon {
@@ -736,7 +736,7 @@
 }
 
 .notification-type h3 {
-  color: #0369a1;
+  color: var(--primary-700);
   margin-bottom: 1rem;
   font-size: 1.4rem;
   font-weight: 600;
@@ -751,11 +751,11 @@
   background: white;
   padding: 2.5rem;
   border-radius: 20px;
-  border: 2px solid #e0f2fe;
+  border: 2px solid rgba(123, 193, 183, 0.35);
 }
 
 .notification-settings h3 {
-  color: #0369a1;
+  color: var(--primary-700);
   margin-bottom: 2rem;
   font-size: 1.6rem;
   font-weight: 600;
@@ -788,7 +788,7 @@
 }
 
 .option-details h4 {
-  color: #0369a1;
+  color: var(--primary-700);
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
   font-weight: 600;
@@ -852,8 +852,8 @@
   gap: 12px;
   margin-bottom: 20px;
   padding: 12px 20px;
-  background: rgba(14, 165, 233, 0.1);
-  border: 2px solid #0ea5e9;
+  background: rgba(123, 193, 183, 0.18);
+  border: 2px solid var(--primary);
   border-radius: 50px;
   width: fit-content;
 }
@@ -864,7 +864,7 @@
 
 .hospital-badge h2 {
   margin: 0;
-  color: #0ea5e9;
+  color: var(--primary);
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 0.5px;
@@ -915,7 +915,7 @@
 
 .news-image {
   height: 200px;
-  background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+  background: linear-gradient(135deg, #eafaf7 0%, #d6f1ec 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -938,7 +938,7 @@
 
 .news-category {
   display: inline-block;
-  background: #0ea5e9;
+  background: var(--primary);
   color: white;
   padding: 4px 12px;
   border-radius: 20px;
@@ -1038,11 +1038,11 @@
   position: relative;
   width: 100%;
   height: 450px;                   /* fixed visual height for the box */
-  border: 3px solid #e0f2fe;
+  border: 3px solid rgba(123, 193, 183, 0.35);
   border-radius: 20px;
   overflow: hidden;                 /* keep image inside rounded box */
   background: #fff;
-  box-shadow: 0 10px 30px rgba(14, 165, 233, 0.10);
+  box-shadow: 0 10px 30px rgba(13, 142, 174, 0.10);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1060,7 +1060,7 @@
 .media-badge,
 .media-chip {
   position: absolute;
-  background: #0A8FB2;
+  background: var(--primary);
   color: #fff;
   padding: 6px 12px;
   border-radius: 20px;

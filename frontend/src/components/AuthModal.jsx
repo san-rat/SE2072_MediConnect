@@ -22,10 +22,14 @@ const FIELD_DEFAULTS = {
   emergencyContact: ''
 }
 
+
+
 const BRAND_BLUE = '#0a66c2'
 const BRAND_TEAL = '#12b886'
 const DARK = '#2f3944'
 const LIGHT = '#ffffff'
+
+
 
 const styles = {
   overlay: {
@@ -249,9 +253,11 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'hero' }) => {
       }
     }
 
+
     setErrors(e)
     return Object.keys(e).length === 0
   }
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
@@ -259,9 +265,11 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'hero' }) => {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: '' }))
   }
 
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!validateForm()) return
+
 
     setIsSubmitting(true)
     try {
@@ -305,11 +313,14 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'hero' }) => {
     }
   }
 
+
   const goHero = () => {
     setMode('hero'); setUserType('patient'); setErrors({}); setFormData({ ...FIELD_DEFAULTS })
   }
 
+
   if (!isOpen) return null
+
 
   return (
     <div style={styles.overlay} onClick={onClose}>
@@ -355,6 +366,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'hero' }) => {
         </div>
       </div>
 
+
       {/* HERO */}
       <section style={styles.hero} onClick={(e) => e.stopPropagation()}>
         <div style={styles.circleWrap}>
@@ -367,6 +379,7 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'hero' }) => {
           </div>
         </div>
       </section>
+
 
       {/* ACTION BAR */}
       <section style={styles.wave} onClick={(e) => e.stopPropagation()}>

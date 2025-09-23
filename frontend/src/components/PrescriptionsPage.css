@@ -72,8 +72,8 @@
 }
 
 .status.active {
-  background: #dcfce7;
-  color: #166534;
+  background: rgba(123, 193, 183, 0.28);
+  color: var(--primary-700);
 }
 
 .status.completed {
