@@ -504,3 +504,34 @@
 .container { max-width: 1400px; margin: 0 auto; padding: 0 30px; }
 .btn-large { padding: 18px 36px; font-size: 1.1rem; font-weight: 600; }
 .btn-small { padding: 10px 20px; font-size: 0.9rem; font-weight: 600; }
+
+/* Profile Icon */
+.profile-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.profile-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary);
+}
+
+/* Profile Page */
+.profile-page {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  text-align: center;
+}

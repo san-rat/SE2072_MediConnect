@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './Header.css'
 
-const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPageChange }) => {
+const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPageChange, user }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAuthed, setIsAuthed] = useState(!!localStorage.getItem('mc_token'))
+  const navigate = useNavigate();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
@@ -120,6 +122,21 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
             <span></span>
             <span></span>
             <span></span>
+          </button>
+        )}
+
+        {/* Profile Icon Button */}
+        {user && (
+          <button
+            className="profile-icon-btn"
+            onClick={() => navigate('/profile')}
+            aria-label="Profile"
+          >
+            <img
+              src={user.avatar || '/default-profile.svg'}
+              alt="Profile"
+              className="profile-icon"
+            />
           </button>
         )}
       </div>
