@@ -47,7 +47,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
               <li>
                 <button 
                   className={`nav-link ${currentPage === 'home' ? 'active' : ''}`}
-                  onClick={() => { onPageChange('home'); closeMenu(); }}
+                  onClick={() => { navigate('/'); onPageChange('home'); closeMenu(); }}
                 >
                   HOME
                 </button>
@@ -55,7 +55,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
               <li>
                 <button 
                   className={`nav-link ${currentPage === 'prescriptions' ? 'active' : ''}`}
-                  onClick={() => { onPageChange('prescriptions'); closeMenu(); }}
+                  onClick={() => { navigate('/prescriptions'); onPageChange('prescriptions'); closeMenu(); }}
                 >
                   PRESCRIPTIONS
                 </button>
@@ -63,7 +63,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
               <li>
                 <button 
                   className={`nav-link ${currentPage === 'appointments' ? 'active' : ''}`}
-                  onClick={() => { onPageChange('appointments'); closeMenu(); }}
+                  onClick={() => { navigate('/appointments'); onPageChange('appointments'); closeMenu(); }}
                 >
                   APPOINTMENTS
                 </button>
@@ -71,7 +71,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
               <li>
                 <button 
                   className={`nav-link ${currentPage === 'notifications' ? 'active' : ''}`}
-                  onClick={() => { onPageChange('notifications'); closeMenu(); }}
+                  onClick={() => { navigate('/notifications'); onPageChange('notifications'); closeMenu(); }}
                 >
                   NOTIFICATIONS
                 </button>
@@ -79,9 +79,17 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
               <li>
                 <button 
                   className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}
-                  onClick={() => { onPageChange('contact'); closeMenu(); }}
+                  onClick={() => { navigate('/contact'); onPageChange('contact'); closeMenu(); }}
                 >
                   CONTACT
+                </button>
+              </li>
+              <li>
+                <button 
+                  className={`nav-link ${currentPage === 'profile' ? 'active' : ''}`}
+                  onClick={() => { navigate('/profile'); onPageChange('profile'); closeMenu(); }}
+                >
+                  PROFILE
                 </button>
               </li>
             </ul>
@@ -148,7 +156,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
             <li>
               <button 
                 className={`nav-link ${currentPage === 'home' ? 'active' : ''}`}
-                onClick={() => { onPageChange('home'); closeMenu(); }}
+                onClick={() => { navigate('/'); onPageChange('home'); closeMenu(); }}
               >
                 HOME
               </button>
@@ -156,7 +164,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
             <li>
               <button 
                 className={`nav-link ${currentPage === 'prescriptions' ? 'active' : ''}`}
-                onClick={() => { onPageChange('prescriptions'); closeMenu(); }}
+                onClick={() => { navigate('/prescriptions'); onPageChange('prescriptions'); closeMenu(); }}
               >
                 PRESCRIPTIONS
               </button>
@@ -164,7 +172,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
             <li>
               <button 
                 className={`nav-link ${currentPage === 'appointments' ? 'active' : ''}`}
-                onClick={() => { onPageChange('appointments'); closeMenu(); }}
+                onClick={() => { navigate('/appointments'); onPageChange('appointments'); closeMenu(); }}
               >
                 APPOINTMENTS
               </button>
@@ -172,7 +180,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
             <li>
               <button 
                 className={`nav-link ${currentPage === 'notifications' ? 'active' : ''}`}
-                onClick={() => { onPageChange('notifications'); closeMenu(); }}
+                onClick={() => { navigate('/notifications'); onPageChange('notifications'); closeMenu(); }}
               >
                 NOTIFICATIONS
               </button>
@@ -180,9 +188,17 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
             <li>
               <button 
                 className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}
-                onClick={() => { onPageChange('contact'); closeMenu(); }}
+                onClick={() => { navigate('/contact'); onPageChange('contact'); closeMenu(); }}
               >
                 CONTACT
+              </button>
+            </li>
+            <li>
+              <button 
+                className={`nav-link ${currentPage === 'profile' ? 'active' : ''}`}
+                onClick={() => { navigate('/profile'); onPageChange('profile'); closeMenu(); }}
+              >
+                PROFILE
               </button>
             </li>
 

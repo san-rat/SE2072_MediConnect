@@ -231,3 +231,40 @@
     align-items: center;
   }
 }
+
+/* Profile Icon */
+.profile-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.profile-icon-btn:hover {
+  background: rgba(13, 142, 174, 0.1);
+  transform: scale(1.05);
+}
+
+.profile-icon-btn:active {
+  transform: scale(0.95);
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary);
+  transition: all 0.3s ease;
+}
+
+.profile-icon-btn:hover .profile-icon {
+  border-color: var(--primary-600);
+  box-shadow: 0 2px 8px rgba(13, 142, 174, 0.3);
+}
