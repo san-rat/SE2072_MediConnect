@@ -14,7 +14,7 @@ import "./index.css"
 
 function AppContent() {
   const [authOpen, setAuthOpen] = useState(false)
-  const [initialMode, setInitialMode] = useState("hero")
+  const [initialMode, setInitialMode] = useState("login")
   const [currentPage, setCurrentPage] = useState("home")
   const { user, loadingUser } = useCurrentUser();
   const location = useLocation();

@@ -1,6 +1,8 @@
 import './HomePage.css'
+import { useNavigate } from 'react-router-dom';
 import heroImage from '../assets/827a7642-638b-4ce3-b70f-c34f15d66ad5.png';
 const HomePage = () => {
+  const navigate = useNavigate();
   return (
     <main className="home-page">
       {/* Hero Section */}
@@ -17,7 +19,12 @@ const HomePage = () => {
               we're committed to your health and wellness journey.
             </p>
             <div className="hero-buttons">
-              <button className="btn btn-primary btn-large">🩺 Book Appointment</button>
+              <button 
+                className="btn btn-primary btn-large"
+                onClick={() => navigate('/appointments')}
+              >
+                🩺 Book Appointment
+              </button>
               
             </div>
           </div>
