@@ -24,7 +24,7 @@ const NotificationsPage = () => {
               </div>
             </div>
             <div className="notification-content">
-              <p>Your cardiology consultation with Dr. Sarah Johnson is scheduled for tomorrow at 10:30 AM. Please arrive 15 minutes early.</p>
+              <p>Test notification</p>
             </div>
             <div className="notification-actions">
               <button className="btn btn-primary">View Details</button>
@@ -68,7 +68,7 @@ const NotificationsPage = () => {
               </div>
             </div>
             <div className="notification-content">
-              <p>Your blood test results from March 15th are now available. Please review them in your medical records.</p>
+              <p>Your blood test results from March 15th are now available.</p>
             </div>
             <div className="notification-actions">
               <button className="btn btn-primary">View Results</button>
@@ -90,7 +90,7 @@ const NotificationsPage = () => {
               </div>
             </div>
             <div className="notification-content">
-              <p>Your payment of $150 for the consultation fee has been processed successfully. Thank you for your payment.</p>
+              <p>Your payment of Rs.1500 for the consultation fee has been processed successfully. Thank you for your payment.</p>
             </div>
             <div className="notification-actions">
               <button className="btn btn-primary">View Receipt</button>

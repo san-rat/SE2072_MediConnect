@@ -16,7 +16,7 @@ const AppointmentsPage = () => {
               <span className="status upcoming">Upcoming</span>
             </div>
             <div className="appointment-details">
-              <p><strong>Doctor:</strong> Dr. Sarah Johnson</p>
+              <p><strong>Doctor:</strong> Dr.S Jayasinghe</p>
               <p><strong>Date:</strong> March 25, 2024</p>
               <p><strong>Time:</strong> 10:30 AM</p>
               <p><strong>Location:</strong> Room 205, Cardiology Department</p>
@@ -34,7 +34,7 @@ const AppointmentsPage = () => {
               <span className="status completed">Completed</span>
             </div>
             <div className="appointment-details">
-              <p><strong>Doctor:</strong> Dr. Michael Chen</p>
+              <p><strong>Doctor:</strong> Dr.C Perera</p>
               <p><strong>Date:</strong> March 15, 2024</p>
               <p><strong>Time:</strong> 2:00 PM</p>
               <p><strong>Location:</strong> Room 101, General Medicine</p>
