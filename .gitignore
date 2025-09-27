@@ -13,7 +13,9 @@ dist
 dist-ssr
 *.local
 
-# Backend
+# Backend - Maven
+backend/target/
+backend/*.log
 target/
 *.class
 *.jar
