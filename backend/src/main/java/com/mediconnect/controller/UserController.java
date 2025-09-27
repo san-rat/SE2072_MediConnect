@@ -2,6 +2,8 @@ package com.mediconnect.controller;
 
 import com.mediconnect.model.UserModel;
 import com.mediconnect.service.UserService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +16,14 @@ public class UserController {
 
     public UserController(UserService userService) {
         this.userService = userService;
+    }
+
+    // Get current authenticated user
+    @GetMapping("/me")
+    public UserModel getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return userService.findByEmail(email);
     }
 
     // Get all users

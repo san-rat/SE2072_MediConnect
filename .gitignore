@@ -16,6 +16,14 @@ dist-ssr
 # Backend - Maven
 backend/target/
 backend/*.log
+target/
+*.class
+*.jar
+*.war
+*.ear
+.mvn/
+!/.mvn/wrapper/**
+*.pid
 
 # Editor directories and files
 .vscode/*

@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Header from "./components/Header"
 import HomePage from "./components/HomePage"
 import PrescriptionsPage from "./components/PrescriptionsPage"
@@ -6,30 +7,35 @@ import AppointmentsPage from "./components/AppointmentsPage"
 import NotificationsPage from "./components/NotificationsPage"
 import ContactPage from "./components/ContactPage"
 import AuthModal from "./components/AuthModal"
+import ProfilePage from './pages/ProfilePage';
+import useCurrentUser from './hooks/useCurrentUser';
 import "./App.css"
 import "./index.css"
 
-function App() {
+function AppContent() {
   const [authOpen, setAuthOpen] = useState(false)
-  const [initialMode, setInitialMode] = useState("hero")
+  const [initialMode, setInitialMode] = useState("login")
   const [currentPage, setCurrentPage] = useState("home")
+  const { user, loadingUser } = useCurrentUser();
+  const location = useLocation();
 
-  const renderPage = () => {
-    switch (currentPage) {
-      case "home":
-        return <HomePage />
-      case "prescriptions":
-        return <PrescriptionsPage />
-      case "appointments":
-        return <AppointmentsPage />
-      case "notifications":
-        return <NotificationsPage />
-      case "contact":
-        return <ContactPage />
-      default:
-        return <HomePage />
+  // Update currentPage based on URL
+  useEffect(() => {
+    const path = location.pathname;
+    if (path === '/') {
+      setCurrentPage('home');
+    } else if (path === '/prescriptions') {
+      setCurrentPage('prescriptions');
+    } else if (path === '/appointments') {
+      setCurrentPage('appointments');
+    } else if (path === '/notifications') {
+      setCurrentPage('notifications');
+    } else if (path === '/contact') {
+      setCurrentPage('contact');
+    } else if (path === '/profile') {
+      setCurrentPage('profile');
     }
-  }
+  }, [location.pathname]);
 
   return (
     <div className="app">
@@ -39,9 +45,17 @@ function App() {
         isModalOpen={authOpen}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
+        user={user}
       />
 
-      {renderPage()}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/prescriptions" element={<PrescriptionsPage />} />
+        <Route path="/appointments" element={<AppointmentsPage />} />
+        <Route path="/notifications" element={<NotificationsPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="/profile" element={<ProfilePage user={user} />} />
+      </Routes>
 
       <AuthModal
         isOpen={authOpen}
@@ -49,6 +63,14 @@ function App() {
         initialMode={initialMode}
       />
     </div>
+  )
+}
+
+function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
   )
 }
 

@@ -16,7 +16,7 @@ const PrescriptionsPage = () => {
               <span className="status active">Active</span>
             </div>
             <div className="prescription-details">
-              <p><strong>Doctor:</strong> Dr. Sarah Johnson</p>
+              <p><strong>Doctor:</strong> Dr.S Jayasinghe</p>
               <p><strong>Date:</strong> March 15, 2024</p>
               <p><strong>Medication:</strong> Amoxicillin 500mg</p>
               <p><strong>Dosage:</strong> 1 tablet, 3 times daily</p>
@@ -34,7 +34,7 @@ const PrescriptionsPage = () => {
               <span className="status completed">Completed</span>
             </div>
             <div className="prescription-details">
-              <p><strong>Doctor:</strong> Dr. Michael Chen</p>
+              <p><strong>Doctor:</strong> Dr.C Perera</p>
               <p><strong>Date:</strong> March 10, 2024</p>
               <p><strong>Medication:</strong> Ibuprofen 400mg</p>
               <p><strong>Dosage:</strong> 1 tablet, twice daily</p>

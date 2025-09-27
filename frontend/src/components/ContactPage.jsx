@@ -18,9 +18,9 @@ const ContactPage = () => {
               <div className="contact-details">
                 <h3>Address</h3>
                 <p>
-                  123 Medical Center Drive<br />
-                  Colombo 07, Sri Lanka<br />
-                  Postal Code: 00700
+                  No.68<br />
+                  Main Street, Kegalle, Sri Lanka<br />
+                  Postal Code: 71000
                 </p>
               </div>
             </div>
@@ -32,26 +32,13 @@ const ContactPage = () => {
               <div className="contact-details">
                 <h3>Phone Numbers</h3>
                 <p>
-                  Main: +94 11 234 5678<br />
-                  Emergency: +94 11 234 5679<br />
-                  Appointments: +94 11 234 5680
+                  Main: +94 35 22 31449<br />
+                  
                 </p>
               </div>
             </div>
 
-            <div className="contact-card">
-              <div className="contact-icon">
-                <span>✉️</span>
-              </div>
-              <div className="contact-details">
-                <h3>Email</h3>
-                <p>
-                  info@drdimanthahospital.com<br />
-                  appointments@drdimanthahospital.com<br />
-                  emergency@drdimanthahospital.com
-                </p>
-              </div>
-            </div>
+           
 
             <div className="contact-card">
               <div className="contact-icon">
@@ -124,12 +111,9 @@ const ContactPage = () => {
               <div className="emergency-actions">
                 <button className="btn btn-danger btn-large">
                   <span>📞</span>
-                  Call Emergency: +94 11 234 5679
+                  Call Emergency: +94 35 22 31449
                 </button>
-                <button className="btn btn-outline btn-large">
-                  <span>🏥</span>
-                  Emergency Department Info
-                </button>
+                
               </div>
             </div>
           </div>

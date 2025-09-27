@@ -589,7 +589,7 @@
 }
 
 .appointment-card.upcoming {
-  border-left: 4px solid #0ea5e9;
+  border-left: 4px solid var(--primary);
 }
 
 .appointment-card.completed {
@@ -620,8 +620,8 @@
 }
 
 .status.upcoming {
-  background: #dbeafe;
-  color: #1e40af;
+  background: rgba(123, 193, 183, 0.28);
+  color: var(--primary-700);
 }
 
 .status.completed {

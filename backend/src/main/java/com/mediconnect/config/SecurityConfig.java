@@ -11,25 +11,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import com.mediconnect.config.JwtAuthenticationFilter;
 
 @Configuration
 public class SecurityConfig {
 
-    // Using CustomUserDetailsService instead of creating a new bean
-
-    // Use your userDetailsService + password encoder
-    @Bean
-    public DaoAuthenticationProvider authProvider(UserDetailsService uds, PasswordEncoder encoder) {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(uds);
-        provider.setPasswordEncoder(encoder);
-        return provider;
-    }
-
-    // AuthenticationManager for AuthController (you already inject it there)
+    // AuthenticationManager for AuthController
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    // DaoAuthenticationProvider for database authentication
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder) {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(userDetailsService);
+        provider.setPasswordEncoder(passwordEncoder);
+        return provider;
     }
 
     // Security rules + enable CORS + disable CSRF for APIs

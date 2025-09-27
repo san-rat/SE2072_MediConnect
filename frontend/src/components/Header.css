@@ -1,8 +1,8 @@
 :root{
-  --primary: #0A8FB2;
-  --primary-600: #087a98;   /* hover */
-  --primary-700: #066a84;   /* darker text accents */
-  --secondary: #7AC2B7;
+  --primary: #0d8eae;
+  --primary-600: #0a7e95;   /* hover */
+  --primary-700: #096b82;   /* darker text accents */
+  --secondary: #7bc1b7;
 
   --text-strong: #1e293b;
   --text: #334155;
@@ -10,7 +10,7 @@
   --border: #e2e8f0;
   --surface: #ffffff;
 
-  --g-brand: linear-gradient(135deg, #0A8FB2 0%, #7AC2B7 100%);
+  --g-brand: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
 }
 
 .header {
@@ -111,12 +111,12 @@
 
 .nav-link:hover {
   color: var(--primary);
-  background: rgba(10, 143, 178, 0.05);
+  background: rgba(13, 142, 174, 0.08);
 }
 
 .nav-link.active {
   color: var(--primary);
-  background: rgba(10, 143, 178, 0.10);
+  background: rgba(13, 142, 174, 0.12);
 }
 
 /* Auth buttons */
@@ -230,4 +230,41 @@
   .header.unauthenticated .logo {
     align-items: center;
   }
+}
+
+/* Profile Icon */
+.profile-icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: 1rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.profile-icon-btn:hover {
+  background: rgba(13, 142, 174, 0.1);
+  transform: scale(1.05);
+}
+
+.profile-icon-btn:active {
+  transform: scale(0.95);
+}
+
+.profile-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary);
+  transition: all 0.3s ease;
+}
+
+.profile-icon-btn:hover .profile-icon {
+  border-color: var(--primary-600);
+  box-shadow: 0 2px 8px rgba(13, 142, 174, 0.3);
 }
