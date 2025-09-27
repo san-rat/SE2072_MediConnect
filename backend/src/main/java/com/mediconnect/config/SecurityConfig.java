@@ -20,21 +20,19 @@ public class SecurityConfig {
 
     // Security rules + enable CORS + disable CSRF for APIs
     @Bean
-    public SecurityFilterChain filterChain(
-            HttpSecurity http,
-            JwtAuthenticationFilter jwtAuthFilter   // <-- your custom JWT filter bean
-    ) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http, DaoAuthenticationProvider provider, JwtAuthenticationFilter jwtAuthFilter) throws Exception {
         http
             .cors(Customizer.withDefaults())    // use our CorsConfigurationSource bean
             .csrf(csrf -> csrf.disable())
+            .authenticationProvider(provider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
-                    "/",                              // health/home
-                    "/api/auth/**",                   // login + register
-                    "/api/doctors/**",                // doctors (public GETs)
-                    "/api/appointments/available-slots/**",
-                    "/api/appointments/test/**"
+                    "/",                      // health/home
+                    "/api/auth/**",           // login + register
+                    "/api/doctors/**",        // get all doctors (public)
+                    "/api/appointments/available-slots/**",  // get available time slots (public)
+                    "/api/appointments/test/**"  // test endpoints for initialization
                 ).permitAll()
                 .anyRequest().authenticated()
             );

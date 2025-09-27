@@ -50,4 +50,8 @@ public class JwtUtil {
             return false;
         }
     }
+
+    public String extractUserId(String token) {
+        return extractUsername(token);
+    }
 }
