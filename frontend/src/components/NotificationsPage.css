@@ -50,7 +50,7 @@
 }
 
 .notification-card.unread {
-  border-left: 4px solid #0ea5e9;
+  border-left: 4px solid var(--primary);
   background: #f8fafc;
 }
 
@@ -64,7 +64,7 @@
 .notification-icon {
   width: 40px;
   height: 40px;
-  background: #e0f2fe;
+  background: rgba(123, 193, 183, 0.25);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -97,7 +97,7 @@
 .unread-dot {
   width: 8px;
   height: 8px;
-  background: #0ea5e9;
+  background: var(--primary);
   border-radius: 50%;
 }
 

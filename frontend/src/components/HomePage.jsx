@@ -1,6 +1,8 @@
 import './HomePage.css'
+import { useNavigate } from 'react-router-dom';
 import heroImage from '../assets/827a7642-638b-4ce3-b70f-c34f15d66ad5.png';
 const HomePage = () => {
+  const navigate = useNavigate();
   return (
     <main className="home-page">
       {/* Hero Section */}
@@ -17,8 +19,13 @@ const HomePage = () => {
               we're committed to your health and wellness journey.
             </p>
             <div className="hero-buttons">
-              <button className="btn btn-primary btn-large">🩺 Book Appointment</button>
-              <button className="btn btn-outline btn-large">🏥 Emergency Services</button>
+              <button 
+                className="btn btn-primary btn-large"
+                onClick={() => navigate('/appointments')}
+              >
+                🩺 Book Appointment
+              </button>
+              
             </div>
           </div>
           <div className="hero-media">
@@ -31,7 +38,7 @@ const HomePage = () => {
  
 
   <div className="media-badge">24/7 Emergency</div>
-  <div className="media-chip">ISO 9001 Certified</div>
+  <div className="media-chip">Certified General Practitioner</div>
 </div>
         </div>
       </section>
@@ -330,21 +337,14 @@ const HomePage = () => {
                 <div className="contact-icon">📍</div>
                 <div>
                   <h4>Address</h4>
-                  <p>123 Healthcare Street<br />Medical District, City 12345</p>
+                  <p>No 68<br />Main Street, Kegalle, Sri Lanka</p>
                 </div>
               </div>
               <div className="contact-item">
                 <div className="contact-icon">📞</div>
                 <div>
                   <h4>Phone</h4>
-                  <p>+1 (555) 123-4567</p>
-                </div>
-              </div>
-              <div className="contact-item">
-                <div className="contact-icon">✉️</div>
-                <div>
-                  <h4>Email</h4>
-                  <p>info@mediconnect.com</p>
+                  <p>+94 35 22 31449</p>
                 </div>
               </div>
               <div className="contact-item">
