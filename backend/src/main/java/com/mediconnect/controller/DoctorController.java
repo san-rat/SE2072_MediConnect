@@ -25,6 +25,7 @@ public class DoctorController {
         return doctorService.getAllDoctors();
     }
 
+
     @PostMapping("/register")
     public DoctorModel registerDoctor(@RequestBody RegisterDoctorDto dto) {
         // Create User
