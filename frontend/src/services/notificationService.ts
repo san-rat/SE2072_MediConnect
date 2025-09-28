@@ -1,11 +1,11 @@
 // src/services/notificationService.ts
-import type { NotifType } from "./types"
+import type { NotifType, Priority } from "./types"
 
 export type Notification = {
   id: number
   message: string
-  type: string
-  timestamp: string
+  type: NotifType
+  createdAt?: string
   isRead: boolean
 }
 
@@ -13,7 +13,7 @@ export type Notification = {
 const BASE_URL = "http://localhost:8080/notifications"
 
 export const notificationService = {
-  // 🔹 Get notifications for a user
+  //  Get notifications for a user
   async getNotifications(userId: number) {
     const res = await fetch(`${BASE_URL}/${userId}`, {
       method: "GET",
@@ -23,12 +23,12 @@ export const notificationService = {
     return await res.json()
   },
 
-  // 🔹 Create a new notification
+  //  Create a new notification
   async createNotification(data: {
+    userId: number
+    title?: string
     message: string
     type: NotifType
-    priority: Priority
-    recipients: number[]
   }) {
     const res = await fetch(BASE_URL, {
       method: "POST",
@@ -39,7 +39,7 @@ export const notificationService = {
     return await res.json()
   },
 
-  // 🔹 Mark a notification as read
+  //  Mark a notification as read
   async markAsRead(id: number) {
     const res = await fetch(`${BASE_URL}/${id}/read`, {
       method: "PATCH",

@@ -24,7 +24,7 @@ import { alertService } from "../services/alertService"
 import Header from "../components/Header"
 import type { NotifType, Priority, AlertType } from "../services/types"
 import type { Notification } from "../services/notificationService";
-//import type { Alert } from "../services/alertService";
+import type { Alert } from "../services/alertService";
 
 
 type UnifiedItem = {
@@ -54,20 +54,22 @@ export default function PatientPage() {
         alertService.getAlerts(),
       ]);
 
-      const formattedAlerts: UnifiedItem[] = alertData.map((a: AlertType) => ({
+      const formattedAlerts: UnifiedItem[] = (alertData as Alert[]).map((a) => ({
         id: a.id.toString(),
         message: `${a.title}: ${a.description}`,
-        type: a.type,
-        timestamp: a.date || new Date().toISOString(),
+        // Alerts do not carry a type from backend; set a constant to drive icon/color
+        type: "health_camp" as AlertType,
+        timestamp: a.eventDate || a.createdAt || new Date().toISOString(),
         source: "alert",
       }));
 
       const formattedNotifs: UnifiedItem[] = notifData.map((n: Notification) => ({
         id: n.id.toString(),  // keep consistent type
         message: n.message,
-        type: n.type,
-        priority: n.priority,
-        timestamp: n.timestamp,
+        // Normalize possible hyphen/underscore drift
+        type: (n.type as string)?.replace("-", "_") as NotifType,
+        // Backend uses createdAt; map to timestamp
+        timestamp: (n as any).createdAt || (n as any).timestamp || new Date().toISOString(),
         isRead: n.isRead,
         source: "notification",
       }));
@@ -173,7 +175,7 @@ function TypeIcon({ t, source }: { t: string; source: string }) {
   if (source === "alert") return <Megaphone className="h-4 w-4" />
   switch (t) {
     case "appointment": return <Calendar className="h-4 w-4" />
-    case "health-awareness": return <Heart className="h-4 w-4" />
+    case "health_awareness": return <Heart className="h-4 w-4" />
     case "urgent": return <AlertCircle className="h-4 w-4" />
     default: return <CheckCircle className="h-4 w-4" />
   }
@@ -191,7 +193,7 @@ function UnifiedCard({ item, onRead }: { item: UnifiedItem; onRead: () => void }
               ? "text-red-600 bg-red-50"
               : item.type === "appointment"
                   ? "text-primary bg-muted"
-                  : item.type === "health-awareness"
+                  : item.type === "health_awareness"
                       ? "text-emerald-600 bg-emerald-50"
                       : "text-slate-600 bg-slate-100"
 
@@ -211,7 +213,7 @@ function UnifiedCard({ item, onRead }: { item: UnifiedItem; onRead: () => void }
 
                 <div className="flex items-center gap-2">
                   <Chip className={color}>
-                    {item.source === "alert" ? "Health Alert" : item.type.replace("-", " ")}
+                    {item.source === "alert" ? "Health Alert" : item.type.replace(/[_-]/g, " ")}
                   </Chip>
                   {item.priority && (
                       <Chip

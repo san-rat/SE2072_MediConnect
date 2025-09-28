@@ -58,14 +58,16 @@ export default function AdminPage() {
     try {
       if (mode === "notification") {
         if (!notifForm.type || !notifForm.message) return
+        const firstRecipient = notifForm.recipients
+            .split(",")
+            .map((id) => Number(id.trim()))
+            .find((n) => !isNaN(n))
+        if (!firstRecipient) throw new Error("No valid recipient")
         await notificationService.createNotification({
+          userId: firstRecipient,
+          title: "Admin Message",
           message: notifForm.message,
           type: notifForm.type as NotifType,
-          priority: notifForm.priority,
-          recipients: notifForm.recipients
-              .split(",")
-              .map((id) => Number(id.trim()))
-              .filter((n) => !isNaN(n)),
         })
         toast.success("Notification sent", { description: "Delivered to selected patients." })
         setNotifForm({ message: "", type: "", priority: "normal", recipients: "" })
@@ -74,8 +76,7 @@ export default function AdminPage() {
         await alertService.createAlert({
           title: alertForm.title,
           description: alertForm.description,
-          type: alertForm.type,
-          date: alertForm.eventDate,
+          eventDate: alertForm.eventDate,
         })
         toast.success("Health Alert published", { description: "Visible to all patients." })
         setAlertForm({ title: "", description: "", type: "vaccination", eventDate: "" })
@@ -90,12 +91,12 @@ export default function AdminPage() {
   const TypeIcon = ({ t }: { t: NotifType | AlertType | "" }) => {
     switch (t) {
       case "appointment": return <Calendar className="h-4 w-4" />
-      case "health-awareness": return <Heart className="h-4 w-4" />
+      case "health_awareness": return <Heart className="h-4 w-4" />
       case "urgent": return <AlertCircle className="h-4 w-4" />
       case "general": return <CheckCircle className="h-4 w-4" />
       case "vaccination": return <CheckCircle className="h-4 w-4" />
-      case "blood-donation": return <Heart className="h-4 w-4" />
-      case "health-camp": return <Megaphone className="h-4 w-4" />
+      case "blood_donation": return <Heart className="h-4 w-4" />
+      case "health_camp": return <Megaphone className="h-4 w-4" />
       default: return <Send className="h-4 w-4" />
     }
   }
@@ -160,7 +161,7 @@ export default function AdminPage() {
                             <SelectTrigger><SelectValue placeholder="Select type" /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="appointment"><Calendar className="inline h-4 w-4 mr-2" /> Appointment</SelectItem>
-                              <SelectItem value="health-awareness"><Heart className="inline h-4 w-4 mr-2" /> Health Awareness</SelectItem>
+                              <SelectItem value="health_awareness"><Heart className="inline h-4 w-4 mr-2" /> Health Awareness</SelectItem>
                               <SelectItem value="urgent"><AlertCircle className="inline h-4 w-4 mr-2" /> Urgent</SelectItem>
                               <SelectItem value="general"><CheckCircle className="inline h-4 w-4 mr-2" /> General</SelectItem>
                             </SelectContent>
@@ -220,7 +221,7 @@ export default function AdminPage() {
                           />
                         </div>
 
-                        {/* Type */}
+                        {/* Type (optional, not sent to backend currently) */}
                         <div className="space-y-2">
                           <Label>Alert Type</Label>
                           <Select
@@ -230,8 +231,8 @@ export default function AdminPage() {
                             <SelectTrigger><SelectValue /></SelectTrigger>
                             <SelectContent>
                               <SelectItem value="vaccination"><CheckCircle className="inline h-4 w-4 mr-2" /> Vaccination</SelectItem>
-                              <SelectItem value="blood-donation"><Heart className="inline h-4 w-4 mr-2" /> Blood Donation</SelectItem>
-                              <SelectItem value="health-camp"><Megaphone className="inline h-4 w-4 mr-2" /> Health Camp</SelectItem>
+                              <SelectItem value="blood_donation"><Heart className="inline h-4 w-4 mr-2" /> Blood Donation</SelectItem>
+                              <SelectItem value="health_camp"><Megaphone className="inline h-4 w-4 mr-2" /> Health Camp</SelectItem>
                             </SelectContent>
                           </Select>
                         </div>

@@ -4,13 +4,14 @@ export type Alert = {
     id: number
     title: string
     description: string
-    date: string            // frontend-friendly (from eventDate or createdAt)
+    eventDate?: string
+    createdAt?: string
 }
 
 const BASE_URL = "http://localhost:8080/alerts" // backend base URL
 
 export const alertService = {
-    // 🔹 Get all alerts
+    //  Get all alerts
     async getAlerts() {
         const res = await fetch(BASE_URL, {
             method: "GET",
@@ -20,7 +21,7 @@ export const alertService = {
         return await res.json()
     },
 
-    // 🔹 Get upcoming alerts
+    //  Get upcoming alerts
     async getUpcomingAlerts() {
         const res = await fetch(`${BASE_URL}/upcoming`, {
             method: "GET",
@@ -30,8 +31,8 @@ export const alertService = {
         return await res.json()
     },
 
-    // 🔹 Create a new alert
-    async createAlert(data: { title: string; description: string; type: AlertType; date: string }) {
+    //  Create a new alert
+    async createAlert(data: { title: string; description: string; eventDate: string }) {
         const res = await fetch(BASE_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -41,7 +42,7 @@ export const alertService = {
         return await res.json()
     },
 
-    // 🔹 Get alert by ID
+    //  Get alert by ID
     async getAlertById(id: number) {
         const res = await fetch(`${BASE_URL}/${id}`, {
             method: "GET",
@@ -51,7 +52,7 @@ export const alertService = {
         return await res.json()
     },
 
-    // 🔹 Delete an alert
+    //  Delete an alert
     async deleteAlert(id: number) {
         const res = await fetch(`${BASE_URL}/${id}`, {
             method: "DELETE",
