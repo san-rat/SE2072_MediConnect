@@ -1,7 +1,8 @@
 package com.mediconnect.backend.model;
 
 public enum NotificationType {
-    REMINDER,
-    ALERT,
-    TIP
+    appointment,
+    health_awareness,
+    urgent,
+    general
 }

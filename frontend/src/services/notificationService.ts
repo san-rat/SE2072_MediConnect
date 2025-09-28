@@ -1,77 +1,51 @@
-// Mock data - in a real app, this would be API calls
-type NotifType = "appointment" | "health-awareness" | "urgent" | "general"
-type Priority = "low" | "normal" | "high" | "urgent"
+// src/services/notificationService.ts
+import type { NotifType } from "./types"
 
-const notifications: Array<{
-  id: string
+export type Notification = {
+  id: number
   message: string
-  type: NotifType
-  priority: Priority
+  type: string
   timestamp: string
   isRead: boolean
-}> = [
-  {
-    id: "1",
-    message:
-      "Your appointment with Dr. Smith is scheduled for tomorrow at 2:00 PM. Please arrive 15 minutes early for check-in.",
-    type: "appointment",
-    priority: "high",
-    timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
-    isRead: false,
-  },
-  {
-    id: "2",
-    message:
-      "Reminder: Annual flu vaccination is now available. Schedule your appointment to protect yourself and others.",
-    type: "health-awareness",
-    priority: "normal",
-    timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
-    isRead: false,
-  },
-  {
-    id: "3",
-    message: "Your lab results are ready for review. Please log into the patient portal or contact our office.",
-    type: "general",
-    priority: "normal",
-    timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(), // 3 days ago
-    isRead: true,
-  },
-]
+}
+
+
+const BASE_URL = "http://localhost:8080/notifications"
 
 export const notificationService = {
-  async getNotifications() {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500))
-    return notifications.sort(
-      (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
-    )
+  // 🔹 Get notifications for a user
+  async getNotifications(userId: number) {
+    const res = await fetch(`${BASE_URL}/${userId}`, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+    if (!res.ok) throw new Error("Failed to fetch notifications")
+    return await res.json()
   },
 
-  async createNotification(data: { message: string; type: NotifType; priority: Priority }) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500))
-    
-    const newNotification = {
-      id: Date.now().toString(),
-      message: data.message,
-      type: data.type,
-      priority: data.priority || "normal",
-      timestamp: new Date().toISOString(),
-      isRead: false,
-    }
-
-    notifications.unshift(newNotification)
-    return newNotification
+  // 🔹 Create a new notification
+  async createNotification(data: {
+    message: string
+    type: NotifType
+    priority: Priority
+    recipients: number[]
+  }) {
+    const res = await fetch(BASE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    })
+    if (!res.ok) throw new Error("Failed to create notification")
+    return await res.json()
   },
 
-  async markAsRead(id: string) {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 300))
-    
-    const notification = notifications.find(n => n.id === id)
-    if (notification) {
-      notification.isRead = true
-    }
-    return notification
-  }
+  // 🔹 Mark a notification as read
+  async markAsRead(id: number) {
+    const res = await fetch(`${BASE_URL}/${id}/read`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+    })
+    if (!res.ok) throw new Error("Failed to mark notification as read")
+    return await res.json()
+  },
 }

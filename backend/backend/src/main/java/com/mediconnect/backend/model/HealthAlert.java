@@ -1,8 +1,8 @@
 package com.mediconnect.backend.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "health_alerts")
