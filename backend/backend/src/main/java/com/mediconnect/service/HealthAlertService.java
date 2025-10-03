@@ -30,6 +30,7 @@ public class HealthAlertService {
         return repository.findById(id).map(alert -> {
             alert.setTitle(updatedAlert.getTitle());
             alert.setDescription(updatedAlert.getDescription());
+            alert.setType(updatedAlert.getType());
             alert.setEventDate(updatedAlert.getEventDate());
             return repository.save(alert);
         }).orElse(null);

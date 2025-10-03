@@ -17,6 +17,8 @@ public class HealthAlert {
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    private String type;
+
     private LocalDate eventDate;
 
     private LocalDateTime createdAt = LocalDateTime.now();
@@ -30,6 +32,9 @@ public class HealthAlert {
 
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
+
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 
     public LocalDate getEventDate() { return eventDate; }
     public void setEventDate(LocalDate eventDate) { this.eventDate = eventDate; }
