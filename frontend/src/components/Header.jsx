@@ -7,6 +7,11 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
   const [isAuthed, setIsAuthed] = useState(!!localStorage.getItem('mc_token'))
   const navigate = useNavigate();
 
+  // Update authentication state when user changes
+  useEffect(() => {
+    setIsAuthed(!!user);
+  }, [user]);
+
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen)
   const closeMenu = () => setIsMenuOpen(false)
 
@@ -49,7 +54,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
                   className={`nav-link ${currentPage === 'home' ? 'active' : ''}`}
                   onClick={() => { navigate('/'); onPageChange('home'); closeMenu(); }}
                 >
-                  HOME
+                  {user?.role === 'DOCTOR' ? 'DASHBOARD' : 'HOME'}
                 </button>
               </li>
               <li>
@@ -68,6 +73,16 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
                   APPOINTMENTS
                 </button>
               </li>
+              {user?.role === 'DOCTOR' && (
+                <li>
+                  <button 
+                    className={`nav-link ${currentPage === 'patients' ? 'active' : ''}`}
+                    onClick={() => { navigate('/patients'); onPageChange('patients'); closeMenu(); }}
+                  >
+                    PATIENTS
+                  </button>
+                </li>
+              )}
               <li>
                 <button 
                   className={`nav-link ${currentPage === 'notifications' ? 'active' : ''}`}
@@ -96,12 +111,21 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
           </nav>
         )}
 
-        {/* Auth Buttons */}
+        {/* User Info & Auth Buttons */}
         <div className="auth-buttons">
           {isAuthed ? (
-            <button className="btn btn-outline" onClick={handleLogout}>
-              Logout
-            </button>
+            <div className="user-info">
+              {user && (
+                <div className="user-role">
+                  <span className={`role-badge ${user.role?.toLowerCase()}`}>
+                    {user.role === 'DOCTOR' ? '👨‍⚕️ Doctor' : user.role === 'PATIENT' ? '👤 Patient' : '👤 User'}
+                  </span>
+                </div>
+              )}
+              <button className="btn btn-outline" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
           ) : (
             <>
               <button
@@ -158,7 +182,7 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
                 className={`nav-link ${currentPage === 'home' ? 'active' : ''}`}
                 onClick={() => { navigate('/'); onPageChange('home'); closeMenu(); }}
               >
-                HOME
+                {user?.role === 'DOCTOR' ? 'DASHBOARD' : 'HOME'}
               </button>
             </li>
             <li>
@@ -177,6 +201,16 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
                 APPOINTMENTS
               </button>
             </li>
+            {user?.role === 'DOCTOR' && (
+              <li>
+                <button 
+                  className={`nav-link ${currentPage === 'patients' ? 'active' : ''}`}
+                  onClick={() => { navigate('/patients'); onPageChange('patients'); closeMenu(); }}
+                >
+                  PATIENTS
+                </button>
+              </li>
+            )}
             <li>
               <button 
                 className={`nav-link ${currentPage === 'notifications' ? 'active' : ''}`}

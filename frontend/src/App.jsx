@@ -8,6 +8,12 @@ import NotificationsPage from "./components/NotificationsPage"
 import ContactPage from "./components/ContactPage"
 import AuthModal from "./components/AuthModal"
 import ProfilePage from './pages/ProfilePage';
+import DoctorDashboard from './components/DoctorDashboard';
+import DoctorAppointmentsPage from './components/DoctorAppointmentsPage';
+import DoctorPatientsPage from './components/DoctorPatientsPage';
+import DoctorPrescriptionsPage from './components/DoctorPrescriptionsPage';
+import DoctorNotificationsPage from './components/DoctorNotificationsPage';
+import DoctorProfilePage from './components/DoctorProfilePage';
 import useCurrentUser from './hooks/useCurrentUser';
 import "./App.css"
 import "./index.css"
@@ -34,28 +40,93 @@ function AppContent() {
       setCurrentPage('contact');
     } else if (path === '/profile') {
       setCurrentPage('profile');
+    } else if (path === '/doctor-dashboard') {
+      setCurrentPage('doctor-dashboard');
     }
   }, [location.pathname]);
 
+  // Helper function to render content based on user role
+  const renderContent = () => {
+    if (loadingUser) {
+      return <div className="loading-container">Loading...</div>;
+    }
+
+    if (!user) {
+      return <HomePage />;
+    }
+
+    // For authenticated users, show the routes
+    return (
+      <Routes>
+        <Route 
+          path="/" 
+          element={
+            user.role === 'DOCTOR' ? 
+            <DoctorDashboard user={user} /> : 
+            <HomePage />
+          } 
+        />
+        <Route 
+          path="/prescriptions" 
+          element={
+            user?.role === 'DOCTOR' ? 
+            <DoctorPrescriptionsPage user={user} /> : 
+            <PrescriptionsPage />
+          } 
+        />
+        <Route 
+          path="/appointments" 
+          element={
+            user?.role === 'DOCTOR' ? 
+            <DoctorAppointmentsPage user={user} /> : 
+            <AppointmentsPage />
+          } 
+        />
+        <Route 
+          path="/patients" 
+          element={
+            user?.role === 'DOCTOR' ? 
+            <DoctorPatientsPage user={user} /> : 
+            <HomePage />
+          } 
+        />
+        <Route 
+          path="/notifications" 
+          element={
+            user?.role === 'DOCTOR' ? 
+            <DoctorNotificationsPage user={user} /> : 
+            <NotificationsPage />
+          } 
+        />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route 
+          path="/profile" 
+          element={
+            user?.role === 'DOCTOR' ? 
+            <DoctorProfilePage user={user} /> : 
+            <ProfilePage user={user} />
+          } 
+        />
+        <Route path="/doctor-dashboard" element={<DoctorDashboard user={user} />} />
+      </Routes>
+    );
+  };
+
   return (
     <div className="app">
-      <Header
-        onLoginClick={() => { setInitialMode("login"); setAuthOpen(true) }}
-        onRegisterClick={() => { setInitialMode("register"); setAuthOpen(true) }}
-        isModalOpen={authOpen}
-        currentPage={currentPage}
-        onPageChange={setCurrentPage}
-        user={user}
-      />
+      {/* Hide header for all doctor pages */}
+      {!(user && user.role === 'DOCTOR') && (
+        <Header
+          onLoginClick={() => { setInitialMode("login"); setAuthOpen(true) }}
+          onRegisterClick={() => { setInitialMode("register"); setAuthOpen(true) }}
+          isModalOpen={authOpen}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          user={user}
+        />
+      )}
 
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/prescriptions" element={<PrescriptionsPage />} />
-        <Route path="/appointments" element={<AppointmentsPage />} />
-        <Route path="/notifications" element={<NotificationsPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/profile" element={<ProfilePage user={user} />} />
-      </Routes>
+      {renderContent()}
 
       <AuthModal
         isOpen={authOpen}

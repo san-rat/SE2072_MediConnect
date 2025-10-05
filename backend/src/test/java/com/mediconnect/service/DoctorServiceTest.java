@@ -2,7 +2,7 @@ package com.mediconnect.service;
 
 import com.mediconnect.model.DoctorModel;
 import com.mediconnect.repository.DoctorRepository;
-import com.mediconnect.service.DoctorServiceImpl; // ← adjust
+import com.mediconnect.service.DoctorServiceImpl; 
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
