@@ -3,9 +3,15 @@ package com.mediconnect.controller;
 import com.mediconnect.dto.AppointmentResponseDto;
 import com.mediconnect.dto.AvailableTimeSlotDto;
 import com.mediconnect.dto.BookAppointmentDto;
+import com.mediconnect.model.AppointmentModel;
+import com.mediconnect.model.DoctorModel;
+import com.mediconnect.model.UserModel;
+import com.mediconnect.repository.DoctorRepository;
 import com.mediconnect.service.AppointmentService;
 import com.mediconnect.service.TimeSlotService;
+import com.mediconnect.service.UserService;
 import com.mediconnect.util.JwtUtil;
+import com.mediconnect.exception.ResourceNotFoundException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +32,12 @@ public class AppointmentController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private DoctorRepository doctorRepository;
 
     // Book a new appointment
     @PostMapping("/book")
@@ -168,6 +180,52 @@ public class AppointmentController {
             return ResponseEntity.ok("Time slots generated successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error generating time slots: " + e.getMessage());
+        }
+    }
+
+    // Get appointments for a specific doctor
+    @GetMapping("/doctor/{doctorId}")
+    public ResponseEntity<?> getAppointmentsByDoctor(@PathVariable String doctorId) {
+        try {
+            List<AppointmentResponseDto> appointments = appointmentService.getAppointmentsByDoctor(doctorId);
+            return ResponseEntity.ok(appointments);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching doctor appointments: " + e.getMessage());
+        }
+    }
+
+    // Get appointments for current doctor (using JWT token)
+    @GetMapping("/doctor/my-appointments")
+    public ResponseEntity<?> getMyAppointmentsAsDoctor(@RequestHeader("Authorization") String token) {
+        try {
+            String userEmail = jwtUtil.extractUserId(token.substring(7));
+            // Find doctor by user email
+            UserModel user = userService.findByEmail(userEmail);
+            if (user == null) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+            
+            DoctorModel doctor = doctorRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor", "user_id", user.getId()));
+            
+            List<AppointmentResponseDto> appointments = appointmentService.getAppointmentsByDoctor(doctor.getId());
+            return ResponseEntity.ok(appointments);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching my appointments: " + e.getMessage());
+        }
+    }
+
+    // Update appointment status (for doctors)
+    @PutMapping("/{appointmentId}/status")
+    public ResponseEntity<?> updateAppointmentStatus(@PathVariable String appointmentId,
+                                                   @RequestParam String status,
+                                                   @RequestHeader("Authorization") String token) {
+        try {
+            AppointmentModel.AppointmentStatus appointmentStatus = AppointmentModel.AppointmentStatus.valueOf(status.toUpperCase());
+            AppointmentResponseDto appointment = appointmentService.updateAppointmentStatus(appointmentId, appointmentStatus);
+            return ResponseEntity.ok(appointment);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error updating appointment status: " + e.getMessage());
         }
     }
 }

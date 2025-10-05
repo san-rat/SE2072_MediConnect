@@ -6,6 +6,16 @@
   background: var(--surface);
 }
 
+/* Loading container */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+
 /* Global button styles for the app */
 .btn {
   padding: 12px 24px;

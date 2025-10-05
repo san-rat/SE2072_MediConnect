@@ -11,6 +11,8 @@ const FIELD_DEFAULTS = {
   phone: '',
   specialization: '',
   licenseNumber: '',
+  yearsExperience: '',
+  consultationFee: '',
   dateOfBirth: '',
   emergencyContact: ''
 }
@@ -63,6 +65,10 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
       if (userType === 'doctor') {
         if (!formData.specialization) e.specialization = 'Specialization is required'
         if (!formData.licenseNumber.trim()) e.licenseNumber = 'License number is required'
+        if (!formData.yearsExperience) e.yearsExperience = 'Years of experience is required'
+        else if (isNaN(formData.yearsExperience) || parseInt(formData.yearsExperience) < 0) e.yearsExperience = 'Enter a valid number'
+        if (!formData.consultationFee) e.consultationFee = 'Consultation fee is required'
+        else if (isNaN(formData.consultationFee) || parseFloat(formData.consultationFee) <= 0) e.consultationFee = 'Enter a valid amount'
       } else {
         if (!formData.dateOfBirth) e.dateOfBirth = 'Date of birth is required'
         else {
@@ -91,9 +97,11 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
     setIsSubmitting(true)
     try {
       if (isLogin) {
-        await login(formData.email, formData.password)
+        const loginData = await login(formData.email, formData.password)
         alert('Login successful!')
         onClose?.()
+        
+        // Simple reload to ensure everything refreshes properly
         window.location.reload()
       } else {
         if (userType === 'patient') {
@@ -115,8 +123,8 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
             phone: formData.phone,
             specialization: formData.specialization,
             licenseNumber: formData.licenseNumber,
-            yearsExperience: 0,
-            consultationFee: 0
+            yearsExperience: parseInt(formData.yearsExperience),
+            consultationFee: parseFloat(formData.consultationFee)
           })
         }
         alert('Registration successful! Please sign in.')
@@ -124,7 +132,27 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
       }
     } catch (err) {
       console.error(err)
-      alert(err?.response?.data?.message || 'Something went wrong.')
+      
+      // Handle different error response formats
+      let errorMessage = 'Something went wrong.'
+      
+      if (err?.response?.data?.message) {
+        const message = err.response.data.message
+        
+        // If message is an object (validation errors), format it properly
+        if (typeof message === 'object') {
+          const validationErrors = Object.entries(message)
+            .map(([field, error]) => `${field}: ${error}`)
+            .join('\n')
+          errorMessage = `Validation errors:\n${validationErrors}`
+        } else {
+          errorMessage = message
+        }
+      } else if (err?.message) {
+        errorMessage = err.message
+      }
+      
+      alert(errorMessage)
     } finally {
       setIsSubmitting(false)
     }
@@ -246,38 +274,69 @@ const AuthModal = ({ isOpen, onClose, initialMode = 'login' }) => {
               </div>
 
               {userType === 'doctor' && (
-                <div className="form-row">
-                  <div className="form-group">
-                    <label htmlFor="specialization">Specialization</label>
-                    <select
-                      id="specialization"
-                      name="specialization"
-                      value={formData.specialization}
-                      onChange={handleInputChange}
-                      className={errors.specialization ? 'error' : ''}
-                    >
-                      <option value="">Select specialization</option>
-                      <option value="Cardiology">Cardiology</option>
-                      <option value="Dermatology">Dermatology</option>
-                      <option value="Pediatrics">Pediatrics</option>
-                      <option value="Orthopedics">Orthopedics</option>
-                      <option value="Neurology">Neurology</option>
-                    </select>
-                    {errors.specialization && <span className="error-text">{errors.specialization}</span>}
+                <>
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="specialization">Specialization</label>
+                      <select
+                        id="specialization"
+                        name="specialization"
+                        value={formData.specialization}
+                        onChange={handleInputChange}
+                        className={errors.specialization ? 'error' : ''}
+                      >
+                        <option value="">Select specialization</option>
+                        <option value="Cardiology">Cardiology</option>
+                        <option value="Dermatology">Dermatology</option>
+                        <option value="Pediatrics">Pediatrics</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="Neurology">Neurology</option>
+                      </select>
+                      {errors.specialization && <span className="error-text">{errors.specialization}</span>}
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="licenseNumber">License Number</label>
+                      <input
+                        type="text"
+                        id="licenseNumber"
+                        name="licenseNumber"
+                        value={formData.licenseNumber}
+                        onChange={handleInputChange}
+                        className={errors.licenseNumber ? 'error' : ''}
+                      />
+                      {errors.licenseNumber && <span className="error-text">{errors.licenseNumber}</span>}
+                    </div>
                   </div>
-                  <div className="form-group">
-                    <label htmlFor="licenseNumber">License Number</label>
-                    <input
-                      type="text"
-                      id="licenseNumber"
-                      name="licenseNumber"
-                      value={formData.licenseNumber}
-                      onChange={handleInputChange}
-                      className={errors.licenseNumber ? 'error' : ''}
-                    />
-                    {errors.licenseNumber && <span className="error-text">{errors.licenseNumber}</span>}
+                  <div className="form-row">
+                    <div className="form-group">
+                      <label htmlFor="yearsExperience">Years of Experience</label>
+                      <input
+                        type="number"
+                        id="yearsExperience"
+                        name="yearsExperience"
+                        min="0"
+                        value={formData.yearsExperience}
+                        onChange={handleInputChange}
+                        className={errors.yearsExperience ? 'error' : ''}
+                      />
+                      {errors.yearsExperience && <span className="error-text">{errors.yearsExperience}</span>}
+                    </div>
+                    <div className="form-group">
+                      <label htmlFor="consultationFee">Consultation Fee (LKR)</label>
+                      <input
+                        type="number"
+                        id="consultationFee"
+                        name="consultationFee"
+                        min="0"
+                        step="0.01"
+                        value={formData.consultationFee}
+                        onChange={handleInputChange}
+                        className={errors.consultationFee ? 'error' : ''}
+                      />
+                      {errors.consultationFee && <span className="error-text">{errors.consultationFee}</span>}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
 
               {userType === 'patient' && (
