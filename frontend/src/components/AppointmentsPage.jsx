@@ -80,9 +80,16 @@ const AppointmentsPage = () => {
     try {
       setLoading(true)
       // Convert JavaScript Date to YYYY-MM-DD format
-      const dateString = date.toISOString().split('T')[0]
-      console.log('Loading time slots for doctor:', doctorId, 'date:', dateString)
+      const dateString = date.getFullYear() + '-' + 
+        String(date.getMonth() + 1).padStart(2, '0') + '-' + 
+        String(date.getDate()).padStart(2, '0')
+      console.log('Loading time slots for doctor:', doctorId)
+      console.log('Original date:', date)
+      console.log('Date string sent to API:', dateString)
+      console.log('Date toDateString():', date.toDateString())
+      console.log('Date toLocaleDateString():', date.toLocaleDateString())
       const response = await api.get(`/api/appointments/available-slots/${doctorId}?date=${dateString}`)
+      console.log('API response:', response.data)
       setAvailableTimeSlots(response.data)
     } catch (err) {
       setError('Failed to load available time slots')
@@ -115,6 +122,9 @@ const AppointmentsPage = () => {
 
   // Handle date selection
   const handleDateSelect = (date) => {
+    console.log('Selected date:', date)
+    console.log('Selected date string:', date.toDateString())
+    console.log('Selected date ISO:', date.toISOString())
     setSelectedDate(date)
     if (selectedDoctor) {
       loadAvailableTimeSlots(selectedDoctor.id, date)
@@ -143,7 +153,9 @@ const AppointmentsPage = () => {
       setLoading(true)
       const appointmentData = {
         doctorId: selectedDoctor.id,
-        appointmentDate: selectedDate.toISOString().split('T')[0], // Convert to YYYY-MM-DD format
+        appointmentDate: selectedDate.getFullYear() + '-' + 
+          String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' + 
+          String(selectedDate.getDate()).padStart(2, '0'), // Convert to YYYY-MM-DD format
         appointmentTime: selectedTimeSlot.startTime,
         notes: appointmentNotes
       }
@@ -198,6 +210,8 @@ const AppointmentsPage = () => {
     for (let i = 0; i < 42; i++) {
       const date = new Date(startDate)
       date.setDate(startDate.getDate() + i)
+      // Ensure time is set to midnight to avoid timezone issues
+      date.setHours(0, 0, 0, 0)
       dates.push(date)
     }
     
@@ -397,18 +411,23 @@ const AppointmentsPage = () => {
           <div className="selected-details">
             <span>Dr. {selectedDoctor.user.firstName} {selectedDoctor.user.lastName}</span>
             <span>•</span>
-            <span>{selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+            <span>{selectedDate.toLocaleDateString('en-US', { 
+              weekday: 'long', 
+              month: 'long', 
+              day: 'numeric'
+            })}</span>
           </div>
         )}
       </div>
 
       {/* Time Slots Grid */}
-      <div className="time-slots-grid">
+      <div className={`time-slots-grid ${loading ? 'loading' : ''}`}>
         {availableTimeSlots.map(timeSlot => (
           <button
             key={timeSlot.id}
             className={`time-slot ${selectedTimeSlot?.id === timeSlot.id ? 'selected' : ''}`}
             onClick={() => handleTimeSlotSelect(timeSlot)}
+            disabled={loading}
           >
             <span className="time">{timeSlot.startTime}</span>
             <span className="duration">30 min</span>
@@ -468,7 +487,11 @@ const AppointmentsPage = () => {
           </div>
           <div className="summary-item">
             <span className="label">Date:</span>
-            <span className="value">{selectedDate?.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+            <span className="value">{selectedDate?.toLocaleDateString('en-US', { 
+              weekday: 'long', 
+              month: 'long', 
+              day: 'numeric'
+            })}</span>
           </div>
           <div className="summary-item">
             <span className="label">Time:</span>

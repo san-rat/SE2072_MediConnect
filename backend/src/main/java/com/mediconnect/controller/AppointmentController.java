@@ -1,8 +1,24 @@
 package com.mediconnect.controller;
 
+import java.time.LocalDate;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.mediconnect.dto.AppointmentResponseDto;
 import com.mediconnect.dto.AvailableTimeSlotDto;
 import com.mediconnect.dto.BookAppointmentDto;
+import com.mediconnect.exception.ResourceNotFoundException;
 import com.mediconnect.model.AppointmentModel;
 import com.mediconnect.model.DoctorModel;
 import com.mediconnect.model.UserModel;
@@ -11,14 +27,8 @@ import com.mediconnect.service.AppointmentService;
 import com.mediconnect.service.TimeSlotService;
 import com.mediconnect.service.UserService;
 import com.mediconnect.util.JwtUtil;
-import com.mediconnect.exception.ResourceNotFoundException;
-import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.util.List;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/appointments")
@@ -226,6 +236,86 @@ public class AppointmentController {
             return ResponseEntity.ok(appointment);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error updating appointment status: " + e.getMessage());
+        }
+    }
+
+    // Get today's appointments for current doctor
+    @GetMapping("/doctor/today")
+    public ResponseEntity<?> getTodayAppointments(@RequestHeader("Authorization") String token) {
+        try {
+            String userEmail = jwtUtil.extractUserId(token.substring(7));
+            UserModel user = userService.findByEmail(userEmail);
+            if (user == null) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+            
+            DoctorModel doctor = doctorRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor", "user_id", user.getId()));
+            
+            List<AppointmentResponseDto> appointments = appointmentService.getTodayAppointmentsByDoctor(doctor.getId());
+            return ResponseEntity.ok(appointments);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching today's appointments: " + e.getMessage());
+        }
+    }
+
+    // Get tomorrow's appointments for current doctor
+    @GetMapping("/doctor/tomorrow")
+    public ResponseEntity<?> getTomorrowAppointments(@RequestHeader("Authorization") String token) {
+        try {
+            String userEmail = jwtUtil.extractUserId(token.substring(7));
+            UserModel user = userService.findByEmail(userEmail);
+            if (user == null) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+            
+            DoctorModel doctor = doctorRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor", "user_id", user.getId()));
+            
+            List<AppointmentResponseDto> appointments = appointmentService.getTomorrowAppointmentsByDoctor(doctor.getId());
+            return ResponseEntity.ok(appointments);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching tomorrow's appointments: " + e.getMessage());
+        }
+    }
+
+    // Get upcoming appointments for current doctor
+    @GetMapping("/doctor/upcoming")
+    public ResponseEntity<?> getUpcomingAppointmentsForDoctor(@RequestHeader("Authorization") String token) {
+        try {
+            String userEmail = jwtUtil.extractUserId(token.substring(7));
+            UserModel user = userService.findByEmail(userEmail);
+            if (user == null) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+            
+            DoctorModel doctor = doctorRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor", "user_id", user.getId()));
+            
+            List<AppointmentResponseDto> appointments = appointmentService.getUpcomingAppointmentsByDoctor(doctor.getId());
+            return ResponseEntity.ok(appointments);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching upcoming appointments: " + e.getMessage());
+        }
+    }
+
+    // Get past appointments for current doctor
+    @GetMapping("/doctor/past")
+    public ResponseEntity<?> getPastAppointments(@RequestHeader("Authorization") String token) {
+        try {
+            String userEmail = jwtUtil.extractUserId(token.substring(7));
+            UserModel user = userService.findByEmail(userEmail);
+            if (user == null) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+            
+            DoctorModel doctor = doctorRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor", "user_id", user.getId()));
+            
+            List<AppointmentResponseDto> appointments = appointmentService.getPastAppointmentsByDoctor(doctor.getId());
+            return ResponseEntity.ok(appointments);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error fetching past appointments: " + e.getMessage());
         }
     }
 }

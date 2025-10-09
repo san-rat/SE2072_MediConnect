@@ -13,6 +13,47 @@ export const doctorAPI = {
     }
   },
 
+  // Get filtered appointments
+  getTodayAppointments: async () => {
+    try {
+      const response = await api.get('/api/appointments/doctor/today');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching today\'s appointments:', error);
+      throw error;
+    }
+  },
+
+  getTomorrowAppointments: async () => {
+    try {
+      const response = await api.get('/api/appointments/doctor/tomorrow');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching tomorrow\'s appointments:', error);
+      throw error;
+    }
+  },
+
+  getUpcomingAppointments: async () => {
+    try {
+      const response = await api.get('/api/appointments/doctor/upcoming');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching upcoming appointments:', error);
+      throw error;
+    }
+  },
+
+  getPastAppointments: async () => {
+    try {
+      const response = await api.get('/api/appointments/doctor/past');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching past appointments:', error);
+      throw error;
+    }
+  },
+
   // Update appointment status
   updateAppointmentStatus: async (appointmentId, status) => {
     try {
@@ -164,6 +205,78 @@ export const doctorAPI = {
       return response.data;
     } catch (error) {
       console.error('Error fetching dashboard stats:', error);
+      throw error;
+    }
+  },
+
+  // Schedule management
+  getMySchedule: async () => {
+    try {
+      const response = await api.get('/api/doctor-schedule/my-schedule');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching doctor schedule:', error);
+      throw error;
+    }
+  },
+
+  updateSchedule: async (dayOfWeek, startTime, endTime, slotDurationMinutes = 30, isAvailable = true) => {
+    try {
+      const response = await api.post('/api/doctor-schedule/update-schedule', null, {
+        params: {
+          dayOfWeek,
+          startTime,
+          endTime,
+          slotDurationMinutes,
+          isAvailable
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error updating schedule:', error);
+      throw error;
+    }
+  },
+
+  setAvailability: async (date, startTime, endTime, slotDurationMinutes = 30) => {
+    try {
+      const response = await api.post('/api/doctor-schedule/set-availability', null, {
+        params: {
+          dateStr: date,
+          startTimeStr: startTime,
+          endTimeStr: endTime,
+          slotDurationMinutes
+        }
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error setting availability:', error);
+      throw error;
+    }
+  },
+
+  setRecurringAvailability: async (days, startTime, endTime, slotDurationMinutes = 30) => {
+    try {
+      const response = await api.post('/api/doctor-schedule/set-recurring-availability', {
+        days,
+        startTime,
+        endTime,
+        slotDurationMinutes
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error setting recurring availability:', error);
+      throw error;
+    }
+  },
+
+  // Get doctor's current availability
+  getMyAvailability: async () => {
+    try {
+      const response = await api.get('/api/doctor-schedule/my-availability');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching doctor availability:', error);
       throw error;
     }
   }
