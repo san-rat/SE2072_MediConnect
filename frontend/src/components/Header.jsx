@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './Header.css'
 
-const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPageChange, user }) => {
+const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen, currentPage, onPageChange, user }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAuthed, setIsAuthed] = useState(!!localStorage.getItem('mc_token'))
   const navigate = useNavigate();
@@ -139,6 +139,13 @@ const Header = ({ onLoginClick, onRegisterClick, isModalOpen, currentPage, onPag
                 onClick={() => { closeMenu(); onRegisterClick(); }}
               >
                 Register
+              </button>
+              <button
+                className="btn btn-admin"
+                onClick={() => { closeMenu(); onAdminLoginClick(); }}
+                title="Admin Access"
+              >
+                🔐 Admin
               </button>
             </>
           )}
