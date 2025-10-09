@@ -9,6 +9,7 @@ import com.mediconnect.model.PatientModel;
 import com.mediconnect.service.UserService;
 import com.mediconnect.service.DoctorService;
 import com.mediconnect.service.PatientService;
+import com.mediconnect.service.AdminService;
 import com.mediconnect.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,17 +26,20 @@ public class AuthController {
     private final UserService userService;
     private final DoctorService doctorService;
     private final PatientService patientService;
+    private final AdminService adminService;
     private final AuthenticationManager authManager;
     private final JwtUtil jwtUtil;
 
     public AuthController(UserService userService,
                           DoctorService doctorService,
                           PatientService patientService,
+                          AdminService adminService,
                           AuthenticationManager authManager,
                           JwtUtil jwtUtil) {
         this.userService = userService;
         this.doctorService = doctorService;
         this.patientService = patientService;
+        this.adminService = adminService;
         this.authManager = authManager;
         this.jwtUtil = jwtUtil;
     }
@@ -49,14 +53,16 @@ public class AuthController {
         UserModel user = userService.findByEmail(request.getEmail());
         String role = "USER"; // default role
         
-        // Check if user is a doctor or patient
-        if (doctorService.findByUserId(user.getId()) != null) {
+        // Check if user is an admin first (highest priority)
+        if (adminService.findByUserId(user.getId()) != null) {
+            role = "ADMIN";
+        } else if (doctorService.findByUserId(user.getId()) != null) {
             role = "DOCTOR";
         } else if (patientService.findByUserId(user.getId()) != null) {
             role = "PATIENT";
         }
         
-        String token = jwtUtil.generateToken(request.getEmail());
+        String token = jwtUtil.generateToken(request.getEmail(), role);
         Map<String, Object> resp = new HashMap<>();
         resp.put("token", token);
         resp.put("type", "Bearer");

@@ -45,8 +45,10 @@ public class SecurityConfig {
                     "/api/auth/**",           // login + register
                     "/api/doctors/**",        // get all doctors (public)
                     "/api/appointments/available-slots/**",  // get available time slots (public)
-                    "/api/appointments/test/**"  // test endpoints for initialization
+                    "/api/appointments/test/**",  // test endpoints for initialization
+                    "/api/debug/**"           // debug endpoints
                 ).permitAll()
+                .requestMatchers("/api/admins/**").hasRole("ADMIN")  // Admin-only endpoints
                 .anyRequest().authenticated()
             );
 

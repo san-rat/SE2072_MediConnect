@@ -7,5 +7,6 @@ public interface AdminService {
     AdminModel saveAdmin(AdminModel admin);
     List<AdminModel> getAllAdmins();
     AdminModel getAdminById(String id);
+    AdminModel findByUserId(String userId);
     void deleteAdmin(String id);
 }

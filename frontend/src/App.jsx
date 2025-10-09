@@ -7,6 +7,8 @@ import AppointmentsPage from "./components/AppointmentsPage"
 import NotificationsPage from "./components/NotificationsPage"
 import ContactPage from "./components/ContactPage"
 import AuthModal from "./components/AuthModal"
+import AdminLoginModal from "./components/AdminLoginModal"
+import AdminDashboard from "./components/AdminDashboard"
 import ProfilePage from './pages/ProfilePage';
 import DoctorDashboard from './components/DoctorDashboard';
 import DoctorAppointmentsPage from './components/DoctorAppointmentsPage';
@@ -20,6 +22,7 @@ import "./index.css"
 
 function AppContent() {
   const [authOpen, setAuthOpen] = useState(false)
+  const [adminLoginOpen, setAdminLoginOpen] = useState(false)
   const [initialMode, setInitialMode] = useState("login")
   const [currentPage, setCurrentPage] = useState("home")
   const { user, loadingUser } = useCurrentUser();
@@ -42,6 +45,8 @@ function AppContent() {
       setCurrentPage('profile');
     } else if (path === '/doctor-dashboard') {
       setCurrentPage('doctor-dashboard');
+    } else if (path === '/admin-dashboard') {
+      setCurrentPage('admin-dashboard');
     }
   }, [location.pathname]);
 
@@ -63,6 +68,8 @@ function AppContent() {
           element={
             user.role === 'DOCTOR' ? 
             <DoctorDashboard user={user} /> : 
+            user.role === 'ADMIN' ?
+            <AdminDashboard user={user} onLogout={() => window.location.reload()} /> :
             <HomePage />
           } 
         />
@@ -108,17 +115,19 @@ function AppContent() {
           } 
         />
         <Route path="/doctor-dashboard" element={<DoctorDashboard user={user} />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard user={user} onLogout={() => window.location.reload()} />} />
       </Routes>
     );
   };
 
   return (
     <div className="app">
-      {/* Hide header for all doctor pages */}
-      {!(user && user.role === 'DOCTOR') && (
+      {/* Hide header for doctor and admin pages */}
+      {!(user && (user.role === 'DOCTOR' || user.role === 'ADMIN')) && (
         <Header
           onLoginClick={() => { setInitialMode("login"); setAuthOpen(true) }}
           onRegisterClick={() => { setInitialMode("register"); setAuthOpen(true) }}
+          onAdminLoginClick={() => setAdminLoginOpen(true)}
           isModalOpen={authOpen}
           currentPage={currentPage}
           onPageChange={setCurrentPage}
@@ -132,6 +141,15 @@ function AppContent() {
         isOpen={authOpen}
         onClose={() => setAuthOpen(false)}
         initialMode={initialMode}
+      />
+
+      <AdminLoginModal
+        isOpen={adminLoginOpen}
+        onClose={() => setAdminLoginOpen(false)}
+        onLoginSuccess={() => {
+          setAdminLoginOpen(false);
+          window.location.reload();
+        }}
       />
     </div>
   )
