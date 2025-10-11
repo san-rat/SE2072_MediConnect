@@ -244,6 +244,62 @@ public class AppointmentServiceImpl implements AppointmentService {
         return appointmentRepository.countByStatus(status);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<AppointmentResponseDto> getTodayAppointmentsByDoctor(String doctorId) {
+        DoctorModel doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", doctorId));
+
+        LocalDate today = LocalDate.now();
+        List<AppointmentModel> appointments = appointmentRepository.findByDoctorAndAppointmentDateOrderByAppointmentTime(doctor, today);
+        
+        return appointments.stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AppointmentResponseDto> getTomorrowAppointmentsByDoctor(String doctorId) {
+        DoctorModel doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", doctorId));
+
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+        List<AppointmentModel> appointments = appointmentRepository.findByDoctorAndAppointmentDateOrderByAppointmentTime(doctor, tomorrow);
+        
+        return appointments.stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AppointmentResponseDto> getUpcomingAppointmentsByDoctor(String doctorId) {
+        DoctorModel doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", doctorId));
+
+        LocalDate today = LocalDate.now();
+        List<AppointmentModel> appointments = appointmentRepository.findByDoctorAndAppointmentDateAfterOrderByAppointmentDateAscAppointmentTimeAsc(doctor, today);
+        
+        return appointments.stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<AppointmentResponseDto> getPastAppointmentsByDoctor(String doctorId) {
+        DoctorModel doctor = doctorRepository.findById(doctorId)
+                .orElseThrow(() -> new ResourceNotFoundException("Doctor", "id", doctorId));
+
+        LocalDate today = LocalDate.now();
+        List<AppointmentModel> appointments = appointmentRepository.findByDoctorAndAppointmentDateBeforeOrderByAppointmentDateDescAppointmentTimeDesc(doctor, today);
+        
+        return appointments.stream()
+                .map(this::convertToResponseDto)
+                .collect(Collectors.toList());
+    }
+
     private AppointmentResponseDto convertToResponseDto(AppointmentModel appointment) {
         AppointmentResponseDto dto = new AppointmentResponseDto();
         dto.setId(appointment.getId());
