@@ -61,7 +61,7 @@ public class NotificationController {
         return ResponseEntity.ok(list);
     }
 
-    // Mark a notification as read (DTO)
+
     @PutMapping("/{notificationId}/read")
     public ResponseEntity<NotificationDto> markAsRead(@PathVariable Long notificationId) {
         Notification updated = notificationService.markAsRead(notificationId);
