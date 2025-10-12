@@ -25,7 +25,13 @@ public class SecurityBeans {
         cors.setAllowedOrigins(List.of(
                 "http://localhost:5173",
                 "http://localhost:5174",
-                "http://localhost:5175"
+                "http://localhost:5175",
+                "http://localhost:5176",
+                "http://localhost:5179",
+                "http://localhost:3000",
+                "http://localhost:5180",
+                "http://localhost:5183",
+                "http://localhost:5184"
         )); // React dev server (Vite may pick another port)
         cors.setAllowedMethods(List.of("GET","POST","PUT","DELETE","PATCH","OPTIONS"));
         cors.setAllowedHeaders(List.of("*"));
