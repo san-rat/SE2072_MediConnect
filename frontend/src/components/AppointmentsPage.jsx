@@ -80,9 +80,16 @@ const AppointmentsPage = () => {
     try {
       setLoading(true)
       // Convert JavaScript Date to YYYY-MM-DD format
-      const dateString = date.toISOString().split('T')[0]
-      console.log('Loading time slots for doctor:', doctorId, 'date:', dateString)
+      const dateString = date.getFullYear() + '-' + 
+        String(date.getMonth() + 1).padStart(2, '0') + '-' + 
+        String(date.getDate()).padStart(2, '0')
+      console.log('Loading time slots for doctor:', doctorId)
+      console.log('Original date:', date)
+      console.log('Date string sent to API:', dateString)
+      console.log('Date toDateString():', date.toDateString())
+      console.log('Date toLocaleDateString():', date.toLocaleDateString())
       const response = await api.get(`/api/appointments/available-slots/${doctorId}?date=${dateString}`)
+      console.log('API response:', response.data)
       setAvailableTimeSlots(response.data)
     } catch (err) {
       setError('Failed to load available time slots')
@@ -115,6 +122,9 @@ const AppointmentsPage = () => {
 
   // Handle date selection
   const handleDateSelect = (date) => {
+    console.log('Selected date:', date)
+    console.log('Selected date string:', date.toDateString())
+    console.log('Selected date ISO:', date.toISOString())
     setSelectedDate(date)
     if (selectedDoctor) {
       loadAvailableTimeSlots(selectedDoctor.id, date)
@@ -143,7 +153,9 @@ const AppointmentsPage = () => {
       setLoading(true)
       const appointmentData = {
         doctorId: selectedDoctor.id,
-        appointmentDate: selectedDate.toISOString().split('T')[0], // Convert to YYYY-MM-DD format
+        appointmentDate: selectedDate.getFullYear() + '-' + 
+          String(selectedDate.getMonth() + 1).padStart(2, '0') + '-' + 
+          String(selectedDate.getDate()).padStart(2, '0'), // Convert to YYYY-MM-DD format
         appointmentTime: selectedTimeSlot.startTime,
         notes: appointmentNotes
       }
@@ -198,6 +210,8 @@ const AppointmentsPage = () => {
     for (let i = 0; i < 42; i++) {
       const date = new Date(startDate)
       date.setDate(startDate.getDate() + i)
+      // Ensure time is set to midnight to avoid timezone issues
+      date.setHours(0, 0, 0, 0)
       dates.push(date)
     }
     
@@ -258,18 +272,45 @@ const AppointmentsPage = () => {
       {/* Doctors Grid */}
       <div className="doctors-grid">
         {filteredDoctors.map(doctor => (
-          <div key={doctor.id} className="doctor-card" onClick={() => handleDoctorSelect(doctor)}>
-            <div className="doctor-avatar">
-              <span className="avatar-icon">👨‍⚕️</span>
+          <div key={doctor.id} className="doctor-card-new" onClick={() => handleDoctorSelect(doctor)}>
+            <div className="card-header">
+              <div className="avatar-container">
+                <div className="doctor-avatar">👨‍⚕️</div>
+              </div>
+              <div className="name-container">
+                <h3 className="doctor-name">
+                  Dr. {doctor.user?.firstName || doctor.firstName || 'John'} {doctor.user?.lastName || doctor.lastName || 'Doe'}
+                </h3>
+              </div>
             </div>
-            <div className="doctor-info">
-              <h3>{doctor.user.firstName} {doctor.user.lastName}</h3>
-              <p className="specialization">{doctor.specialization}</p>
-              <p className="experience">{doctor.yearsExperience} years experience</p>
-              <p className="fee">Consultation Fee: Rs {doctor.consultationFee}</p>
-            </div>
-            <div className="select-button">
-              <span>Select</span>
+            
+            <div className="card-content">
+              <div className="stats-row">
+                <div className="stat-box">
+                  <span className="stat-number">{doctor.yearsExperience || 10}</span>
+                  <span className="stat-text">Years Experience</span>
+                </div>
+                <div className="stat-box">
+                  <span className="stat-number">4.9</span>
+                  <span className="stat-text">Rating</span>
+                </div>
+              </div>
+              
+              <div className="specialization-badge">
+                {doctor.specialization || 'General Medicine'}
+              </div>
+              
+              <div className="fee-section">
+                <span className="fee-text">Consultation Fee</span>
+                <span className="fee-price">Rs {doctor.consultationFee || 200}</span>
+              </div>
+              
+              <button className="select-btn" onClick={(e) => {
+                e.stopPropagation();
+                handleDoctorSelect(doctor);
+              }}>
+                Select Doctor
+              </button>
             </div>
           </div>
         ))}
@@ -296,47 +337,65 @@ const AppointmentsPage = () => {
         )}
       </div>
 
-      {/* Calendar Navigation */}
-      <div className="calendar-navigation">
-        <button 
-          onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
-          className="nav-button"
-        >
-          ← Previous
-        </button>
-        <h3>{currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</h3>
-        <button 
-          onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
-          className="nav-button"
-        >
-          Next →
-        </button>
-      </div>
-
-      {/* Calendar Grid */}
-      <div className="calendar-grid">
-        <div className="calendar-header">
-          {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
-            <div key={day} className="calendar-day-header">{day}</div>
-          ))}
+      {/* Modern Calendar Container */}
+      <div className="modern-calendar">
+        {/* Calendar Header */}
+        <div className="calendar-header-modern">
+          <button 
+            onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1))}
+            className="calendar-nav-btn prev-btn"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="15,18 9,12 15,6"></polyline>
+            </svg>
+          </button>
+          
+          <div className="calendar-title">
+            <span className="month-name">{currentMonth.toLocaleDateString('en-US', { month: 'long' })}</span>
+            <span className="year-number">{currentMonth.getFullYear()}</span>
+          </div>
+          
+          <button 
+            onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
+            className="calendar-nav-btn next-btn"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polyline points="9,18 15,12 9,6"></polyline>
+            </svg>
+          </button>
         </div>
-        <div className="calendar-dates">
-          {generateCalendarDates().map((date, index) => {
-            const isCurrentMonth = date.getMonth() === currentMonth.getMonth()
-            const isAvailable = isDateAvailable(date)
-            const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString()
-            
-            return (
-              <button
-                key={index}
-                className={`calendar-date ${!isCurrentMonth ? 'other-month' : ''} ${!isAvailable ? 'unavailable' : ''} ${isSelected ? 'selected' : ''}`}
-                onClick={() => isAvailable && handleDateSelect(date)}
-                disabled={!isAvailable}
-              >
-                {date.getDate()}
-              </button>
-            )
-          })}
+
+        {/* Calendar Body */}
+        <div className="calendar-body-modern">
+          {/* Day Headers */}
+          <div className="calendar-weekdays">
+            {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((day, index) => (
+              <div key={index} className="weekday-header">
+                {day}
+              </div>
+            ))}
+          </div>
+
+          {/* Calendar Dates Grid */}
+          <div className="calendar-dates-modern">
+            {generateCalendarDates().map((date, index) => {
+              const isCurrentMonth = date.getMonth() === currentMonth.getMonth()
+              const isAvailable = isDateAvailable(date)
+              const isSelected = selectedDate && date.toDateString() === selectedDate.toDateString()
+              const isToday = date.toDateString() === new Date().toDateString()
+              
+              return (
+                <button
+                  key={index}
+                  className={`calendar-date-modern ${!isCurrentMonth ? 'other-month' : ''} ${!isAvailable ? 'unavailable' : ''} ${isSelected ? 'selected' : ''} ${isToday ? 'today' : ''}`}
+                  onClick={() => isAvailable && handleDateSelect(date)}
+                  disabled={!isAvailable}
+                >
+                  <span className="date-number">{date.getDate()}</span>
+                </button>
+              )
+            })}
+          </div>
         </div>
       </div>
     </div>
@@ -352,18 +411,23 @@ const AppointmentsPage = () => {
           <div className="selected-details">
             <span>Dr. {selectedDoctor.user.firstName} {selectedDoctor.user.lastName}</span>
             <span>•</span>
-            <span>{selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+            <span>{selectedDate.toLocaleDateString('en-US', { 
+              weekday: 'long', 
+              month: 'long', 
+              day: 'numeric'
+            })}</span>
           </div>
         )}
       </div>
 
       {/* Time Slots Grid */}
-      <div className="time-slots-grid">
+      <div className={`time-slots-grid ${loading ? 'loading' : ''}`}>
         {availableTimeSlots.map(timeSlot => (
           <button
             key={timeSlot.id}
             className={`time-slot ${selectedTimeSlot?.id === timeSlot.id ? 'selected' : ''}`}
             onClick={() => handleTimeSlotSelect(timeSlot)}
+            disabled={loading}
           >
             <span className="time">{timeSlot.startTime}</span>
             <span className="duration">30 min</span>
@@ -423,7 +487,11 @@ const AppointmentsPage = () => {
           </div>
           <div className="summary-item">
             <span className="label">Date:</span>
-            <span className="value">{selectedDate?.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}</span>
+            <span className="value">{selectedDate?.toLocaleDateString('en-US', { 
+              weekday: 'long', 
+              month: 'long', 
+              day: 'numeric'
+            })}</span>
           </div>
           <div className="summary-item">
             <span className="label">Time:</span>

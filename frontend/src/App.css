@@ -6,6 +6,16 @@
   background: var(--surface);
 }
 
+/* Loading container */
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  font-size: 1.2rem;
+  color: var(--muted);
+}
+
 /* Global button styles for the app */
 .btn {
   padding: 12px 24px;
@@ -76,4 +86,19 @@
   padding: 10px 20px;
   font-size: 0.9rem;
   font-weight: 600;
+}
+
+.btn-admin {
+  background: linear-gradient(135deg, #7c3aed, #5b21b6);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 15px rgba(124, 58, 237, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-admin:hover {
+  background: linear-gradient(135deg, #5b21b6, #4c1d95);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(124, 58, 237, 0.4);
 }
