@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Header from "./components/Header"
 import HomePage from "./components/HomePage"
 import PrescriptionsPage from "./components/PrescriptionsPage"
+import MedicalRecordsPage from "./components/MedicalRecordsPage"
 import AppointmentsPage from "./components/AppointmentsPage"
 import NotificationsPage from "./components/NotificationsPage"
 import ContactPage from "./components/ContactPage"
@@ -14,6 +15,7 @@ import DoctorDashboard from './components/DoctorDashboard';
 import DoctorAppointmentsPage from './components/DoctorAppointmentsPage';
 import DoctorPatientsPage from './components/DoctorPatientsPage';
 import DoctorPrescriptionsPage from './components/DoctorPrescriptionsPage';
+import DoctorMedicalRecordsPage from './components/DoctorMedicalRecordsPage';
 import DoctorNotificationsPage from './components/DoctorNotificationsPage';
 import DoctorProfilePage from './components/DoctorProfilePage';
 import useCurrentUser from './hooks/useCurrentUser';
@@ -35,6 +37,8 @@ function AppContent() {
       setCurrentPage('home');
     } else if (path === '/prescriptions') {
       setCurrentPage('prescriptions');
+    } else if (path === '/medical-records') {
+      setCurrentPage('medical-records');
     } else if (path === '/appointments') {
       setCurrentPage('appointments');
     } else if (path === '/notifications') {
@@ -79,6 +83,14 @@ function AppContent() {
             user?.role === 'DOCTOR' ? 
             <DoctorPrescriptionsPage user={user} /> : 
             <PrescriptionsPage />
+          } 
+        />
+        <Route 
+          path="/medical-records" 
+          element={
+            user?.role === 'DOCTOR' ? 
+            <DoctorMedicalRecordsPage user={user} /> : 
+            <MedicalRecordsPage />
           } 
         />
         <Route 

@@ -67,6 +67,14 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
               </li>
               <li>
                 <button 
+                  className={`nav-link ${currentPage === 'medical-records' ? 'active' : ''}`}
+                  onClick={() => { navigate('/medical-records'); onPageChange('medical-records'); closeMenu(); }}
+                >
+                  MEDICAL RECORDS
+                </button>
+              </li>
+              <li>
+                <button 
                   className={`nav-link ${currentPage === 'appointments' ? 'active' : ''}`}
                   onClick={() => { navigate('/appointments'); onPageChange('appointments'); closeMenu(); }}
                 >
@@ -198,6 +206,14 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
                 onClick={() => { navigate('/prescriptions'); onPageChange('prescriptions'); closeMenu(); }}
               >
                 PRESCRIPTIONS
+              </button>
+            </li>
+            <li>
+              <button 
+                className={`nav-link ${currentPage === 'medical-records' ? 'active' : ''}`}
+                onClick={() => { navigate('/medical-records'); onPageChange('medical-records'); closeMenu(); }}
+              >
+                MEDICAL RECORDS
               </button>
             </li>
             <li>
