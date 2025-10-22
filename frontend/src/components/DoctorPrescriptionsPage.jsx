@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DoctorDashboardSidebar from './DoctorDashboardSidebar';
 import doctorAPI from '../services/doctor';
+import downloadFile from '../utils/downloadFile';
 import './DoctorPrescriptionsPage.css';
 
 const mockDoctorPrescriptions = [
@@ -300,19 +301,17 @@ const DoctorPrescriptionsPage = ({ user }) => {
     setPreviewId((prev) => (prev === prescriptionId ? null : prescriptionId));
   };
 
-  const handleDownload = (prescription) => {
+  const handleDownload = async (prescription) => {
     if (!prescription.fileUrl) {
       return;
     }
+
     try {
-      const link = document.createElement('a');
-      link.href = prescription.fileUrl;
-      link.target = '_blank';
-      link.rel = 'noopener';
-      link.download = prescription.fileName || `${prescription.prescriptionNumber || 'prescription'}`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      await downloadFile({
+        url: prescription.fileUrl,
+        fileName: prescription.fileName,
+        fallbackName: prescription.prescriptionNumber || 'prescription'
+      });
     } catch (error) {
       console.error('Unable to download prescription file', error);
     }
@@ -608,3 +607,4 @@ const DoctorPrescriptionsPage = ({ user }) => {
 };
 
 export default DoctorPrescriptionsPage;
+

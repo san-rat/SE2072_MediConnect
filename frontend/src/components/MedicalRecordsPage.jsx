@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getMyMedicalRecords } from '../services/patient';
+import downloadFile from '../utils/downloadFile';
 import './MedicalRecordsPage.css';
 
 const fallbackRecords = [
@@ -119,17 +120,18 @@ const MedicalRecordsPage = () => {
     setExpandedId((prev) => (prev === id ? null : id));
   };
 
-  const handleDownload = (record) => {
+  const handleDownload = async (record) => {
     if (record.fileUrl) {
-      const anchor = document.createElement('a');
-      anchor.href = record.fileUrl;
-      anchor.target = '_blank';
-      anchor.rel = 'noopener';
-      anchor.download = record.fileName || record.recordNumber || 'medical-record';
-      document.body.appendChild(anchor);
-      anchor.click();
-      document.body.removeChild(anchor);
-      return;
+      try {
+        await downloadFile({
+          url: record.fileUrl,
+          fileName: record.fileName,
+          fallbackName: record.recordNumber || 'medical-record'
+        });
+        return;
+      } catch (error) {
+        console.error('Unable to download medical record file', error);
+      }
     }
 
     try {
@@ -261,3 +263,4 @@ const MedicalRecordsPage = () => {
 };
 
 export default MedicalRecordsPage;
+

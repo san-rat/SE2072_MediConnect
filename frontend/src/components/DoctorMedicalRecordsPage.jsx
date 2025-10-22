@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DoctorDashboardSidebar from './DoctorDashboardSidebar';
 import doctorAPI from '../services/doctor';
+import downloadFile from '../utils/downloadFile';
 import './DoctorMedicalRecordsPage.css';
 
 const allowedFileTypes = ['application/pdf', 'image/png', 'image/jpeg', 'image/gif', 'image/bmp'];
@@ -252,18 +253,20 @@ const DoctorMedicalRecordsPage = ({ user }) => {
     setPreviewId((prev) => (prev === recordId ? null : recordId));
   };
 
-  const handleDownload = (record) => {
+  const handleDownload = async (record) => {
     if (!record.fileUrl) {
       return;
     }
-    const anchor = document.createElement('a');
-    anchor.href = record.fileUrl;
-    anchor.target = '_blank';
-    anchor.rel = 'noopener';
-    anchor.download = record.fileName || record.recordNumber || 'medical-record';
-    document.body.appendChild(anchor);
-    anchor.click();
-    document.body.removeChild(anchor);
+
+    try {
+      await downloadFile({
+        url: record.fileUrl,
+        fileName: record.fileName,
+        fallbackName: record.recordNumber || 'medical-record'
+      });
+    } catch (error) {
+      console.error('Unable to download medical record file', error);
+    }
   };
 
   return (
@@ -460,3 +463,4 @@ const DoctorMedicalRecordsPage = ({ user }) => {
 };
 
 export default DoctorMedicalRecordsPage;
+

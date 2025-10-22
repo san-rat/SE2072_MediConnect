@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { getMyPrescriptions } from '../services/patient';
+import downloadFile from '../utils/downloadFile';
 import './PrescriptionsPage.css';
 
 const fallbackPrescriptions = [
@@ -123,17 +124,14 @@ const PrescriptionsPage = () => {
     setExpandedId((prev) => (prev === id ? null : id));
   };
 
-  const handleDownload = (prescription) => {
+  const handleDownload = async (prescription) => {
     if (prescription.fileUrl) {
       try {
-        const link = document.createElement('a');
-        link.href = prescription.fileUrl;
-        link.target = '_blank';
-        link.rel = 'noopener';
-        link.download = prescription.fileName || `${prescription.prescriptionNumber || 'prescription'}`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        await downloadFile({
+          url: prescription.fileUrl,
+          fileName: prescription.fileName,
+          fallbackName: prescription.prescriptionNumber || 'prescription'
+        });
         return;
       } catch (error) {
         console.error('Unable to download prescription file', error);
@@ -297,3 +295,4 @@ const PrescriptionsPage = () => {
 };
 
 export default PrescriptionsPage;
+
