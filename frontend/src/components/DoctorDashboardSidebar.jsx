@@ -11,42 +11,49 @@ const DoctorDashboardSidebar = ({ user, onLogout }) => {
     {
       id: 'dashboard',
       label: 'Dashboard',
-      icon: '🏠',
+      icon: 'DB',
       path: '/',
       active: location.pathname === '/'
     },
     {
       id: 'appointments',
       label: 'Appointments',
-      icon: '📅',
+      icon: 'AP',
       path: '/appointments',
       active: location.pathname === '/appointments'
     },
     {
       id: 'patients',
       label: 'Patients',
-      icon: '👥',
+      icon: 'PT',
       path: '/patients',
       active: location.pathname === '/patients'
     },
     {
       id: 'prescriptions',
       label: 'Prescriptions',
-      icon: '💊',
+      icon: 'RX',
       path: '/prescriptions',
       active: location.pathname === '/prescriptions'
     },
     {
+      id: 'medical-records',
+      label: 'Medical Records',
+      icon: 'MR',
+      path: '/medical-records',
+      active: location.pathname === '/medical-records'
+    },
+    {
       id: 'notifications',
       label: 'Notifications',
-      icon: '🔔',
+      icon: 'NT',
       path: '/notifications',
       active: location.pathname === '/notifications'
     },
     {
       id: 'profile',
       label: 'Profile',
-      icon: '👤',
+      icon: 'PF',
       path: '/profile',
       active: location.pathname === '/profile'
     }
@@ -125,3 +132,4 @@ const DoctorDashboardSidebar = ({ user, onLogout }) => {
 };
 
 export default DoctorDashboardSidebar;
+
