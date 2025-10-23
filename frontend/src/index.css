@@ -1,62 +1,254 @@
-:root {
-  --primary: #0d8eae;
-  --primary-600: #0a7e95;
-  --primary-700: #096b82;
-  --secondary: #7bc1b7;
+/* =========================
+   MediConnect — index.css
+   Tailwind v4 + shadcn/ui
+   ========================= */
 
-  --text-strong: #1e293b;
-  --text: #334155;
-  --muted: #64748b;
-  --border: #e2e8f0;
-  --surface: #ffffff;
+   @import "tailwindcss";
 
-  --g-brand: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+/* ---------- THEME TOKENS (RGB) ----------
+   Tailwind v4 uses @theme color tokens as RGB triplets.
+   Use via classes like bg-background text-foreground etc.
+------------------------------------------ */
+@theme {
+  /* Base surfaces & text */
+  --color-background: 248 250 252;   /* #F8FAFC */
+  --color-foreground: 11 59 79;      /* #0B3B4F */
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 1.6;
-  color: var(--text);
-  background: var(--surface);
-}
+  --color-card:       255 255 255;   /* #FFFFFF */
+  --color-card-foreground: 11 59 79; /* #0B3B4F */
 
-#root {
-  margin: 0;
-  padding: 0;
-  width: 100vw;
-  min-height: 100vh;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
+  --color-popover:       255 255 255;
+  --color-popover-foreground: 11 59 79;
 
-/* Smooth scrolling for better UX */
-html {
-  scroll-behavior: smooth;
-}
+  /* Brand */
+  --color-primary: 13 143 172;       /* #0D8FAC */
+  --color-primary-foreground: 255 255 255;
 
-/* Custom scrollbar for webkit browsers */
-::-webkit-scrollbar {
-  width: 8px;
+  /* Supporting */
+  --color-secondary: 7 90 107;       /* #075A6B */
+  --color-secondary-foreground: 255 255 255;
+
+  /* Muted surfaces (chips, subtle fills) */
+  --color-muted: 230 247 246;        /* #E6F7F6 */
+  --color-muted-foreground: 100 116 139; /* #64748B */
+
+  /* Semantic */
+  --color-destructive: 185 28 28;    /* #B91C1C */
+  --color-destructive-foreground: 255 255 255;
+  --color-success: 5 150 105;        /* #059669 */
+  --color-warning: 180 83 9;         /* #B45309 */
+
+  /* Borders / focus */
+  --color-border: 212 223 230;       /* #D4DFE6 */
+  --color-input:  212 223 230;
+  --color-ring:   153 224 233;       /* #99E0E9 */
+
+  --radius: 0.75rem; /* slightly rounder UI */
 }
 
-::-webkit-scrollbar-track {
-  background: #f1f5f9;
+/* Optional: dark mode scaffold that keeps the same medical feel */
+@media (prefers-color-scheme: dark) {
+  @theme {
+    --color-background: 243 245 247;   /* gentle light, not pure black */
+    --color-foreground: 11 59 79;
+
+    --color-card: 255 255 255;
+    --color-card-foreground: 11 59 79;
+
+    --color-popover: 255 255 255;
+    --color-popover-foreground: 11 59 79;
+
+    --color-border: 212 223 230;
+    --color-input:  212 223 230;
+
+    --color-ring:   153 224 233;
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--g-brand);
-  border-radius: 4px;
+/* ---------- BASE LAYER (reset + sensible defaults) ---------- */
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background-color: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Use our border token everywhere by default */
+  * { border-color: rgb(var(--color-border)); }
+
+  /* Accessible focus styles */
+  :focus-visible {
+    outline: 2px solid rgb(var(--color-ring));
+    outline-offset: 2px;
+  }
+
+  /* Scrollbar (subtle) */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: rgba(0,0,0,0.04); }
+  ::-webkit-scrollbar-thumb {
+    background: rgb(var(--color-primary));
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(13,143,172,0.85); }
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, var(--primary-600), var(--primary-700));
+/* ---------- UTILITIES (lightweight helpers) ---------- */
+@utility container-pro {
+  max-width: 80rem;  /* ~1280px */
+  margin-inline: auto;
+  padding-inline: 1rem;
+  @media (min-width: 640px) { padding-inline: 1.5rem; }
+  @media (min-width: 1024px) { padding-inline: 2rem; }
 }
+
+@utility ring-focus {
+  outline: 3px solid rgb(var(--color-ring));
+  outline-offset: 2px;
+}
+
+/* ---------- COMPONENT PRIMITIVES ----------
+   Keep these minimal; rely on Tailwind classes in components.
+------------------------------------------- */
+
+/* Cards */
+.card {
+  background: rgb(var(--color-card));
+  color: rgb(var(--color-card-foreground));
+  border: 1px solid rgb(var(--color-border));
+  border-radius: var(--radius);
+  box-shadow: 0 8px 30px rgba(2, 44, 55, 0.06);
+}
+.card:hover { box-shadow: 0 12px 40px rgba(2, 44, 55, 0.08); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 2.5rem; padding-inline: 1rem; border-radius: calc(var(--radius) - 2px);
+  font-weight: 600; gap: .5rem; white-space: nowrap;
+}
+.btn-primary {
+  background: rgb(var(--color-primary));
+  color: rgb(var(--color-primary-foreground));
+}
+.btn-primary:hover { background: rgb(var(--color-secondary)); }
+.btn-outline {
+  background: #fff;
+  color: rgb(var(--color-primary));
+  border: 1px solid rgb(var(--color-primary));
+}
+.btn-outline:hover { background: rgb(var(--color-muted)); }
+
+/* Inputs / Select triggers */
+.input, .select-trigger {
+  height: 2.5rem; width: 100%;
+  background: #fff;
+  color: rgb(var(--color-foreground));
+  border: 1px solid rgb(var(--color-input));
+  border-radius: var(--radius);
+  padding: .5rem .75rem;
+}
+.input::placeholder { color: rgba(100,116,139,.9); }
+.input:focus, .select-trigger:focus { border-color: rgb(var(--color-primary)); }
+
+/* Chips / badges */
+.badge {
+  display:inline-flex; align-items:center; gap:.375rem;
+  border-radius: 999px; padding:.125rem .5rem; font-size:.75rem; line-height:1rem;
+  font-weight: 600;
+}
+.badge-info    { background:#E0F2FE; color:#0284C7; }
+.badge-success { background:#ECFDF5; color:#059669; }
+.badge-warning { background:#FFFBEB; color:#B45309; }
+.badge-error   { background:#FEF2F2; color:#B91C1C; }
+
+/* ---------- RADIX/SHADCN ANIMATIONS ----------
+   We do NOT override positioning. We add tasteful animations gated by data-*.
+------------------------------------------------ */
+
+/* Fade */
+@keyframes mc-fade-in   { from { opacity: 0 } to { opacity: 1 } }
+@keyframes mc-fade-out  { from { opacity: 1 } to { opacity: 0 } }
+
+/* Zoom */
+@keyframes mc-zoom-in   { from { opacity: 0; transform: scale(.96) } to { opacity: 1; transform: scale(1) } }
+@keyframes mc-zoom-out  { from { opacity: 1; transform: scale(1) } to { opacity: 0; transform: scale(.96) } }
+
+/* Slide (popover/dropdown) */
+@keyframes mc-slide-up    { from { transform: translateY(6px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
+@keyframes mc-slide-down  { from { transform: translateY(-6px); opacity: 0 } to { transform: translateY(0); opacity: 1 } }
+@keyframes mc-slide-left  { from { transform: translateX(6px); opacity: 0 } to { transform: translateX(0); opacity: 1 } }
+@keyframes mc-slide-right { from { transform: translateX(-6px); opacity: 0 } to { transform: translateX(0); opacity: 1 } }
+
+/* Accordion */
+@keyframes mc-accordion-down { from { height: 0 } to { height: var(--radix-accordion-content-height) } }
+@keyframes mc-accordion-up   { from { height: var(--radix-accordion-content-height) } to { height: 0 } }
+
+/* Apply to Radix primitives */
+[data-state="open"][data-side="bottom"] { animation: mc-slide-up 160ms cubic-bezier(.22,1,.36,1); }
+[data-state="open"][data-side="top"]    { animation: mc-slide-down 160ms cubic-bezier(.22,1,.36,1); }
+[data-state="open"][data-side="left"]   { animation: mc-slide-right 160ms cubic-bezier(.22,1,.36,1); }
+[data-state="open"][data-side="right"]  { animation: mc-slide-left 160ms cubic-bezier(.22,1,.36,1); }
+
+[data-state="open"].dialog-content,
+[data-state="open"].popover-content,
+[data-state="open"].dropdown-content,
+[role="menu"][data-state="open"],
+[role="dialog"][data-state="open"] {
+  animation: mc-zoom-in 160ms cubic-bezier(.22,1,.36,1);
+}
+[data-state="closed"].dialog-content,
+[data-state="closed"].popover-content,
+[data-state="closed"].dropdown-content,
+[role="menu"][data-state="closed"],
+[role="dialog"][data-state="closed"] {
+  animation: mc-zoom-out 120ms ease;
+}
+
+/* Accordion panels */
+[data-radix-accordion-content][data-state="open"]  { animation: mc-accordion-down 180ms ease-out; overflow: hidden; }
+[data-radix-accordion-content][data-state="closed"]{ animation: mc-accordion-up 160ms ease-in;  overflow: hidden; }
+
+/* Ensure poppers render above cards without forcing position */
+[data-radix-popper-content-wrapper] { z-index: 50; }
+
+/* --- Radix/shadcn dropdown background + border fix --- */
+[data-radix-popper-content-wrapper] .dropdown-content,
+[data-radix-popper-content-wrapper] .SelectContent,
+[role="listbox"] {
+  background-color: rgb(var(--color-popover)) !important;      /* solid bg (white) */
+  color: rgb(var(--color-popover-foreground)) !important;
+  border: 1px solid rgb(var(--color-border)) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 12px 40px rgba(2,44,55,.10) !important;
+}
+
+/* Ensure inner viewport doesn't reset it to transparent */
+[data-radix-popper-content-wrapper] .SelectViewport {
+  background-color: inherit !important;
+}
+
+/* Keep animations; just guarantee full opacity when open */
+[data-radix-popper-content-wrapper] [data-state="open"] {
+  opacity: 1 !important;
+}
+
+/* subtle, medical hover */
+[role="option"][data-highlighted] {
+  background-color: rgb(var(--color-muted)) !important;
+  color: rgb(var(--color-foreground)) !important;
+}
+
+/* ---------- OPTIONAL: heading/text helpers (keep tiny) ---------- */
+.mc-heading { color:#0B3B4F; font-weight:800; letter-spacing:-0.02em; }
+.mc-subheading { color:rgb(var(--color-muted-foreground)); }
+.mc-body { color: rgb(31 41 55); } /* #1F2937 */

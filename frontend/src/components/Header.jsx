@@ -235,13 +235,25 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
               </li>
             )}
             <li>
-              <button 
-                className={`nav-link ${currentPage === 'notifications' ? 'active' : ''}`}
-                onClick={() => { navigate('/notifications'); onPageChange('notifications'); closeMenu(); }}
+              <button
+                  className={`nav-link ${currentPage === 'notifications' ? 'active' : ''}`}
+                  onClick={() => {
+                    // Route user to their correct notifications page
+                    if (user?.role === 'DOCTOR') {
+                      navigate('/notifications'); // DoctorNotificationsPage
+                    } else if (user?.role === 'ADMIN') {
+                      navigate('/notifications'); // AdminNotificationsPage
+                    } else {
+                      navigate('/notifications'); // PatientNotificationsPage
+                    }
+                    onPageChange('notifications');
+                    closeMenu();
+                  }}
               >
                 NOTIFICATIONS
               </button>
             </li>
+
             <li>
               <button 
                 className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}
