@@ -127,43 +127,72 @@ export const doctorAPI = {
     }
   },
 
-  // Get doctor's prescriptions (this would need to be implemented in backend)
+  // Get doctor's prescriptions
   getMyPrescriptions: async () => {
     try {
-      // For now, return mock data until backend endpoint is implemented
-      return [
-        {
-          id: 1,
-          prescriptionNumber: 'RX001234',
-          patientName: 'Alice Johnson',
-          patientEmail: 'alice.johnson@email.com',
-          date: '2025-10-01',
-          validUntil: '2025-11-01',
-          status: 'Active',
-          medications: [
-            { name: 'Metformin', dosage: '500mg', duration: '30 days' },
-            { name: 'Lisinopril', dosage: '10mg', duration: '30 days' }
-          ],
-          instructions: 'Take with food, once daily',
-          notes: 'Monitor blood sugar levels'
-        },
-        {
-          id: 2,
-          prescriptionNumber: 'RX001235',
-          patientName: 'Bob Williams',
-          patientEmail: 'bob.williams@email.com',
-          date: '2025-10-02',
-          validUntil: '2025-11-02',
-          status: 'Pending',
-          medications: [
-            { name: 'Atorvastatin', dosage: '20mg', duration: '30 days' }
-          ],
-          instructions: 'Take at bedtime',
-          notes: 'Follow up in 4 weeks'
-        }
-      ];
+      const response = await api.get('/api/prescriptions/doctor/my');
+      return response.data;
     } catch (error) {
       console.error('Error fetching doctor prescriptions:', error);
+      throw error;
+    }
+  },
+
+  // Create or upload a prescription
+  createPrescription: async (prescriptionData) => {
+    try {
+      const { attachment, medications = [], ...otherFields } = prescriptionData || {};
+      const payload = { ...otherFields, medications };
+
+      if (attachment) {
+        const formData = new FormData();
+        formData.append('payload', JSON.stringify(payload));
+        formData.append('attachment', attachment);
+        const response = await api.post('/api/prescriptions/doctor', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        return response.data;
+      }
+
+      const response = await api.post('/api/prescriptions/doctor', payload);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating prescription:', error);
+      throw error;
+    }
+  },
+
+  // Get doctor's medical records
+  getMyMedicalRecords: async () => {
+    try {
+      const response = await api.get('/api/medical-records/doctor/my');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching doctor medical records:', error);
+      throw error;
+    }
+  },
+
+  // Create or upload a medical record
+  createMedicalRecord: async (recordData) => {
+    try {
+      const { attachment, ...otherFields } = recordData || {};
+      const payload = { ...otherFields };
+
+      if (attachment) {
+        const formData = new FormData();
+        formData.append('payload', JSON.stringify(payload));
+        formData.append('attachment', attachment);
+        const response = await api.post('/api/medical-records/doctor', formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        return response.data;
+      }
+
+      const response = await api.post('/api/medical-records/doctor', payload);
+      return response.data;
+    } catch (error) {
+      console.error('Error creating medical record:', error);
       throw error;
     }
   },
@@ -283,3 +312,4 @@ export const doctorAPI = {
 };
 
 export default doctorAPI;
+

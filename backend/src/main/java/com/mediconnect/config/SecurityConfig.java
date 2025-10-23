@@ -10,6 +10,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -40,7 +43,13 @@ public class SecurityConfig {
                     "/api/test/**",           // test data endpoints for debugging
                     "/api/debug/**"           // debug endpoints
                 ).permitAll()
-                .requestMatchers("/api/admins/**").hasRole("ADMIN")  // Admin-only endpoints
+
+                    .requestMatchers("/files/**").permitAll()
+                    .requestMatchers("/api/prescriptions/doctor/**").hasRole("DOCTOR")
+                    .requestMatchers("/api/prescriptions/patient/**").hasRole("PATIENT")
+                    .requestMatchers("/api/medical-records/doctor/**").hasRole("DOCTOR")
+                    .requestMatchers("/api/medical-records/patient/**").hasRole("PATIENT")
+                    .requestMatchers("/api/admins/**").hasRole("ADMIN")  // Admin-only endpoints
                 .anyRequest().authenticated()
             );
 
