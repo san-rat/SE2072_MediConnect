@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react'
 import './AdminDashboard.css'
-//import NotificationsPage from "@/pages/Notification/NotificationsPage.jsx";
+import './admin/AdminManagement.css'
 import AdminNotificationsPage from "@/pages/Notification/AdminNotificationsPage.jsx";
+import UserManagement from './admin/UserManagement';
+import DoctorManagement from './admin/DoctorManagement';
+import PatientManagement from './admin/PatientManagement';
+import AppointmentManagement from './admin/AppointmentManagement';
+import { adminService } from '../services/admin';
 
 const AdminDashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('overview')
@@ -11,6 +16,28 @@ const AdminDashboard = ({ user, onLogout }) => {
     totalPatients: 0,
     totalAppointments: 0
   })
+  const [recentActivity, setRecentActivity] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    fetchDashboardData()
+  }, [])
+
+  const fetchDashboardData = async () => {
+    try {
+      setLoading(true)
+      const [statsData, activityData] = await Promise.all([
+        adminService.getDashboardStats(),
+        adminService.getRecentActivity()
+      ])
+      setStats(statsData)
+      setRecentActivity(activityData)
+    } catch (error) {
+      console.error('Error fetching dashboard data:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const tabs = [
     { id: 'overview', label: 'Overview', icon: '📊' },
@@ -30,61 +57,72 @@ const AdminDashboard = ({ user, onLogout }) => {
 
   const renderOverview = () => (
       <div className="overview-content">
-        <div className="stats-grid">
-          <div className="stat-card">
-            <div className="stat-icon">👥</div>
-            <div className="stat-info">
-              <h3>{stats.totalUsers}</h3>
-              <p>Total Users</p>
+        {loading ? (
+          <div className="loading">Loading dashboard data...</div>
+        ) : (
+          <div className="stats-grid">
+            <div className="stat-card">
+              <div className="stat-icon">👥</div>
+              <div className="stat-info">
+                <h3>{stats.totalUsers}</h3>
+                <p>Total Users</p>
+              </div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-icon">👨‍⚕️</div>
+              <div className="stat-info">
+                <h3>{stats.totalDoctors}</h3>
+                <p>Doctors</p>
+              </div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-icon">🏥</div>
+              <div className="stat-info">
+                <h3>{stats.totalPatients}</h3>
+                <p>Patients</p>
+              </div>
+            </div>
+            <div className="stat-card">
+              <div className="stat-icon">📅</div>
+              <div className="stat-info">
+                <h3>{stats.totalAppointments}</h3>
+                <p>Appointments</p>
+              </div>
             </div>
           </div>
-          <div className="stat-card">
-            <div className="stat-icon">👨‍⚕️</div>
-            <div className="stat-info">
-              <h3>{stats.totalDoctors}</h3>
-              <p>Doctors</p>
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">🏥</div>
-            <div className="stat-info">
-              <h3>{stats.totalPatients}</h3>
-              <p>Patients</p>
-            </div>
-          </div>
-          <div className="stat-card">
-            <div className="stat-icon">📅</div>
-            <div className="stat-info">
-              <h3>{stats.totalAppointments}</h3>
-              <p>Appointments</p>
-            </div>
-          </div>
-        </div>
+        )}
 
         <div className="recent-activity">
-          <h3>Recent Activity</h3>
+          <div className="activity-header">
+            <h3>Recent Activity</h3>
+            <button 
+              className="refresh-btn" 
+              onClick={fetchDashboardData}
+              disabled={loading}
+            >
+              {loading ? 'Refreshing...' : '🔄 Refresh'}
+            </button>
+          </div>
           <div className="activity-list">
-            <div className="activity-item">
-              <div className="activity-icon">✅</div>
-              <div className="activity-content">
-                <p>New doctor registered: Dr. Sarah Johnson</p>
-                <span className="activity-time">2 hours ago</span>
+            {recentActivity.length > 0 ? (
+              recentActivity.map((activity, index) => (
+                <div key={`${activity.type}-${activity.id}-${index}`} className="activity-item">
+                  <div className="activity-icon">{activity.icon}</div>
+                  <div className="activity-content">
+                    <p>{activity.message}</p>
+                    <span className="activity-time">{activity.timeAgo}</span>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="activity-item">
+                <div className="activity-icon">📊</div>
+                <div className="activity-content">
+                  <p>No recent activity to display</p>
+                  <span className="activity-time">Check back later for updates</span>
+                </div>
               </div>
-            </div>
-            <div className="activity-item">
-              <div className="activity-icon">📅</div>
-              <div className="activity-content">
-                <p>Appointment completed: John Smith - Cardiology</p>
-                <span className="activity-time">4 hours ago</span>
-              </div>
-            </div>
-            <div className="activity-item">
-              <div className="activity-icon">👤</div>
-              <div className="activity-content">
-                <p>New patient registered: Michael Chen</p>
-                <span className="activity-time">6 hours ago</span>
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -102,13 +140,13 @@ const AdminDashboard = ({ user, onLogout }) => {
       case 'overview':
         return renderOverview()
       case 'users':
-        return <div className="tab-content"><h3>User Management</h3><p>User management features coming soon...</p></div>
+        return <UserManagement />
       case 'doctors':
-        return <div className="tab-content"><h3>Doctor Management</h3><p>Doctor management features coming soon...</p></div>
+        return <DoctorManagement />
       case 'patients':
-        return <div className="tab-content"><h3>Patient Management</h3><p>Patient management features coming soon...</p></div>
+        return <PatientManagement />
       case 'appointments':
-        return <div className="tab-content"><h3>Appointment Management</h3><p>Appointment management features coming soon...</p></div>
+        return <AppointmentManagement />
       case 'notifications':
         return renderNotifications()
       default:
