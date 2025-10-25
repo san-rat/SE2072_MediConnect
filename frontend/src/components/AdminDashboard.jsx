@@ -6,6 +6,8 @@ import UserManagement from './admin/UserManagement';
 import DoctorManagement from './admin/DoctorManagement';
 import PatientManagement from './admin/PatientManagement';
 import AppointmentManagement from './admin/AppointmentManagement';
+import SystemHealth from './admin/SystemHealth';
+import Analytics from './admin/Analytics';
 import { adminService } from '../services/admin';
 
 const AdminDashboard = ({ user, onLogout }) => {
@@ -92,39 +94,11 @@ const AdminDashboard = ({ user, onLogout }) => {
           </div>
         )}
 
-        <div className="recent-activity">
-          <div className="activity-header">
-            <h3>Recent Activity</h3>
-            <button 
-              className="refresh-btn" 
-              onClick={fetchDashboardData}
-              disabled={loading}
-            >
-              {loading ? 'Refreshing...' : '🔄 Refresh'}
-            </button>
-          </div>
-          <div className="activity-list">
-            {recentActivity.length > 0 ? (
-              recentActivity.map((activity, index) => (
-                <div key={`${activity.type}-${activity.id}-${index}`} className="activity-item">
-                  <div className="activity-icon">{activity.icon}</div>
-                  <div className="activity-content">
-                    <p>{activity.message}</p>
-                    <span className="activity-time">{activity.timeAgo}</span>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <div className="activity-item">
-                <div className="activity-icon">📊</div>
-                <div className="activity-content">
-                  <p>No recent activity to display</p>
-                  <span className="activity-time">Check back later for updates</span>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
+        {/* System Health & Performance */}
+        <SystemHealth />
+
+        {/* Charts & Analytics */}
+        <Analytics />
       </div>
   )
 

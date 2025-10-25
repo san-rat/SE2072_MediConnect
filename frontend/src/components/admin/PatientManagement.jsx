@@ -6,6 +6,8 @@ const PatientManagement = () => {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [deleting, setDeleting] = useState(null);
 
   useEffect(() => {
     fetchPatients();
@@ -14,10 +16,11 @@ const PatientManagement = () => {
   const fetchPatients = async () => {
     try {
       setLoading(true);
+      setError(null);
       const data = await adminService.getAllPatients();
       setPatients(data);
     } catch (err) {
-      setError('Failed to fetch patients');
+      setError(err.message || 'Failed to fetch patients');
       console.error(err);
     } finally {
       setLoading(false);
@@ -25,19 +28,33 @@ const PatientManagement = () => {
   };
 
   const handleDeletePatient = async (patientId) => {
-    if (window.confirm('Are you sure you want to delete this patient?')) {
+    if (window.confirm('Are you sure you want to delete this patient? This action cannot be undone.')) {
       try {
-        await adminService.deletePatient(patientId);
+        setDeleting(patientId);
+        setError(null);
+        setSuccessMessage(null);
+        
+        const result = await adminService.deletePatient(patientId);
+        
+        // Show success message
+        setSuccessMessage(result.message);
+        
+        // Remove patient from list
         setPatients(patients.filter(patient => patient.id !== patientId));
+        
+        // Clear success message after 3 seconds
+        setTimeout(() => setSuccessMessage(null), 3000);
+        
       } catch (err) {
-        setError('Failed to delete patient');
+        setError(err.message || 'Failed to delete patient');
         console.error(err);
+      } finally {
+        setDeleting(null);
       }
     }
   };
 
   if (loading) return <div className="loading">Loading patients...</div>;
-  if (error) return <div className="error">{error}</div>;
 
   return (
     <div className="patient-management">
@@ -45,6 +62,22 @@ const PatientManagement = () => {
         <h3>Patient Management</h3>
         <p>Total Patients: {patients.length}</p>
       </div>
+
+      {/* Success Message */}
+      {successMessage && (
+        <div className="success-message">
+          <span className="success-icon">✓</span>
+          {successMessage}
+        </div>
+      )}
+
+      {/* Error Message */}
+      {error && (
+        <div className="error-message">
+          <span className="error-icon">⚠</span>
+          {error}
+        </div>
+      )}
 
       <div className="table-container">
         <table className="data-table">
@@ -70,10 +103,11 @@ const PatientManagement = () => {
                 <td>{patient.emergencyContact || 'N/A'}</td>
                 <td>
                   <button 
-                    className="delete-btn"
+                    className={`delete-btn ${deleting === patient.id ? 'deleting' : ''}`}
                     onClick={() => handleDeletePatient(patient.id)}
+                    disabled={deleting === patient.id}
                   >
-                    Delete
+                    {deleting === patient.id ? 'Deleting...' : 'Delete'}
                   </button>
                 </td>
               </tr>
