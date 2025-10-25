@@ -23,6 +23,87 @@
   max-height: 90vh;
   overflow-y: auto;
   animation: modalSlideIn 0.3s ease-out;
+  transition: background-color 0.3s ease;
+}
+
+/* Dark mode auth modal */
+.dark .auth-modal {
+  background: var(--card-background);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Dark mode modal header */
+.dark .auth-modal-header h2 {
+  color: var(--text-strong);
+}
+
+.dark .auth-modal-header p {
+  color: var(--text);
+}
+
+/* Dark mode form elements */
+.dark .auth-form-group label {
+  color: var(--text-strong);
+}
+
+.dark .auth-form-group input {
+  background: var(--input-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .auth-form-group input::placeholder {
+  color: var(--muted);
+}
+
+.dark .auth-form-group input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 142, 174, 0.1);
+}
+
+/* Dark mode buttons */
+.dark .auth-submit-btn {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+  color: white;
+}
+
+.dark .auth-submit-btn:hover {
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);
+}
+
+.dark .auth-toggle-btn {
+  background: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.dark .auth-toggle-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* Dark mode error messages */
+.dark .auth-error {
+  background: #1f2937;
+  border-color: #374151;
+  color: #fca5a5;
+}
+
+/* Dark mode success messages */
+.dark .auth-success {
+  background: #1f2937;
+  border-color: #374151;
+  color: #86efac;
+}
+
+/* Dark mode close button */
+.dark .auth-modal-close {
+  color: var(--text);
+}
+
+.dark .auth-modal-close:hover {
+  color: var(--text-strong);
+  background: var(--hover-background);
 }
 
 @keyframes modalSlideIn {

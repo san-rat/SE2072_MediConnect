@@ -2,6 +2,12 @@
   min-height: calc(100vh - 70px);
   background: linear-gradient(135deg, #f9fafb 0%, #e5edf5 100%);
   padding: 40px 0;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode medical records page */
+.dark .medical-records-page {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
 .page-container {
@@ -20,12 +26,124 @@
   color: #1f2937;
   margin-bottom: 8px;
   font-weight: 700;
+  transition: color 0.3s ease;
 }
 
 .page-header p {
   font-size: 1.05rem;
   color: #4b5563;
   margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode medical records page header */
+.dark .page-header h1 {
+  color: var(--text-strong);
+}
+
+.dark .page-header p {
+  color: var(--muted);
+}
+
+/* Dark mode medical records content */
+.dark .medical-records-content {
+  color: var(--text);
+}
+
+/* Dark mode record cards */
+.dark .record-card {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .record-card h3 {
+  color: var(--text-strong);
+}
+
+.dark .record-card p {
+  color: var(--text);
+}
+
+/* Dark mode info banner */
+.dark .info-banner {
+  background: #1f2937;
+  color: #fbbf24;
+  border-color: #374151;
+}
+
+/* Dark mode empty state */
+.dark .empty-state {
+  color: var(--text);
+}
+
+.dark .empty-state h3 {
+  color: var(--text-strong);
+}
+
+.dark .empty-state p {
+  color: var(--muted);
+}
+
+/* Dark mode buttons */
+.dark .btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+  color: white;
+}
+
+.dark .btn-outline {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.dark .btn-outline:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* Dark mode form elements */
+.dark .form-group label {
+  color: var(--text-strong);
+}
+
+.dark .form-group input,
+.dark .form-group textarea,
+.dark .form-group select {
+  background: var(--input-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .form-group input::placeholder,
+.dark .form-group textarea::placeholder {
+  color: var(--muted);
+}
+
+.dark .form-group input:focus,
+.dark .form-group textarea:focus,
+.dark .form-group select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 142, 174, 0.1);
+}
+
+/* Dark mode record details */
+.dark .record-details {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .record-details h4 {
+  color: var(--text-strong);
+}
+
+.dark .record-details p {
+  color: var(--text);
+}
+
+/* Dark mode loading */
+.dark .loading-container {
+  color: var(--text);
 }
 
 .info-banner {

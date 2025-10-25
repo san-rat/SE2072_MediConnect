@@ -28,8 +28,20 @@ function AppContent() {
   const [adminLoginOpen, setAdminLoginOpen] = useState(false)
   const [initialMode, setInitialMode] = useState("login")
   const [currentPage, setCurrentPage] = useState("home")
+  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('mc_dark_mode') === 'true')
   const { user, loadingUser } = useCurrentUser();
   const location = useLocation();
+
+  // Apply dark mode to document
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  // Dark mode changes are now handled via direct callback from Header
 
   // Update currentPage based on URL
   useEffect(() => {
@@ -153,7 +165,7 @@ function AppContent() {
   };
 
   return (
-    <div className="app">
+    <div className={`app ${isDarkMode ? 'dark' : ''}`}>
       {/* Hide header for doctor and admin views */}
       {!(user && (user.role === 'DOCTOR' || user.role === 'ADMIN')) && (
         <Header
@@ -164,6 +176,7 @@ function AppContent() {
           currentPage={currentPage}
           onPageChange={setCurrentPage}
           user={user}
+          onDarkModeToggle={(darkMode) => setIsDarkMode(darkMode)}
         />
       )}
 

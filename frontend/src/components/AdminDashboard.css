@@ -2,6 +2,12 @@
   min-height: 100vh;
   background: linear-gradient(135deg, #f8fafc 0%, #eafaf7 50%, #f0f9ff 100%);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode admin dashboard */
+.dark .admin-dashboard {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
 }
 
 .admin-header {
@@ -10,6 +16,131 @@
   padding: 0 24px;
   box-shadow: 0 2px 8px rgba(13, 142, 174, 0.08);
   backdrop-filter: blur(10px);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Dark mode admin header */
+.dark .admin-header {
+  background: var(--card-background);
+  border-bottom-color: var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode admin header text */
+.dark .admin-header h1 {
+  background: linear-gradient(135deg, #0d8eae 0%, #0a7e95 50%, #096b82 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .admin-user-info {
+  color: var(--text);
+}
+
+.dark .admin-logout-btn {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  color: white;
+}
+
+.dark .admin-logout-btn:hover {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+}
+
+/* Dark mode admin content */
+.dark .admin-content {
+  background: transparent;
+}
+
+/* Dark mode admin tabs */
+.dark .admin-tabs {
+  background: var(--card-background);
+  border-color: var(--border);
+}
+
+.dark .admin-tab {
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.dark .admin-tab.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.dark .admin-tab:hover:not(.active) {
+  background: var(--hover-background);
+  color: var(--text-strong);
+}
+
+/* Dark mode admin cards */
+.dark .admin-card {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .admin-card h3 {
+  color: var(--text-strong);
+}
+
+.dark .admin-card p {
+  color: var(--text);
+}
+
+/* Dark mode admin stats */
+.dark .admin-stat-card {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .admin-stat-card h3 {
+  color: var(--text-strong);
+}
+
+.dark .admin-stat-card .stat-number {
+  color: var(--primary);
+}
+
+.dark .admin-stat-card .stat-label {
+  color: var(--text);
+}
+
+/* Dark mode admin buttons */
+.dark .admin-btn {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.dark .admin-btn:hover {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+}
+
+.dark .admin-btn-secondary {
+  background: transparent;
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.dark .admin-btn-secondary:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* Dark mode admin refresh button */
+.dark .admin-refresh-btn {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+.dark .admin-refresh-btn:hover {
+  background: var(--hover-background);
+  color: var(--text-strong);
 }
 
 .admin-header-content {

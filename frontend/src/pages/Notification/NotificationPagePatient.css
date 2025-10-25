@@ -4,6 +4,129 @@
     background-color: #f9fafb; /* background */
     color: #1f2937; /* foreground */
     font-family: sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode notification page */
+.dark .notification-page {
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+/* Dark mode header */
+.dark .header-section h2 {
+    color: var(--text-strong);
+}
+
+.dark .header-section p {
+    color: var(--muted);
+}
+
+/* Dark mode cards */
+.dark .notification-card {
+    background: var(--card-background);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.dark .notification-card h3 {
+    color: var(--text-strong);
+}
+
+.dark .notification-card p {
+    color: var(--text);
+}
+
+/* Dark mode buttons */
+.dark .btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.dark .btn-primary:hover {
+    background: var(--primary-600);
+}
+
+.dark .btn-outline {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.dark .btn-outline:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* Dark mode form elements */
+.dark .form-group label {
+    color: var(--text-strong);
+}
+
+.dark .form-group input,
+.dark .form-group select,
+.dark .form-group textarea {
+    background: var(--input-background);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.dark .form-group input::placeholder,
+.dark .form-group textarea::placeholder {
+    color: var(--muted);
+}
+
+.dark .form-group input:focus,
+.dark .form-group select:focus,
+.dark .form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(13, 142, 174, 0.1);
+}
+
+/* Dark mode filter section */
+.dark .filter-section {
+    background: var(--card-background);
+    border-color: var(--border);
+}
+
+.dark .filter-section label {
+    color: var(--text-strong);
+}
+
+/* Dark mode notification items */
+.dark .notification-item {
+    background: var(--card-background);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.dark .notification-item:hover {
+    background: var(--hover-background);
+}
+
+.dark .notification-item h4 {
+    color: var(--text-strong);
+}
+
+.dark .notification-item p {
+    color: var(--text);
+}
+
+/* Dark mode empty state */
+.dark .empty-state {
+    color: var(--text);
+}
+
+.dark .empty-state h3 {
+    color: var(--text-strong);
+}
+
+.dark .empty-state p {
+    color: var(--muted);
+}
+
+/* Dark mode loading */
+.dark .loading-container {
+    color: var(--text);
 }
 
 .container {

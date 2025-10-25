@@ -11,6 +11,132 @@
   padding: 1.5rem 2rem;
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(13, 142, 174, 0.08);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+/* Dark mode management header */
+.dark .management-header {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  border-bottom-color: var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode management header text */
+.dark .management-header h3 {
+  color: var(--primary);
+}
+
+/* Dark mode management components */
+.dark .management-content {
+  color: var(--text);
+}
+
+/* Dark mode data tables */
+.dark .data-table {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .data-table th {
+  background: var(--surface);
+  color: var(--text-strong);
+  border-color: var(--border);
+}
+
+.dark .data-table td {
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .data-table tr:hover {
+  background: var(--hover-background);
+}
+
+/* Dark mode buttons */
+.dark .btn-delete {
+  background: #dc2626;
+  color: white;
+  border-color: #dc2626;
+}
+
+.dark .btn-delete:hover {
+  background: #b91c1c;
+  border-color: #b91c1c;
+}
+
+.dark .btn-add {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.dark .btn-add:hover {
+  background: var(--primary-600);
+  border-color: var(--primary-600);
+}
+
+/* Dark mode status badges */
+.dark .status-badge {
+  color: var(--text);
+}
+
+.dark .status-badge.active {
+  background: #10b981;
+  color: white;
+}
+
+.dark .status-badge.pending {
+  background: #f59e0b;
+  color: white;
+}
+
+.dark .status-badge.cancelled {
+  background: #ef4444;
+  color: white;
+}
+
+/* Dark mode success/error messages */
+.dark .success-message {
+  background: #1f2937;
+  border-color: #374151;
+  color: #86efac;
+}
+
+.dark .error-message {
+  background: #1f2937;
+  border-color: #374151;
+  color: #fca5a5;
+}
+
+/* Dark mode loading states */
+.dark .loading-container {
+  color: var(--text);
+}
+
+/* Dark mode form elements */
+.dark .form-group label {
+  color: var(--text-strong);
+}
+
+.dark .form-group input,
+.dark .form-group select,
+.dark .form-group textarea {
+  background: var(--input-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .form-group input::placeholder,
+.dark .form-group textarea::placeholder {
+  color: var(--muted);
+}
+
+.dark .form-group input:focus,
+.dark .form-group select:focus,
+.dark .form-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 142, 174, 0.1);
 }
 
 .management-header h3 {

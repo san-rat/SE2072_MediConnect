@@ -2,6 +2,12 @@
   min-height: calc(100vh - 70px);
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 40px 0;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode contact page */
+.dark .contact-page {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
 }
 
 .page-container {
@@ -20,12 +26,93 @@
   color: #1e293b;
   margin-bottom: 10px;
   font-weight: 700;
+  transition: color 0.3s ease;
 }
 
 .page-header p {
   font-size: 1.1rem;
   color: #64748b;
   margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode contact page header */
+.dark .page-header h1 {
+  color: var(--text-strong);
+}
+
+.dark .page-header p {
+  color: var(--muted);
+}
+
+/* Dark mode contact content */
+.dark .contact-content {
+  color: var(--text);
+}
+
+/* Dark mode contact cards */
+.dark .contact-card {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .contact-card h3 {
+  color: var(--text-strong);
+}
+
+.dark .contact-card p {
+  color: var(--text);
+}
+
+/* Dark mode form elements */
+.dark .contact-form label {
+  color: var(--text-strong);
+}
+
+.dark .contact-form input,
+.dark .contact-form textarea {
+  background: var(--input-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .contact-form input::placeholder,
+.dark .contact-form textarea::placeholder {
+  color: var(--muted);
+}
+
+.dark .contact-form input:focus,
+.dark .contact-form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 142, 174, 0.1);
+}
+
+/* Dark mode buttons */
+.dark .contact-form .btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+  color: white;
+}
+
+.dark .contact-form .btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-600) 0%, var(--primary-700) 100%);
+}
+
+/* Dark mode contact info */
+.dark .contact-info h3 {
+  color: var(--text-strong);
+}
+
+.dark .contact-info p {
+  color: var(--text);
+}
+
+.dark .contact-info .contact-item {
+  color: var(--text);
+}
+
+.dark .contact-info .contact-item strong {
+  color: var(--text-strong);
 }
 
 .contact-content {

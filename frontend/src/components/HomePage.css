@@ -27,6 +27,61 @@
   position: relative;
   overflow: hidden;
   margin-top: 70px; /* Add margin to account for fixed header */
+  transition: background 0.3s ease;
+}
+
+/* Dark mode hero */
+.dark .hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+}
+
+/* Dark mode text colors */
+.dark .hero h1,
+.dark .hero h2,
+.dark .hero h3 {
+  color: var(--text-strong);
+}
+
+.dark .hero p {
+  color: var(--text);
+}
+
+/* Dark mode cards */
+.dark .card {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+/* Dark mode buttons */
+.dark .btn-outline {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.dark .btn-outline:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* Dark mode sections */
+.dark .section {
+  background: var(--background);
+  color: var(--text);
+}
+
+/* Dark mode form elements */
+.dark input,
+.dark textarea,
+.dark select {
+  background: var(--input-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark input::placeholder,
+.dark textarea::placeholder {
+  color: var(--muted);
 }
 
 .hero::before {
