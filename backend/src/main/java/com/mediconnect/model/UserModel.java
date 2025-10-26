@@ -12,6 +12,8 @@ public class UserModel {
     @Column(length = 36)
     private String id;
 
+
+
     @Column(nullable = false, unique = true)
     private String email;
 
@@ -57,4 +59,7 @@ public class UserModel {
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
+
+
 }

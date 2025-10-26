@@ -3,6 +3,12 @@
   min-height: calc(100vh - 70px);
   background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 40px 0;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode appointments page */
+.dark .appointments-page {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%) !important;
 }
 
 .page-container {
@@ -30,6 +36,274 @@
   font-size: 1.2rem;
   color: #64748b;
   margin: 0;
+  transition: color 0.3s ease;
+}
+
+/* Dark mode page header */
+.dark .page-header h1 {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.dark .page-header p {
+  color: var(--muted);
+}
+
+/* Dark mode error message */
+.dark .error-message {
+  background: #1f2937;
+  border-color: #374151;
+  color: #fca5a5;
+}
+
+/* Dark mode cards and components */
+.dark .card {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .doctor-card {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .doctor-card:hover {
+  background: var(--hover-background);
+  border-color: var(--primary);
+}
+
+.dark .doctor-card h3 {
+  color: var(--text-strong);
+}
+
+.dark .doctor-card p {
+  color: var(--text);
+}
+
+/* Dark mode form elements */
+.dark .form-group label {
+  color: var(--text-strong);
+}
+
+.dark .form-group input,
+.dark .form-group select,
+.dark .form-group textarea {
+  background: var(--input-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .form-group input::placeholder,
+.dark .form-group textarea::placeholder {
+  color: var(--muted);
+}
+
+.dark .form-group input:focus,
+.dark .form-group select:focus,
+.dark .form-group textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(13, 142, 174, 0.1);
+}
+
+/* Dark mode buttons */
+.dark .btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-600) 100%);
+  color: white;
+}
+
+.dark .btn-outline {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.dark .btn-outline:hover {
+  background: var(--primary);
+  color: white;
+}
+
+/* Dark mode steps */
+.dark .step-indicator {
+  background: var(--card-background);
+  border-color: var(--border);
+}
+
+.dark .step-indicator .step.active {
+  background: var(--primary);
+  color: white;
+}
+
+.dark .step-indicator .step {
+  background: var(--surface);
+  color: var(--muted);
+  border-color: var(--border);
+}
+
+/* Dark mode search and filter */
+.dark .search-filter-container {
+  background: var(--card-background);
+  border-color: var(--border);
+}
+
+.dark .search-filter-container label {
+  color: var(--text-strong);
+}
+
+/* Dark mode time slots */
+.dark .time-slot {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .time-slot:hover {
+  background: var(--hover-background);
+  border-color: var(--primary);
+}
+
+.dark .time-slot.selected {
+  background: var(--primary);
+  color: white;
+}
+
+.dark .time-slot.unavailable {
+  background: var(--surface);
+  color: var(--muted);
+  opacity: 0.5;
+}
+
+/* Dark mode confirmation */
+.dark .confirmation-card {
+  background: var(--card-background);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.dark .confirmation-card h3 {
+  color: var(--text-strong);
+}
+
+.dark .confirmation-card p {
+  color: var(--text);
+}
+
+/* Dark mode loading */
+.dark .loading-container {
+  color: var(--text);
+}
+
+/* Dark mode success message */
+.dark .success-message {
+  background: #1f2937;
+  border-color: #374151;
+  color: #86efac;
+}
+
+/* Dark mode doctor selection section */
+.dark .doctor-selection h2 {
+  color: var(--text-strong);
+}
+
+.dark .doctor-selection p {
+  color: var(--text);
+}
+
+/* Dark mode search and filter container */
+.dark .search-filter-container {
+  background: var(--card-background) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+.dark .search-filter-container label {
+  color: var(--text-strong) !important;
+}
+
+.dark .search-filter-container input,
+.dark .search-filter-container select {
+  background: var(--input-background) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+}
+
+.dark .search-filter-container input::placeholder {
+  color: var(--muted) !important;
+}
+
+.dark .search-filter-container input:focus,
+.dark .search-filter-container select:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 3px rgba(13, 142, 174, 0.1) !important;
+}
+
+/* Dark mode doctor grid */
+.dark .doctors-grid {
+  background: transparent;
+}
+
+/* Dark mode doctor cards - enhanced */
+.dark .doctor-card {
+  background: var(--card-background) !important;
+  border: 2px solid var(--border) !important;
+  color: var(--text) !important;
+  transition: all 0.3s ease;
+}
+
+.dark .doctor-card:hover {
+  background: var(--hover-background) !important;
+  border-color: var(--primary) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(13, 142, 174, 0.15);
+}
+
+.dark .doctor-card.selected {
+  background: var(--primary) !important;
+  border-color: var(--primary) !important;
+  color: white !important;
+}
+
+.dark .doctor-card.selected h3 {
+  color: white !important;
+}
+
+.dark .doctor-card.selected p {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.dark .doctor-card h3 {
+  color: var(--text-strong) !important;
+  transition: color 0.3s ease;
+}
+
+.dark .doctor-card p {
+  color: var(--text) !important;
+  transition: color 0.3s ease;
+}
+
+.dark .doctor-card .specialization {
+  color: var(--primary) !important;
+  background: rgba(13, 142, 174, 0.1) !important;
+  border: 1px solid rgba(13, 142, 174, 0.2) !important;
+}
+
+.dark .doctor-card.selected .specialization {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+/* Dark mode doctor card icons */
+.dark .doctor-card .doctor-icon {
+  background: var(--primary) !important;
+  color: white !important;
+}
+
+.dark .doctor-card.selected .doctor-icon {
+  background: white !important;
+  color: var(--primary) !important;
 }
 
 /* Error Message */
@@ -541,45 +815,104 @@
 /* Time Slots Grid */
 .time-slots-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 16px;
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 .time-slot {
   background: white;
   border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 20px 16px;
+  border-radius: 16px;
+  padding: 24px 20px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-align: center;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.time-slot::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0ea5e9, #0284c7);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
 }
 
 .time-slot:hover {
   border-color: #0ea5e9;
-  background: #f0f9ff;
-  transform: translateY(-2px);
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(14, 165, 233, 0.15);
+}
+
+.time-slot:hover::before {
+  transform: scaleX(1);
 }
 
 .time-slot.selected {
   background: linear-gradient(135deg, #0ea5e9, #0284c7);
   color: white;
   border-color: #0ea5e9;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(14, 165, 233, 0.3);
+}
+
+.time-slot.selected::before {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scaleX(1);
 }
 
 .time-slot .time {
-  font-size: 1.1rem;
-  font-weight: 600;
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .time-slot .duration {
-  font-size: 0.9rem;
-  opacity: 0.8;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.time-slot.selected .duration {
+  opacity: 0.9;
+}
+
+/* Enhanced visual feedback */
+.time-slot:active {
+  transform: translateY(-1px);
+}
+
+/* Loading state for time slots */
+.time-slots-grid.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.time-slots-grid.loading .time-slot {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* Appointment Summary */
@@ -668,15 +1001,50 @@
 .no-results,
 .no-slots {
   text-align: center;
-  padding: 40px;
+  padding: 60px 40px;
   color: #64748b;
+  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  border-radius: 20px;
+  border: 2px dashed #cbd5e1;
+  margin-top: 30px;
+  position: relative;
+  overflow: hidden;
 }
 
 .no-slots {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
   align-items: center;
+}
+
+.no-slots::before {
+  content: '📅';
+  font-size: 3rem;
+  display: block;
+  opacity: 0.6;
+}
+
+.no-slots p {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.no-slots .btn {
+  background: linear-gradient(135deg, #0ea5e9, #0284c7);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+}
+
+.no-slots .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(14, 165, 233, 0.4);
 }
 
 /* Appointment History */

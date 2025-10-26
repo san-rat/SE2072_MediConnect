@@ -1,0 +1,306 @@
+/* ---------------- Layout ---------------- */
+.notification-page {
+    min-height: 100vh;
+    background-color: #f9fafb; /* background */
+    color: #1f2937; /* foreground */
+    font-family: sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark mode notification page */
+.dark .notification-page {
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
+/* Dark mode header */
+.dark .header-section h2 {
+    color: var(--text-strong);
+}
+
+.dark .header-section p {
+    color: var(--muted);
+}
+
+/* Dark mode cards */
+.dark .notification-card {
+    background: var(--card-background);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.dark .notification-card h3 {
+    color: var(--text-strong);
+}
+
+.dark .notification-card p {
+    color: var(--text);
+}
+
+/* Dark mode buttons */
+.dark .btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.dark .btn-primary:hover {
+    background: var(--primary-600);
+}
+
+.dark .btn-outline {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.dark .btn-outline:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* Dark mode form elements */
+.dark .form-group label {
+    color: var(--text-strong);
+}
+
+.dark .form-group input,
+.dark .form-group select,
+.dark .form-group textarea {
+    background: var(--input-background);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.dark .form-group input::placeholder,
+.dark .form-group textarea::placeholder {
+    color: var(--muted);
+}
+
+.dark .form-group input:focus,
+.dark .form-group select:focus,
+.dark .form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(13, 142, 174, 0.1);
+}
+
+/* Dark mode filter section */
+.dark .filter-section {
+    background: var(--card-background);
+    border-color: var(--border);
+}
+
+.dark .filter-section label {
+    color: var(--text-strong);
+}
+
+/* Dark mode notification items */
+.dark .notification-item {
+    background: var(--card-background);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.dark .notification-item:hover {
+    background: var(--hover-background);
+}
+
+.dark .notification-item h4 {
+    color: var(--text-strong);
+}
+
+.dark .notification-item p {
+    color: var(--text);
+}
+
+/* Dark mode empty state */
+.dark .empty-state {
+    color: var(--text);
+}
+
+.dark .empty-state h3 {
+    color: var(--text-strong);
+}
+
+.dark .empty-state p {
+    color: var(--muted);
+}
+
+/* Dark mode loading */
+.dark .loading-container {
+    color: var(--text);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1rem;
+}
+
+/* ---------------- Header ---------------- */
+.header-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.header-section h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.header-section p {
+    font-size: 1rem;
+    color: #6b7280; /* muted */
+}
+
+/* ---------------- Filter ---------------- */
+.filter-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+}
+
+.filter-left {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #6b7280;
+}
+
+.unread-count {
+    text-align: right;
+}
+
+.unread-count div:first-child {
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.unread-count div:last-child {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #3b82f6; /* blue */
+}
+
+/* ---------------- Cards ---------------- */
+.items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.card.new {
+    border: 2px solid #3b82f6;
+    background-color: #eff6ff;
+}
+
+.card-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-left {
+    flex: 1;
+}
+
+.icon-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.icon-bg {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    color: white;
+}
+
+/* Icon colors based on type */
+.icon-bg.alert { background-color: #ec4899; } /* pink */
+.icon-bg.urgent { background-color: #ef4444; } /* red */
+.icon-bg.appointment { background-color: #3b82f6; } /* blue */
+.icon-bg.health_awareness { background-color: #10b981; } /* green */
+.icon-bg.default { background-color: #9ca3af; } /* gray */
+
+.chips {
+    display: flex;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+}
+
+.chip {
+    display: inline-block;
+    padding: 0.125rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 0.375rem;
+    background-color: #e5e7eb;
+    color: #1f2937;
+}
+
+.chip.alert { background-color: #fce7f3; color: #be185d; }
+.chip.urgent { background-color: #fee2e2; color: #b91c1c; }
+.chip.appointment { background-color: #dbeafe; color: #1d4ed8; }
+.chip.health_awareness { background-color: #d1fae5; color: #047857; }
+.chip.new { background-color: #bfdbfe; color: #1e40af; }
+
+/* ---------------- Message & Timestamp ---------------- */
+.card-left p {
+    margin: 0.25rem 0;
+}
+
+.timestamp {
+    font-size: 0.75rem;
+    color: #6b7280;
+}
+
+/* ---------------- Skeleton ---------------- */
+.skeleton-list .card {
+    background-color: #f3f4f6;
+}
+
+.skeleton-line {
+    height: 1rem;
+    width: 100%;
+    background-color: #e5e7eb;
+    border-radius: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.skeleton-line.short {
+    width: 50%;
+}
+
+/* ---------------- Empty State ---------------- */
+.empty-state {
+    text-align: center;
+    padding: 3rem 1rem;
+}
+
+.icon-large {
+    width: 3rem;
+    height: 3rem;
+    color: #6b7280;
+    margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+    color: #6b7280;
+    font-size: 1rem;
+}

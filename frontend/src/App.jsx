@@ -3,8 +3,11 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Header from "./components/Header"
 import HomePage from "./components/HomePage"
 import PrescriptionsPage from "./components/PrescriptionsPage"
+import MedicalRecordsPage from "./components/MedicalRecordsPage"
 import AppointmentsPage from "./components/AppointmentsPage"
-import NotificationsPage from "./components/NotificationsPage"
+import NotificationsPage from "./pages/Notification/NotificationsPage"
+import AdminNotificationsPage from "./pages/Notification/AdminNotificationsPage"
+import DoctorNotificationsPage from "./components/DoctorNotificationsPage"
 import ContactPage from "./components/ContactPage"
 import AuthModal from "./components/AuthModal"
 import AdminLoginModal from "./components/AdminLoginModal"
@@ -14,7 +17,7 @@ import DoctorDashboard from './components/DoctorDashboard';
 import DoctorAppointmentsPage from './components/DoctorAppointmentsPage';
 import DoctorPatientsPage from './components/DoctorPatientsPage';
 import DoctorPrescriptionsPage from './components/DoctorPrescriptionsPage';
-import DoctorNotificationsPage from './components/DoctorNotificationsPage';
+import DoctorMedicalRecordsPage from './components/DoctorMedicalRecordsPage';
 import DoctorProfilePage from './components/DoctorProfilePage';
 import useCurrentUser from './hooks/useCurrentUser';
 import "./App.css"
@@ -25,8 +28,20 @@ function AppContent() {
   const [adminLoginOpen, setAdminLoginOpen] = useState(false)
   const [initialMode, setInitialMode] = useState("login")
   const [currentPage, setCurrentPage] = useState("home")
+  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('mc_dark_mode') === 'true')
   const { user, loadingUser } = useCurrentUser();
   const location = useLocation();
+
+  // Apply dark mode to document
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  // Dark mode changes are now handled via direct callback from Header
 
   // Update currentPage based on URL
   useEffect(() => {
@@ -35,6 +50,8 @@ function AppContent() {
       setCurrentPage('home');
     } else if (path === '/prescriptions') {
       setCurrentPage('prescriptions');
+    } else if (path === '/medical-records') {
+      setCurrentPage('medical-records');
     } else if (path === '/appointments') {
       setCurrentPage('appointments');
     } else if (path === '/notifications') {
@@ -60,60 +77,87 @@ function AppContent() {
       return <HomePage />;
     }
 
-    // For authenticated users, show the routes
+    // For authenticated users, show role-based routes
     return (
       <Routes>
-        <Route 
-          path="/" 
+        {/* Home / Dashboard routes */}
+        <Route
+          path="/"
           element={
-            user.role === 'DOCTOR' ? 
-            <DoctorDashboard user={user} /> : 
-            user.role === 'ADMIN' ?
-            <AdminDashboard user={user} onLogout={() => window.location.reload()} /> :
-            <HomePage />
-          } 
+            user.role === 'DOCTOR' ?
+              <DoctorDashboard user={user} /> :
+              user.role === 'ADMIN' ?
+                <AdminDashboard user={user} onLogout={() => window.location.reload()} /> :
+                <HomePage />
+          }
         />
-        <Route 
-          path="/prescriptions" 
+
+        {/* Prescriptions */}
+        <Route
+          path="/prescriptions"
           element={
-            user?.role === 'DOCTOR' ? 
-            <DoctorPrescriptionsPage user={user} /> : 
-            <PrescriptionsPage />
-          } 
+            user.role === 'DOCTOR' ?
+              <DoctorPrescriptionsPage user={user} /> :
+              <PrescriptionsPage />
+          }
         />
-        <Route 
-          path="/appointments" 
+
+        {/* Medical Records */}
+        <Route
+          path="/medical-records"
           element={
-            user?.role === 'DOCTOR' ? 
-            <DoctorAppointmentsPage user={user} /> : 
-            <AppointmentsPage />
-          } 
+            user.role === 'DOCTOR' ?
+              <DoctorMedicalRecordsPage user={user} /> :
+              <MedicalRecordsPage />
+          }
         />
-        <Route 
-          path="/patients" 
+
+        {/* Appointments */}
+        <Route
+          path="/appointments"
           element={
-            user?.role === 'DOCTOR' ? 
-            <DoctorPatientsPage user={user} /> : 
-            <HomePage />
-          } 
+            user.role === 'DOCTOR' ?
+              <DoctorAppointmentsPage user={user} /> :
+              <AppointmentsPage />
+          }
         />
-        <Route 
-          path="/notifications" 
+
+        {/* Patients (only for doctors) */}
+        <Route
+          path="/patients"
           element={
-            user?.role === 'DOCTOR' ? 
-            <DoctorNotificationsPage user={user} /> : 
-            <NotificationsPage />
-          } 
+            user.role === 'DOCTOR' ?
+              <DoctorPatientsPage user={user} /> :
+              <HomePage />
+          }
         />
+
+        {/* Notifications (split by role) */}
+        <Route
+          path="/notifications"
+          element={
+            user.role === 'DOCTOR' ?
+              <DoctorNotificationsPage user={user} /> :
+              user.role === 'ADMIN' ?
+                <AdminNotificationsPage user={user} /> :
+                <NotificationsPage user={user} /> // patient
+          }
+        />
+
+        {/* Contact */}
         <Route path="/contact" element={<ContactPage />} />
-        <Route 
-          path="/profile" 
+
+        {/* Profile */}
+        <Route
+          path="/profile"
           element={
-            user?.role === 'DOCTOR' ? 
-            <DoctorProfilePage user={user} /> : 
-            <ProfilePage user={user} />
-          } 
+            user.role === 'DOCTOR' ?
+              <DoctorProfilePage user={user} /> :
+              <ProfilePage user={user} />
+          }
         />
+
+        {/* Dashboards */}
         <Route path="/doctor-dashboard" element={<DoctorDashboard user={user} />} />
         <Route path="/admin-dashboard" element={<AdminDashboard user={user} onLogout={() => window.location.reload()} />} />
       </Routes>
@@ -121,8 +165,8 @@ function AppContent() {
   };
 
   return (
-    <div className="app">
-      {/* Hide header for doctor and admin pages */}
+    <div className={`app ${isDarkMode ? 'dark' : ''}`}>
+      {/* Hide header for doctor and admin views */}
       {!(user && (user.role === 'DOCTOR' || user.role === 'ADMIN')) && (
         <Header
           onLoginClick={() => { setInitialMode("login"); setAuthOpen(true) }}
@@ -132,6 +176,7 @@ function AppContent() {
           currentPage={currentPage}
           onPageChange={setCurrentPage}
           user={user}
+          onDarkModeToggle={(darkMode) => setIsDarkMode(darkMode)}
         />
       )}
 
@@ -156,11 +201,11 @@ function AppContent() {
 }
 
 function App() {
-  return (
-    <Router>
-      <AppContent />
-    </Router>
-  )
+    return (
+        <Router>
+            <AppContent />
+        </Router>
+    )
 }
 
 export default App

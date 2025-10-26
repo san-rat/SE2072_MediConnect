@@ -52,4 +52,10 @@ public interface AppointmentRepository extends JpaRepository<AppointmentModel, S
 
     // Count appointments by status
     long countByStatus(AppointmentModel.AppointmentStatus status);
+
+    // Find appointments by doctor and date after today
+    List<AppointmentModel> findByDoctorAndAppointmentDateAfterOrderByAppointmentDateAscAppointmentTimeAsc(DoctorModel doctor, LocalDate appointmentDate);
+
+    // Find appointments by doctor and date before today
+    List<AppointmentModel> findByDoctorAndAppointmentDateBeforeOrderByAppointmentDateDescAppointmentTimeDesc(DoctorModel doctor, LocalDate appointmentDate);
 }

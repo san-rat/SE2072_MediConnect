@@ -47,4 +47,16 @@ public interface AppointmentService {
 
     // Get appointment statistics
     long getAppointmentCountByStatus(AppointmentModel.AppointmentStatus status);
+
+    // Get today's appointments by doctor
+    List<AppointmentResponseDto> getTodayAppointmentsByDoctor(String doctorId);
+
+    // Get tomorrow's appointments by doctor
+    List<AppointmentResponseDto> getTomorrowAppointmentsByDoctor(String doctorId);
+
+    // Get upcoming appointments by doctor
+    List<AppointmentResponseDto> getUpcomingAppointmentsByDoctor(String doctorId);
+
+    // Get past appointments by doctor
+    List<AppointmentResponseDto> getPastAppointmentsByDoctor(String doctorId);
 }

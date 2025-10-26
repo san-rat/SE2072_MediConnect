@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './Header.css'
 
-const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen, currentPage, onPageChange, user }) => {
+const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen, currentPage, onPageChange, user, onDarkModeToggle }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isAuthed, setIsAuthed] = useState(!!localStorage.getItem('mc_token'))
+  const [isDarkMode, setIsDarkMode] = useState(localStorage.getItem('mc_dark_mode') === 'true')
   const navigate = useNavigate();
 
   // Update authentication state when user changes
@@ -27,6 +28,18 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
     return () => window.removeEventListener('storage', onStorage)
   }, [])
 
+  // Dark mode is now managed by the parent App component
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !isDarkMode
+    setIsDarkMode(newDarkMode)
+    localStorage.setItem('mc_dark_mode', newDarkMode.toString())
+    // Notify parent component about dark mode change
+    if (onDarkModeToggle) {
+      onDarkModeToggle(newDarkMode)
+    }
+  }
+
   const handleLogout = () => {
     localStorage.removeItem('mc_token')
     localStorage.removeItem('mc_token_type')
@@ -36,13 +49,12 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
   }
 
   return (
-    <header className={`header ${isAuthed ? 'authenticated' : 'unauthenticated'}`}>
+    <header className={`header ${isAuthed ? 'authenticated' : 'unauthenticated'} ${isDarkMode ? 'dark' : ''}`}>
       <div className="header-container">
         {/* Logo */}
-        <div className="logo">
+        <div className="logo" onClick={() => { navigate('/'); onPageChange('home'); closeMenu(); }} style={{ cursor: 'pointer' }}>
           <span className="logo-mark" aria-label="Hospital" role="img"></span>
           <h1>MediConnect</h1>
-          <span className="tagline">Smart Appointments. Better Care.</span>
         </div>
 
         {/* Desktop Navigation - Only show when authenticated */}
@@ -63,6 +75,14 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
                   onClick={() => { navigate('/prescriptions'); onPageChange('prescriptions'); closeMenu(); }}
                 >
                   PRESCRIPTIONS
+                </button>
+              </li>
+              <li>
+                <button 
+                  className={`nav-link ${currentPage === 'medical-records' ? 'active' : ''}`}
+                  onClick={() => { navigate('/medical-records'); onPageChange('medical-records'); closeMenu(); }}
+                >
+                  MEDICAL RECORDS
                 </button>
               </li>
               <li>
@@ -113,6 +133,15 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
 
         {/* User Info & Auth Buttons */}
         <div className="auth-buttons">
+          {/* Dark Mode Toggle */}
+          <button
+            className="dark-mode-toggle"
+            onClick={toggleDarkMode}
+            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {isDarkMode ? '☀️' : '🌙'}
+          </button>
+
           {isAuthed ? (
             <div className="user-info">
               {user && (
@@ -202,6 +231,14 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
             </li>
             <li>
               <button 
+                className={`nav-link ${currentPage === 'medical-records' ? 'active' : ''}`}
+                onClick={() => { navigate('/medical-records'); onPageChange('medical-records'); closeMenu(); }}
+              >
+                MEDICAL RECORDS
+              </button>
+            </li>
+            <li>
+              <button 
                 className={`nav-link ${currentPage === 'appointments' ? 'active' : ''}`}
                 onClick={() => { navigate('/appointments'); onPageChange('appointments'); closeMenu(); }}
               >
@@ -219,13 +256,25 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
               </li>
             )}
             <li>
-              <button 
-                className={`nav-link ${currentPage === 'notifications' ? 'active' : ''}`}
-                onClick={() => { navigate('/notifications'); onPageChange('notifications'); closeMenu(); }}
+              <button
+                  className={`nav-link ${currentPage === 'notifications' ? 'active' : ''}`}
+                  onClick={() => {
+                    // Route user to their correct notifications page
+                    if (user?.role === 'DOCTOR') {
+                      navigate('/notifications'); // DoctorNotificationsPage
+                    } else if (user?.role === 'ADMIN') {
+                      navigate('/notifications'); // AdminNotificationsPage
+                    } else {
+                      navigate('/notifications'); // PatientNotificationsPage
+                    }
+                    onPageChange('notifications');
+                    closeMenu();
+                  }}
               >
                 NOTIFICATIONS
               </button>
             </li>
+
             <li>
               <button 
                 className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}
@@ -244,6 +293,13 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
             </li>
 
             <li className="mobile-auth-buttons">
+              <button
+                className="dark-mode-toggle mobile"
+                onClick={() => { toggleDarkMode(); closeMenu(); }}
+                title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              >
+                {isDarkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
+              </button>
               <button className="btn btn-outline" onClick={() => { handleLogout(); closeMenu(); }}>
                 Logout
               </button>
