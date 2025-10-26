@@ -19,6 +19,7 @@ import DoctorPatientsPage from './components/DoctorPatientsPage';
 import DoctorPrescriptionsPage from './components/DoctorPrescriptionsPage';
 import DoctorMedicalRecordsPage from './components/DoctorMedicalRecordsPage';
 import DoctorProfilePage from './components/DoctorProfilePage';
+import FeedbackPage from './components/FeedbackPage';
 import useCurrentUser from './hooks/useCurrentUser';
 import "./App.css"
 import "./index.css"
@@ -60,6 +61,8 @@ function AppContent() {
       setCurrentPage('contact');
     } else if (path === '/profile') {
       setCurrentPage('profile');
+    } else if (path === '/feedback') {
+      setCurrentPage('feedback');
     } else if (path === '/doctor-dashboard') {
       setCurrentPage('doctor-dashboard');
     } else if (path === '/admin-dashboard') {
@@ -154,6 +157,16 @@ function AppContent() {
             user.role === 'DOCTOR' ?
               <DoctorProfilePage user={user} /> :
               <ProfilePage user={user} />
+          }
+        />
+
+        {/* Feedback (patients only) */}
+        <Route
+          path="/feedback"
+          element={
+            user.role === 'PATIENT' ?
+              <FeedbackPage /> :
+              <HomePage />
           }
         />
 
