@@ -119,6 +119,16 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
                   CONTACT
                 </button>
               </li>
+              {user?.role === 'PATIENT' && (
+                <li>
+                  <button 
+                    className={`nav-link ${currentPage === 'feedback' ? 'active' : ''}`}
+                    onClick={() => { navigate('/feedback'); onPageChange('feedback'); closeMenu(); }}
+                  >
+                    FEEDBACK
+                  </button>
+                </li>
+              )}
               <li>
                 <button 
                   className={`nav-link ${currentPage === 'profile' ? 'active' : ''}`}
@@ -283,6 +293,16 @@ const Header = ({ onLoginClick, onRegisterClick, onAdminLoginClick, isModalOpen,
                 CONTACT
               </button>
             </li>
+            {user?.role === 'PATIENT' && (
+              <li>
+                <button 
+                  className={`nav-link ${currentPage === 'feedback' ? 'active' : ''}`}
+                  onClick={() => { navigate('/feedback'); onPageChange('feedback'); closeMenu(); }}
+                >
+                  FEEDBACK
+                </button>
+              </li>
+            )}
             <li>
               <button 
                 className={`nav-link ${currentPage === 'profile' ? 'active' : ''}`}

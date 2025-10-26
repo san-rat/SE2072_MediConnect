@@ -6,6 +6,7 @@ import UserManagement from './admin/UserManagement';
 import DoctorManagement from './admin/DoctorManagement';
 import PatientManagement from './admin/PatientManagement';
 import AppointmentManagement from './admin/AppointmentManagement';
+import FeedbackManagement from './admin/FeedbackManagement';
 import SystemHealth from './admin/SystemHealth';
 import Analytics from './admin/Analytics';
 import { adminService } from '../services/admin';
@@ -47,7 +48,8 @@ const AdminDashboard = ({ user, onLogout }) => {
     { id: 'doctors', label: 'Doctors', icon: '👨‍⚕️' },
     { id: 'patients', label: 'Patients', icon: '🏥' },
     { id: 'appointments', label: 'Appointments', icon: '📅' },
-    { id: 'notifications', label: 'Notifications', icon: '🔔' } // 👈 NEW TAB
+    { id: 'feedback', label: 'Feedback', icon: '💬' },
+    { id: 'notifications', label: 'Notifications', icon: '🔔' }
   ]
 
   const handleLogout = () => {
@@ -121,6 +123,8 @@ const AdminDashboard = ({ user, onLogout }) => {
         return <PatientManagement />
       case 'appointments':
         return <AppointmentManagement />
+      case 'feedback':
+        return <FeedbackManagement />
       case 'notifications':
         return renderNotifications()
       default:

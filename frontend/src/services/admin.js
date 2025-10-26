@@ -817,6 +817,17 @@ export const adminService = {
       totalDoctors,
       totalAppointments
     };
+  },
+
+  // Get all feedback
+  async getAllFeedback() {
+    try {
+      const { feedbackService } = await import('./feedback');
+      return await feedbackService.getAllFeedback();
+    } catch (error) {
+      console.error('Error fetching feedback:', error);
+      throw error;
+    }
   }
 };
 
