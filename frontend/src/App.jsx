@@ -21,6 +21,7 @@ import DoctorMedicalRecordsPage from './components/DoctorMedicalRecordsPage';
 import DoctorProfilePage from './components/DoctorProfilePage';
 import FeedbackPage from './components/FeedbackPage';
 import useCurrentUser from './hooks/useCurrentUser';
+import HealthTips from './pages/Healthtips';
 import "./App.css"
 import "./index.css"
 
@@ -57,6 +58,8 @@ function AppContent() {
       setCurrentPage('appointments');
     } else if (path === '/notifications') {
       setCurrentPage('notifications');
+    } else if (path === '/health-tips') {
+        setCurrentPage('health-tips');
     } else if (path === '/contact') {
       setCurrentPage('contact');
     } else if (path === '/profile') {
@@ -94,6 +97,16 @@ function AppContent() {
                 <HomePage />
           }
         />
+
+          {/* Health Tips: patients only */}
+          <Route
+              path="/health-tips"
+              element={
+                  user.role === 'PATIENT'
+                      ? <HealthTips user={user} />
+                      : <HomePage />
+              }
+          />
 
         {/* Prescriptions */}
         <Route

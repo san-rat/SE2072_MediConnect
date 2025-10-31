@@ -1,0 +1,26 @@
+.ht-admin { max-width: 1100px; margin: 16px auto; padding: 0 16px; }
+.ht-admin h2 { margin: 6px 0 14px; }
+
+.ht-form { background:#fff; border:1px solid #e5e7eb; border-radius:12px; padding:16px; margin-bottom:16px; }
+.ht-form .row { display:flex; flex-direction:column; gap:6px; margin-bottom:12px; }
+.ht-form .row.two { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+.ht-form input, .ht-form select, .ht-form textarea {
+    border:1px solid #e5e7eb; border-radius:8px; padding:10px; font-size:14px;
+}
+.ht-form .actions { display:flex; gap:10px; }
+.ht-form button { background:#0d8eae; border:none; color:#fff; padding:10px 14px; border-radius:8px; cursor:pointer; }
+.ht-form button.ghost { background:#f3f4f6; color:#111827; }
+
+.ht-toolbar { display:flex; justify-content:space-between; align-items:center; margin:8px 0 12px; }
+.ht-toolbar .left { display:flex; gap:8px; align-items:center; }
+.ht-toolbar select { padding:6px 8px; }
+
+.ht-table-wrap { overflow-x:auto; background:#fff; border:1px solid #e5e7eb; border-radius:12px; }
+.ht-table { width:100%; border-collapse:collapse; font-size:14px; }
+.ht-table th, .ht-table td { border-bottom:1px solid #f1f5f9; padding:10px; text-align:left; vertical-align:top; }
+.ht-table .msg { max-width:560px; white-space:pre-wrap; }
+.ht-table .actions-col button { margin-right:8px; padding:6px 10px; border-radius:6px; border:1px solid #e5e7eb; background:#fff; cursor:pointer; }
+.ht-table .actions-col button.danger { color:#b91c1c; border-color:#fecaca; }
+
+.ht-pager { display:flex; gap:10px; align-items:center; justify-content:center; padding:12px; }
+.ht-pager button { padding:6px 10px; border-radius:6px; border:1px solid #e5e7eb; background:#fff; cursor:pointer; }
