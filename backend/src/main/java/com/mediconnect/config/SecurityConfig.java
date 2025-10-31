@@ -49,6 +49,9 @@ public class SecurityConfig {
                     .requestMatchers("/api/prescriptions/patient/**").hasRole("PATIENT")
                     .requestMatchers("/api/medical-records/doctor/**").hasRole("DOCTOR")
                     .requestMatchers("/api/medical-records/patient/**").hasRole("PATIENT")
+                    // ---- Health Tips ----
+                    .requestMatchers("/api/health-tips/personalized").permitAll()  // patient
+                    .requestMatchers("/api/health-tips/**").hasRole("ADMIN")        // admin CRUD
                     .requestMatchers("/api/admins/**").hasRole("ADMIN")  // Admin-only endpoints
                 .anyRequest().authenticated()
             );
