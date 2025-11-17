@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Card, CardContent } from "../../components/ui/Card";
-import { Button } from "../../components/ui/Button";
+import { Card, CardContent } from "../../components/ui/card";
+import { Button } from "../../components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../../components/ui/select";
 import { Bell, Calendar, Heart, AlertCircle, CheckCircle, Check, Filter, Megaphone } from "lucide-react";
 import { toast } from "sonner";
