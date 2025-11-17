@@ -9,10 +9,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig {
 
-    private static final String[] ALLOWED_ORIGINS = new String[]{
+    private static final String[] ALLOWED_ORIGIN_PATTERNS = new String[]{
             "http://localhost:5173",
             "http://localhost:3000",
-            "https://mediconnect-iota.vercel.app"
+            "https://mediconnect-iota.vercel.app",
+            "https://*.vercel.app"
     };
 
     @Bean
@@ -21,9 +22,11 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(ALLOWED_ORIGINS)
+                        .allowedOriginPatterns(ALLOWED_ORIGIN_PATTERNS)
                         .allowedMethods("*")
-                        .allowCredentials(true);
+                        .allowedHeaders("*")
+                        .allowCredentials(true)
+                        .maxAge(3600);
             }
         };
     }
