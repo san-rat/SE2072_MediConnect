@@ -27,7 +27,11 @@ import com.mediconnect.service.HealthAlertService;
 @RestController
 @RequestMapping("/api/alerts")
 @CrossOrigin(
-        origins = {"http://localhost:3000", "http://localhost:5173"},
+        origins = {
+                "http://localhost:3000",
+                "http://localhost:5173",
+                "https://mediconnect-iota.vercel.app"
+        },
         allowCredentials = "true",
         methods = {GET, POST, PUT, DELETE, OPTIONS}
 )
