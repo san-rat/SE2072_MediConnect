@@ -2,18 +2,31 @@ import React from "react";
 import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 import { cn } from "../../lib/utils";
+import { cva } from "class-variance-authority";
 
 const Select = SelectPrimitive.Root;
 const SelectGroup = SelectPrimitive.Group;
 const SelectValue = SelectPrimitive.Value;
 
-const SelectTrigger = React.forwardRef(({ className, children, ...props }, ref) => (
+/* Size system for Trigger */
+const triggerVariants = cva(
+    "flex w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+    {
+        variants: {
+            size: {
+                sm: "h-9 rounded-md text-sm",      // 36px
+                md: "h-10 rounded-md text-sm",     // 40px
+                lg: "h-11 rounded-lg text-base",   // 44px
+            },
+        },
+        defaultVariants: { size: "sm" },
+    }
+);
+
+const SelectTrigger = React.forwardRef(({ className, size, children, ...props }, ref) => (
     <SelectPrimitive.Trigger
         ref={ref}
-        className={cn(
-            "flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-            className
-        )}
+        className={cn(triggerVariants({ size }), className)}
         {...props}
     >
         {children}
@@ -76,11 +89,7 @@ const SelectContent = React.forwardRef(({ className, children, position = "poppe
 SelectContent.displayName = "SelectContent";
 
 const SelectLabel = React.forwardRef(({ className, ...props }, ref) => (
-    <SelectPrimitive.Label
-        ref={ref}
-        className={cn("px-2 py-1.5 text-sm font-semibold", className)}
-        {...props}
-    />
+    <SelectPrimitive.Label ref={ref} className={cn("px-2 py-1.5 text-sm font-semibold", className)} {...props} />
 ));
 SelectLabel.displayName = "SelectLabel";
 
@@ -104,11 +113,7 @@ const SelectItem = React.forwardRef(({ className, children, ...props }, ref) => 
 SelectItem.displayName = "SelectItem";
 
 const SelectSeparator = React.forwardRef(({ className, ...props }, ref) => (
-    <SelectPrimitive.Separator
-        ref={ref}
-        className={cn("-mx-1 my-1 h-px bg-muted", className)}
-        {...props}
-    />
+    <SelectPrimitive.Separator ref={ref} className={cn("-mx-1 my-1 h-px bg-muted", className)} {...props} />
 ));
 SelectSeparator.displayName = "SelectSeparator";
 

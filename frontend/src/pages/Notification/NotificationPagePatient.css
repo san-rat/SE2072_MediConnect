@@ -1,306 +1,123 @@
-/* ---------------- Layout ---------------- */
-.notification-page {
-    min-height: 100vh;
-    background-color: #f9fafb; /* background */
-    color: #1f2937; /* foreground */
-    font-family: sans-serif;
-    transition: background-color 0.3s ease, color 0.3s ease;
+/* ================================
+   Notifications – Final Polish
+   ================================ */
+
+.notification-page{
+    --bg:#f8fafc;--fg:#0f172a;--muted:#64748b;--card:#fff;--border:#e5e7eb;--hover:#f1f5f9;
+    --primary:#0d8eae;--primary-600:#0a7e95;--blue:#3b82f6;--green:#10b981;--red:#ef4444;--pink:#ec4899;
+    --ring:rgba(13,142,174,.18);
+    min-height:100vh;background:var(--bg);color:var(--fg);
+    font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans";
+    transition:background-color .3s,color .3s;
+}
+.dark .notification-page{
+    --bg:#0b1220;--fg:#e6edf5;--muted:#9fb0c2;--card:#0f172a;--border:#283345;--hover:#111a2b;
+    --primary:#0ea5b2;--primary-600:#0891a3;--blue:#60a5fa;--green:#34d399;--red:#f87171;--pink:#f472b6;
+    --ring:rgba(14,165,178,.14);
 }
 
-/* Dark mode notification page */
-.dark .notification-page {
-    background-color: #0f172a;
-    color: #f8fafc;
+.container{max-width:1100px;margin:0 auto;padding:32px 16px}
+
+/* Header */
+.header-section{display:grid;gap:8px;text-align:left;margin-bottom:18px}
+.header-section h2{margin:0;font-weight:800;letter-spacing:-.02em;font-size:clamp(1.4rem,2.8vw,1.8rem)}
+.header-section p{margin:0;color:var(--muted);font-size:.98rem}
+.header-section::after{content:"";height:4px;width:100px;margin-top:6px;border-radius:999px;
+    background:linear-gradient(135deg,var(--primary),var(--primary-600));opacity:.9}
+
+/* Filter bar */
+.filter-section{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    background:var(--card);border:1px solid var(--border);border-radius:10px;
+    padding:8px 12px;margin-bottom:14px;box-shadow:none
+}
+.filter-left{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.filter-left span{color:var(--muted);font-size:.95rem}
+.filter-icon{width:1.05rem;height:1.05rem;color:var(--muted)}
+
+/* Compact select trigger (add className="notif-select" on SelectTrigger) */
+.notif-select{
+    min-width:160px;height:36px;border-radius:8px;border:1px solid var(--border);
+    background:var(--card);font-size:.92rem;box-shadow:none;padding:0 10px;
+}
+.notif-select:hover{border-color:var(--primary)}
+.dark .notif-select{border-color:var(--border);background:var(--card)}
+
+/* Optional: dropdown panel polish */
+[data-radix-select-content]{border-color:var(--border)!important;background:var(--card)!important}
+[data-radix-select-content] [data-radix-select-item]{padding-top:6px!important;padding-bottom:6px!important}
+
+/* Unread counter */
+.unread-count{display:grid;gap:2px;text-align:right}
+.unread-count div:first-child{font-size:.85rem;color:var(--muted)}
+.unread-count div:last-child{font-size:1.2rem;font-weight:800;color:var(--blue)}
+
+/* List + cards */
+.items-list{display:grid;gap:10px}
+.card{
+    background:var(--card);border:1px solid var(--border)!important;border-radius:14px!important;
+    box-shadow:0 8px 20px rgba(2,6,23,.05);
+    transition:transform .14s,box-shadow .14s,border-color .14s,background-color .14s;overflow:hidden;position:relative
+}
+.card:hover{transform:translateY(-2px);border-color:var(--primary)!important;box-shadow:0 16px 30px rgba(13,142,174,.14)}
+.card.new{background:linear-gradient(180deg,rgba(13,142,174,.06),rgba(13,142,174,.02));border-left:4px solid var(--blue)}
+
+/* Remove default padding from CardContent on this page; inner layout handles it */
+.notification-page .card > .p-6{padding:0!important}
+
+.card-content{padding:12px 14px!important;display:grid;grid-template-columns:1fr auto;gap:10px}
+.card-left{display:grid;gap:6px}
+.card-left .title{margin:2px 0 0;font-weight:700;font-size:1rem}
+.card-left p{margin:0;font-size:.94rem;line-height:1.5}
+.timestamp{font-size:.78rem;color:var(--muted);margin-top:6px}
+
+/* Icon + chips row */
+.icon-container{display:flex;align-items:center;gap:10px}
+.icon-bg{display:grid;place-items:center;width:34px;height:34px;border-radius:10px;color:#fff;
+    box-shadow:0 8px 18px rgba(2,6,23,.1);flex:0 0 34px}
+.icon-bg.alert{background:var(--pink)} .icon-bg.urgent{background:var(--red)}
+.icon-bg.appointment{background:var(--blue)} .icon-bg.health_awareness{background:var(--green)}
+.icon-bg.default{background:#9ca3af}
+.icon{width:18px;height:18px}
+
+/* Chips — force inline pills so they never stretch */
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{
+    display:inline-flex;align-items:center;max-width:fit-content;
+    padding:2px 8px;font-size:.75rem;font-weight:700;border-radius:999px;border:1px solid transparent;
+    background:#e5e7eb;color:#1f2937
+}
+.chip.alert{background:#fce7f3;color:#be185d}
+.chip.urgent{background:#fee2e2;color:#b91c1c}
+.chip.appointment{background:#dbeafe;color:#1d4ed8}
+.chip.health_awareness{background:#d1fae5;color:#047857}
+.chip.new{background:#bfdbfe;color:#1e40af}
+
+/* Optional right-corner category tag */
+.alert-tag{
+    position:absolute;top:10px;right:12px;display:inline-flex;align-items:center;max-width:fit-content;
+    padding:3px 8px;border-radius:999px;background:var(--blue);color:#fff;font-size:.7rem;font-weight:600
 }
 
-/* Dark mode header */
-.dark .header-section h2 {
-    color: var(--text-strong);
+/* Skeleton */
+.skeleton-list{display:grid;gap:10px}
+.skeleton-list .card{background:var(--card);border:1px solid var(--border)}
+.skeleton-line{
+    height:12px;width:100%;border-radius:6px;
+    background:linear-gradient(90deg,rgba(148,163,184,.28),rgba(148,163,184,.16),rgba(148,163,184,.28));
+    animation:skel 1.2s infinite ease-in-out
 }
+.skeleton-line.short{width:55%;margin-top:10px}
+@keyframes skel{0%{filter:brightness(1)}50%{filter:brightness(1.1)}100%{filter:brightness(1)}}
 
-.dark .header-section p {
-    color: var(--muted);
-}
+/* Empty */
+.empty-state{text-align:center;padding:28px 16px;color:var(--muted)}
+.icon-large{width:40px;height:40px;margin-bottom:10px;opacity:.85}
+.empty-state h3{margin:0 0 6px;font-size:1.05rem;font-weight:800}
+.empty-state p{margin:0;font-size:.95rem}
 
-/* Dark mode cards */
-.dark .notification-card {
-    background: var(--card-background);
-    border-color: var(--border);
-    color: var(--text);
-}
-
-.dark .notification-card h3 {
-    color: var(--text-strong);
-}
-
-.dark .notification-card p {
-    color: var(--text);
-}
-
-/* Dark mode buttons */
-.dark .btn-primary {
-    background: var(--primary);
-    color: white;
-}
-
-.dark .btn-primary:hover {
-    background: var(--primary-600);
-}
-
-.dark .btn-outline {
-    border-color: var(--primary);
-    color: var(--primary);
-}
-
-.dark .btn-outline:hover {
-    background: var(--primary);
-    color: white;
-}
-
-/* Dark mode form elements */
-.dark .form-group label {
-    color: var(--text-strong);
-}
-
-.dark .form-group input,
-.dark .form-group select,
-.dark .form-group textarea {
-    background: var(--input-background);
-    border-color: var(--border);
-    color: var(--text);
-}
-
-.dark .form-group input::placeholder,
-.dark .form-group textarea::placeholder {
-    color: var(--muted);
-}
-
-.dark .form-group input:focus,
-.dark .form-group select:focus,
-.dark .form-group textarea:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(13, 142, 174, 0.1);
-}
-
-/* Dark mode filter section */
-.dark .filter-section {
-    background: var(--card-background);
-    border-color: var(--border);
-}
-
-.dark .filter-section label {
-    color: var(--text-strong);
-}
-
-/* Dark mode notification items */
-.dark .notification-item {
-    background: var(--card-background);
-    border-color: var(--border);
-    color: var(--text);
-}
-
-.dark .notification-item:hover {
-    background: var(--hover-background);
-}
-
-.dark .notification-item h4 {
-    color: var(--text-strong);
-}
-
-.dark .notification-item p {
-    color: var(--text);
-}
-
-/* Dark mode empty state */
-.dark .empty-state {
-    color: var(--text);
-}
-
-.dark .empty-state h3 {
-    color: var(--text-strong);
-}
-
-.dark .empty-state p {
-    color: var(--muted);
-}
-
-/* Dark mode loading */
-.dark .loading-container {
-    color: var(--text);
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 1rem;
-}
-
-/* ---------------- Header ---------------- */
-.header-section {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.header-section h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.header-section p {
-    font-size: 1rem;
-    color: #6b7280; /* muted */
-}
-
-/* ---------------- Filter ---------------- */
-.filter-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-}
-
-.filter-left {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.filter-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    color: #6b7280;
-}
-
-.unread-count {
-    text-align: right;
-}
-
-.unread-count div:first-child {
-    font-size: 0.875rem;
-    color: #6b7280;
-}
-
-.unread-count div:last-child {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #3b82f6; /* blue */
-}
-
-/* ---------------- Cards ---------------- */
-.items-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-}
-
-.card.new {
-    border: 2px solid #3b82f6;
-    background-color: #eff6ff;
-}
-
-.card-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-}
-
-.card-left {
-    flex: 1;
-}
-
-.icon-container {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.icon-bg {
-    display: grid;
-    place-items: center;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 0.5rem;
-    color: white;
-}
-
-/* Icon colors based on type */
-.icon-bg.alert { background-color: #ec4899; } /* pink */
-.icon-bg.urgent { background-color: #ef4444; } /* red */
-.icon-bg.appointment { background-color: #3b82f6; } /* blue */
-.icon-bg.health_awareness { background-color: #10b981; } /* green */
-.icon-bg.default { background-color: #9ca3af; } /* gray */
-
-.chips {
-    display: flex;
-    gap: 0.25rem;
-    flex-wrap: wrap;
-}
-
-.chip {
-    display: inline-block;
-    padding: 0.125rem 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    border-radius: 0.375rem;
-    background-color: #e5e7eb;
-    color: #1f2937;
-}
-
-.chip.alert { background-color: #fce7f3; color: #be185d; }
-.chip.urgent { background-color: #fee2e2; color: #b91c1c; }
-.chip.appointment { background-color: #dbeafe; color: #1d4ed8; }
-.chip.health_awareness { background-color: #d1fae5; color: #047857; }
-.chip.new { background-color: #bfdbfe; color: #1e40af; }
-
-/* ---------------- Message & Timestamp ---------------- */
-.card-left p {
-    margin: 0.25rem 0;
-}
-
-.timestamp {
-    font-size: 0.75rem;
-    color: #6b7280;
-}
-
-/* ---------------- Skeleton ---------------- */
-.skeleton-list .card {
-    background-color: #f3f4f6;
-}
-
-.skeleton-line {
-    height: 1rem;
-    width: 100%;
-    background-color: #e5e7eb;
-    border-radius: 0.25rem;
-    margin-bottom: 0.5rem;
-}
-
-.skeleton-line.short {
-    width: 50%;
-}
-
-/* ---------------- Empty State ---------------- */
-.empty-state {
-    text-align: center;
-    padding: 3rem 1rem;
-}
-
-.icon-large {
-    width: 3rem;
-    height: 3rem;
-    color: #6b7280;
-    margin-bottom: 1rem;
-}
-
-.empty-state h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.5rem;
-}
-
-.empty-state p {
-    color: #6b7280;
-    font-size: 1rem;
+/* Responsive */
+@media (max-width:720px){
+    .filter-section{flex-direction:column;align-items:stretch;gap:10px}
+    .card-content{grid-template-columns:1fr}
 }

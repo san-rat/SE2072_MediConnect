@@ -375,6 +375,15 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      {/* Floating Health Tips Icon */}
+      <div
+          className="floating-tips-icon"
+          title="View Personalized Health Tips"
+          onClick={() => navigate('/health-tips')}
+      >
+        💡
+      </div>
+
     </main>
   )
 }
