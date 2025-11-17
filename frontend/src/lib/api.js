@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8081", // backend URL
+  baseURL: "https://se2072mediconnect-production.up.railway.app", // backend URL
   withCredentials: true,            // if cookies are used
 });
 
