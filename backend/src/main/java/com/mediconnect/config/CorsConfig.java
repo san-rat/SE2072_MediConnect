@@ -20,7 +20,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig implements WebMvcConfigurer {
 
-    private static final List<String> ALLOWED_ORIGIN_PATTERNS = List.of(
+    private static final List<String> ALLOWED_ORIGINS = List.of(
             "http://localhost:5173",
             "http://localhost:5174",
             "http://localhost:5175",
@@ -30,9 +30,12 @@ public class CorsConfig implements WebMvcConfigurer {
             "http://localhost:5183",
             "http://localhost:5184",
             "http://localhost:3000",
-            "https://mediconnect-iota.vercel.app",
-            "https://mediconnect-git-main-*.vercel.app",
-            "https://*.vercel.app"
+            "https://mediconnect-iota.vercel.app"
+    );
+    
+    private static final List<String> ALLOWED_ORIGIN_PATTERNS = List.of(
+            "http://localhost:*",
+            "https://mediconnect-*.vercel.app"
     );
 
     private static final List<String> ALLOWED_METHODS = List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS");
@@ -50,6 +53,7 @@ public class CorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         registry.addMapping("/**")
+                .allowedOrigins(ALLOWED_ORIGINS.toArray(new String[0]))
                 .allowedOriginPatterns(ALLOWED_ORIGIN_PATTERNS.toArray(new String[0]))
                 .allowedMethods(ALLOWED_METHODS.toArray(new String[0]))
                 .allowedHeaders(ALLOWED_HEADERS.toArray(new String[0]))
@@ -82,13 +86,13 @@ public class CorsConfig implements WebMvcConfigurer {
 
     private CorsConfiguration buildCorsConfiguration() {
         CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(ALLOWED_ORIGINS);
         config.setAllowedOriginPatterns(ALLOWED_ORIGIN_PATTERNS);
         config.setAllowedMethods(ALLOWED_METHODS);
         config.setAllowedHeaders(ALLOWED_HEADERS);
         config.setExposedHeaders(EXPOSED_HEADERS);
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
-
         return config;
     }
 }
