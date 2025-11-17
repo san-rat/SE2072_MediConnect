@@ -41,7 +41,7 @@
             const resultDiv = document.getElementById('result');
             
             try {
-                const response = await fetch(`http://localhost:8080/api/debug/user/${encodeURIComponent(email)}`);
+                const response = await fetch(`http://localhost:8081/api/debug/user/${encodeURIComponent(email)}`);
                 const data = await response.json();
                 
                 resultDiv.style.display = 'block';
@@ -60,7 +60,7 @@
             const resultDiv = document.getElementById('result');
             
             try {
-                const response = await fetch('http://localhost:8080/api/debug/test-login', {
+                const response = await fetch('http://localhost:8081/api/debug/test-login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

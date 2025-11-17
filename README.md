@@ -47,7 +47,7 @@ cd backend
 mvn clean install
 mvn spring-boot:run
 
-The backend will run on: http://localhost:8080
+The backend will run on: http://localhost:8081
 
 🔹 Frontend Setup
 cd frontend
