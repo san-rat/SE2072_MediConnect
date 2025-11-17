@@ -56,11 +56,8 @@ const FeedbackPage = () => {
   const loadDoctors = async () => {
     try {
       // Load doctors from the appointments or a separate endpoint
-      const response = await fetch('http://localhost:8081/api/doctors');
-      if (response.ok) {
-        const data = await response.json();
-        setDoctors(data);
-      }
+      const response = await api.get('/api/doctors');
+      setDoctors(response.data || []);
     } catch (error) {
       console.error('Error loading doctors:', error);
     }
