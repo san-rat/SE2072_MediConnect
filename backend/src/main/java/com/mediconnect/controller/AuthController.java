@@ -21,6 +21,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(
+        origins = {"https://mediconnect-iota.vercel.app", "http://localhost:5173"},
+        allowedHeaders = {"Authorization", "Content-Type", "X-Requested-With", "Accept", "Origin", "Cache-Control", "Pragma"},
+        exposedHeaders = {"Authorization", "Set-Cookie"},
+        allowCredentials = "true",
+        maxAge = 3600)
 public class AuthController {
 
     private final UserService userService;
