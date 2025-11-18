@@ -43,6 +43,7 @@ public class CorsConfig implements WebMvcConfigurer {
     );
 
     private static final List<String> ALLOWED_ORIGIN_PATTERNS = List.of(
+            "*",
             "http://localhost:*",
             "https://mediconnect-*.vercel.app"
     );
