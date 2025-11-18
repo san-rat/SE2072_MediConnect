@@ -1,0 +1,15 @@
+# Prevent large/unneeded files ending up in the Docker build context
+.git
+.gitignore
+.idea
+.mvn
+.m2
+node_modules
+frontend
+docs
+sql
+uploads
+**/target
+**/*.log
+*.iml
+.DS_Store

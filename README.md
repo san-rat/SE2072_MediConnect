@@ -56,6 +56,14 @@ npm start
 
 The frontend runs on: http://localhost:5173
 
+### Docker-friendly build
+Railway now leverages the root `Dockerfile`, which builds the backend with Maven and a matching JDK so the platform never needs to hit the failing `mise` metadata service. You can build and run the same image locally with:
+
+```bash
+docker build -t mediconnect .
+docker run -e PORT=8081 -p 8081:8081 mediconnect
+```
+
 🧪 Test Data
 
 We provide a SQL script to populate test users, doctors, patients, schedules, and appointments:
