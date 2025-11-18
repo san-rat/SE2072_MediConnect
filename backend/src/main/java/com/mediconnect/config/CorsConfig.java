@@ -3,6 +3,7 @@ package com.mediconnect.config;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -22,10 +23,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CorsConfig implements WebMvcConfigurer {
 
     /**
-     * Allowed origins are now driven from application.properties:
+     * Allowed origins are driven from application.properties (with a built-in fallback).
+     * Example:
      * app.cors.allowed-origins=https://your-frontend-domain.com,http://localhost:5173
      */
-    @Value("#{'${app.cors.allowed-origins}'.split(',')}")
+    @Value("#{'${app.cors.allowed-origins:https://mediconnect-iota.vercel.app,http://localhost:5173}'.split(',')}")
     private List<String> allowedOrigins;
 
     /**
@@ -34,6 +36,11 @@ public class CorsConfig implements WebMvcConfigurer {
      */
     @Value("${app.cors.max-age:3600}")
     private long corsMaxAge;
+
+    private static final List<String> DEFAULT_ALLOWED_ORIGINS = List.of(
+            "https://mediconnect-iota.vercel.app",
+            "http://localhost:5173"
+    );
 
     private static final List<String> ALLOWED_ORIGIN_PATTERNS = List.of(
             "http://localhost:*",
@@ -52,10 +59,24 @@ public class CorsConfig implements WebMvcConfigurer {
     );
     private static final List<String> EXPOSED_HEADERS = List.of("Authorization", "Set-Cookie");
 
+    private List<String> getAllowedOrigins() {
+        if (allowedOrigins == null) {
+            return DEFAULT_ALLOWED_ORIGINS;
+        }
+
+        List<String> cleaned = allowedOrigins.stream()
+                .filter(Objects::nonNull)
+                .map(String::trim)
+                .filter(origin -> !origin.isEmpty())
+                .toList();
+        return cleaned.isEmpty() ? DEFAULT_ALLOWED_ORIGINS : cleaned;
+    }
+
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
+        List<String> origins = getAllowedOrigins();
         registry.addMapping("/**")
-                .allowedOrigins(allowedOrigins.toArray(new String[0]))
+                .allowedOrigins(origins.toArray(new String[0]))
                 .allowedOriginPatterns(ALLOWED_ORIGIN_PATTERNS.toArray(new String[0]))
                 .allowedMethods(ALLOWED_METHODS.toArray(new String[0]))
                 .allowedHeaders(ALLOWED_HEADERS.toArray(new String[0]))
@@ -88,7 +109,8 @@ public class CorsConfig implements WebMvcConfigurer {
 
     private CorsConfiguration buildCorsConfiguration() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(allowedOrigins);
+        List<String> origins = getAllowedOrigins();
+        config.setAllowedOrigins(origins);
         config.setAllowedOriginPatterns(ALLOWED_ORIGIN_PATTERNS);
         config.setAllowedMethods(ALLOWED_METHODS);
         config.setAllowedHeaders(ALLOWED_HEADERS);
@@ -98,4 +120,3 @@ public class CorsConfig implements WebMvcConfigurer {
         return config;
     }
 }
-
