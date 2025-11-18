@@ -1,8 +1,18 @@
 import axios from "axios";
 
+const FALLBACK_API_BASE_URL = "https://se2072mediconnect-production.up.railway.app";
+
+const apiBaseUrl =
+  (import.meta?.env?.VITE_API_BASE_URL && import.meta.env.VITE_API_BASE_URL.trim()) ||
+  FALLBACK_API_BASE_URL;
+
 const api = axios.create({
-  baseURL: "https://se2072mediconnect-production.up.railway.app", // backend URL
-  withCredentials: true,            // if cookies are used
+  baseURL: apiBaseUrl,
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  withCredentials: false,
 });
 
 // Add request interceptor to include JWT token
